@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Media Queries - Responsive Breakpoints</title>
+</head>
+<body>
+    <div class="demo-wrapper">
+        <h2>Laboratorio de CSS3 Media Queries</h2>
+        <p class="subtitle">Redimensiona la ventana o usa los botones de simulación para observar el cambio de breakpoint.</p>
+
+        <div class="info-bar">
+            <span>Ancho actual: <strong id="vpWidth">0px</strong></span>
+            <span id="bpBadge" class="bp-badge">Detectando...</span>
+        </div>
+
+        <div class="sim-buttons">
+            <button type="button" onclick="simulateBp('mobile')">📱 Simular Móvil (&lt;600px)</button>
+            <button type="button" onclick="simulateBp('tablet')">📟 Simular Tablet (≥600px)</button>
+            <button type="button" onclick="simulateBp('desktop')">🖥️ Simular Desktop (≥900px)</button>
+            <button type="button" onclick="simulateBp('auto')">🔄 Automático (Viewport Real)</button>
+        </div>
+
+        <div class="square" id="targetSquare">
+            <span id="squareLabel">.square</span>
+        </div>
+    </div>
+
+    <script>
+        const vpWidth = document.getElementById("vpWidth");
+        const bpBadge = document.getElementById("bpBadge");
+        const square = document.getElementById("targetSquare");
+        const squareLabel = document.getElementById("squareLabel");
+
+        function updateInfo() {
+            const w = window.innerWidth;
+            vpWidth.textContent = w + "px";
+            if (w < 600) {
+                bpBadge.textContent = "Móvil (< 600px) • 200x200 • BlueViolet";
+            } else if (w < 900) {
+                bpBadge.textContent = "Tablet (600px - 899px) • 100x100 • Black";
+            } else {
+                bpBadge.textContent = "Desktop (≥ 900px) • 300x300 • Red (#da0000)";
+            }
+        }
+
+        window.simulateBp = function(mode) {
+            square.className = "square";
+            if (mode === "mobile") {
+                square.classList.add("sim-mobile");
+                squareLabel.textContent = "200x200px (Móvil)";
+            } else if (mode === "tablet") {
+                square.classList.add("sim-tablet");
+                squareLabel.textContent = "100x100px (Tablet)";
+            } else if (mode === "desktop") {
+                square.classList.add("sim-desktop");
+                squareLabel.textContent = "300x300px (Desktop)";
+            } else {
+                squareLabel.textContent = ".square (Automático)";
+            }
+        };
+
+        window.addEventListener("resize", updateInfo);
+        updateInfo();
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!--
+  ============================================================================
+  EJERCICIO 6: DESCUENTO SOBRE PROMEDIO ACADÉMICO (descuentos.html)
+  ============================================================================
+  Propósito: Calcular el valor de la matrícula estudiantil aplicando descuentos
+  escalonados según el promedio (0.0 a 5.0).
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <title>Descuento sobre promedio</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm mb-4">
+        <div class="container-fluid">
+          <a class="navbar-brand fw-bold" href="index.html">⚡ Lógica JS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="suma_numeros.html">Sumar Números</a></li>
+              <li class="nav-item"><a class="nav-link" href="par_impar.html">Par o Impar</a></li>
+              <li class="nav-item"><a class="nav-link" href="pizza.html">Pizzería</a></li>
+              <li class="nav-item"><a class="nav-link" href="menu.html">Menú Texto</a></li>
+              <li class="nav-item"><a class="nav-link" href="menu_checkbox.html">Menú Checkbox</a></li>
+              <li class="nav-item"><a class="nav-link" href="tablas_multiplicar.html">Tablas</a></li>
+              <li class="nav-item"><a class="nav-link active fw-semibold" href="descuentos.html">Descuentos</a></li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+    <div class="text-center d-flex justify-content-center align-items-center p-4 border rounded-3 shadow-sm w-50 flex-wrap mx-auto">
+        <h1>Descuento sobre promedio</h1>
+        <label class="w-100 m-2" for="promedio">Ingrese el promedio del estudiante (0.0 a 5.0)</label>
+        <input class="form-control w-75" type="number" step="0.1" max="5" min="0" id="promedio" placeholder="Ej: 4.2">
+        <div class="w-100">
+            <button onclick="promedio()" class="btn btn-primary m-2" type="button">Calcular Descuento</button>
+        </div>
+        <p id="descuento"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sumar_numeros.js"></script>
+</body>
+</html>

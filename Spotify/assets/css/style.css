@@ -1,0 +1,363 @@
+/**
+ * ============================================================================
+ * HOJA DE ESTILOS: CLON DE SPOTIFY PREMIUM COLOMBIA (assets/css/style.css)
+ * ============================================================================
+ * Complemento: Se reconstruyó la hoja de estilos completa para todas las clases
+ * utilizadas en `index.html` (`.header`, `.logoheader`, `.menuheader`, `.button`,
+ * `.articlebody`, `.containerdiv`, `.buy`, `.planes`, `.contplan`, `.footer`,
+ * `.final-container`) logrando fidelidad visual con la página oficial de Spotify.
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Header */
+.header {
+  background-color: #000000;
+  color: #ffffff;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.logoheader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.menuheader {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.menuheader a:hover {
+  color: #1ed760;
+}
+
+/* Hero Banner */
+.button {
+  background-color: #1d75de;
+  color: #ffffff;
+  padding: 72px 10% 48px;
+}
+
+.title1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.pbutton {
+  font-size: 1.35rem;
+  margin-bottom: 32px;
+}
+
+.botonespromo {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.mainbot {
+  padding: 14px 32px;
+  border-radius: 500px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.mainbot.emp {
+  background-color: #191414;
+  color: #ffffff;
+  border: 2px solid #191414;
+}
+
+.mainbot.ver {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.term {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.term a {
+  text-decoration: underline;
+}
+
+/* ¿Por qué cambiarse a Premium? */
+.articlebody {
+  padding: 75px 10%;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.why {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 56px;
+}
+
+.containerdiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 32px;
+}
+
+.div-main {
+  flex: 1 1 200px;
+  max-width: 260px;
+}
+
+.imgtop {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f0f4f8;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.divtxt {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Sección de Métodos de Pago y Planes */
+.buy {
+  background-color: #efefef;
+  padding: 64px 10% 24px;
+  text-align: center;
+}
+
+.plantitle {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.ptxt {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.conpayu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#mostrar {
+  display: flex;
+  gap: 12px;
+}
+
+.payu {
+  height: 24px;
+}
+
+/* Tarjetas de Planes */
+.planes {
+  background-color: #efefef;
+  padding: 24px 8% 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contplan {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainp {
+  display: inline-block;
+  border: 1px solid #0d72ea;
+  color: #0d72ea;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+
+.contxt h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.contxt p {
+  font-size: 0.95rem;
+  color: #222;
+}
+
+.linea {
+  height: 1px;
+  background: #cccccc;
+  margin: 20px 0;
+}
+
+.color {
+  flex-grow: 1;
+}
+
+.submenu li {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.submenu i {
+  color: #000;
+  margin-top: 3px;
+}
+
+.contbutt {
+  background-color: #191414;
+  color: #ffffff;
+  border: none;
+  border-radius: 500px;
+  padding: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 20px 0 12px;
+}
+
+.contbutt:hover {
+  background-color: #1ed760;
+  color: #000000;
+}
+
+.conttyc {
+  font-size: 0.72rem;
+  color: #535353;
+}
+
+.tyc {
+  text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 64px 10% 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.firstline {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.firstline img {
+  width: 36px;
+}
+
+.footitle {
+  color: #919496;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.menfoo li {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.menfoo a:hover {
+  color: #1ed760;
+}
+
+.fiveline {
+  display: flex;
+  gap: 14px;
+}
+
+.iconf {
+  width: 48px;
+  height: 48px;
+  background-color: #222326;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+}
+
+.iconf:hover {
+  color: #1ed760;
+}
+
+.final-container {
+  background-color: #000000;
+  color: #919496;
+  padding: 20px 10% 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+}
+
+.final-container .ul {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contleft {
+  text-align: right;
+}

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="big-container d-flex">
+        <div class="navbar-lateral">
+            <nav class="lateral-navbar top-0 bottom-0 left-0 overflow-hidden text-white">
+                <ul class="px-0">
+                    <li class="list-unstyled">
+                        <div class="main-logo text-center d-flex mt-3">
+                            <img src="assets/img/logo.png"
+                                class="rounded-circle logo-navbar" alt="" />
+                            <span class="fw-bold text-uppercase fs-5 mx-4">Pro night</span>
+                        </div>
+                    </li>
+                    <li class="list-unstyled mt-1">
+                        <a href="index.html" class="link-lateral-navbar fs-6 d-table text-decoration-none position-relative">
+                            <span class="material-icons-outlined position-relative text-center">
+                                home
+                            </span>
+                            <span class="name-option position-relative ms-4">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="list-unstyled mt-1">
+                        <a href="pomodoro.html" class="link-lateral-navbar fs-6 d-table text-decoration-none position-relative">
+                            <span class="material-icons-outlined position-relative text-center">
+                                timer
+                            </span>
+                            <span class="name-option position-relative ms-4">Timer</span>
+                        </a>
+                    </li>
+                    <li class="list-unstyled">
+                        <a href="to-do-list.html" class="link-lateral-navbar fs-6 text-decoration-none position-relative d-table">
+                            <span class="material-icons-outlined position-relative text-center">
+                                check_circle
+                            </span>
+                            <span class="name-option position-relative ms-4">Lista de tareas</span>
+                        </a>
+                    </li>
+                    <li class="list-unstyled">
+                        <a href="calendario.html" class="link-lateral-navbar fs-6 text-decoration-none position-relative d-table">
+                            <span class="material-icons-outlined position-relative text-center">
+                                event
+                            </span>
+                            <span class="name-option position-relative ms-4">Calendario</span>
+                        </a>
+                    </li>
+                    <li class="list-unstyled">
+                        <a href="habitos.html" class="link-lateral-navbar fs-6 text-decoration-none position-relative d-table">
+                            <span class="material-icons-outlined position-relative text-center">
+                                autorenew
+                            </span>
+                            <span class="name-option position-relative ms-4">Hábitos</span>
+                        </a>
+                    </li>
+                    <li class="list-unstyled">
+                        <a href="roadMapTareas.html" class="link-lateral-navbar fs-6 text-decoration-none position-relative d-table">
+                            <span class="material-icons-outlined position-relative text-center">
+                                table_rows
+                            </span>
+                            <span class="name-option position-relative ms-4">Tareas</span>
+                        </a>
+                    <li class="list-unstyled">
+                        <a href="#" class="link-lateral-navbar logout position-absolute text-decoration-none d-table">
+                            <span class="material-icons-outlined position-relative text-center">
+                                logout
+                            </span>
+                            <span class="name-option position-relative ms-4">Salir</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="section-space-work">
+            <nav class="navbar navbar-expand-lg background-navbar-superior">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <p style="color:white"></p>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars" style="color: white;"></i>
+                    </button>
+                    <div class="collapse navbar-collapse c-nav-superior" id="navbarSupportedContent">
+                        <form class="d-flex c-nav-items-toogle" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                        <div class="input-group c-nav-items-toogle d-flex justify-content-center align-items-center"
+                            style="width: 100%;">
+                            <label class="input-group-text" for="inputGroupSelect01">Cambiar a</label>
+                            <select class="form-select" id="inputGroupSelect01" style="max-width: 12rem">
+                                <option selected>Bit</option>
+                                <option value="1">Bit 2</option>
+                                <option value="2">Bit 3</option>
+                            </select>
+                        </div>
+                        <span class="d-flex align-items-center justify-content-center gap-1 c-nav-items-toogle"
+                            style="color: white">
+                            <button class="btn" style="
+                                  border-radius: 0.3rem;
+                                  width: 10rem;
+                                  background-color: #00d2e5;
+                                  color: white;
+                                ">
+                                <p>Crear +</p>
+
+                            </button>
+                            <i class="fa-regular fa-bell"></i>
+                            <button class="btn d-flex align-items-center justify-content-center" style="
+                                  background-color: #00d2e5;
+                                  border-radius: 50%;
+                                  width: 50px;
+                                  height: 50px;
+                                ">
+                                <img src="./assets/img/avatar.png" alt="" width="40px" height="40px" />
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid space-work">
+                <main class="container-fluid">
+                    <div class="d-flex justify-content-center mt-1"><!--SEMANA HABTIOS-------------------------------->
+                        <div class="row container-fluid">
+                            <div class="col-12 col-xl-8">
+                                <section class="N-bg-primero rounded-3 d-flex flex-column align-items-center container-fluid pt-1 pb-3"><!--WEEK-------------------------------------->
+                                    <div class="N-week d-grip container-fluid p-2">
+                                        <div class="d-flex justify-content-center mb-2"> <!--FECHA----------------------------------------------------------------------------->
+                                            <div class="bg-white rounded-1 p-1 w-100 d-flex justify-content-between">
+                                                <div>
+                                                    <p class="fw-bolder fs-5 text-start ps-3">HOY</p>
+                                                    <p class="fw-light text-start ps-3">28 de Marzo</p>
+                                                </div>
+                                                <div class="mt-3 me-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-arrows-vertical mb-3" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 21v-14" /><path d="M9 15l3 -3l3 3" />
+                                                        <path d="M15 10l3 -3l3 3" /><line x1="3" y1="21" x2="21" y2="21" /><line x1="12" y1="21" x2="12" y2="12" />
+                                                        <path d="M3 6l3 -3l3 3" /><path d="M6 21v-18" /></svg>
+                                                    <span class="material-symbols-outlined ms-3 me-1"> insights </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"><!--CARRUSE-DIAS-MES--------------------------------------------------------------------------------------------------------------------->
+                                                <div class="carousel-inner">
+                                                  <div class="carousel-item active">
+                                                    <div class="row">
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">27</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <div class="N-week_circle rounded-circle align-middle text-center">28</div></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">29</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">30</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">31</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">1</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">2</p></div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="carousel-item">
+                                                    <div class="row">
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">3</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">4</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">5</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">6</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">7</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">8</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">9</p></div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="carousel-item">
+                                                    <div class="row">
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">10</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">11</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">12</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">13</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">14</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">15</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom  border-top border-4 mb-1 col pt-1"> <p class="text-center">16</p></div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="carousel-item">
+                                                    <div class="row">
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">17</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">18</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">19</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">20</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">21</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">22</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">23</p></div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="carousel-item">
+                                                    <div class="row">
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">24</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">25</p> </div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">26</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">27</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">28</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">29</p></div>
+                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-top border-4 mb-1 col pt-1"> <p class="text-center">30</p></div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <button class="carousel-control-prev carousel-control-prev-first" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                  <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next carousel-control-next-first" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                  <span class="visually-hidden">Next</span>
+                                                </button>
+                                              </div><!--CARRUSEL-DIAS-MES-------------------------------------------------------------------------------------------------------------------->
+                                              <div class="N-week_contenedor rounded-3"><!--CONTENIDO WEEK-->
+                                                <div> 
+                                                    <!--TITULOS--> <div class="row">
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>H<span class="N-week_title-span text-center">abito</span> </p> </div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>L<span class="N-week_title-span text-center">unes</span> </p> </div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>M<span class="N-week_title-span text-center">artes</span> </p> </div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>M<span class="N-week_title-span text-center">iercoles</span> </p></div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>J<span class="N-week_title-span text-center">ueves</span> </p> </div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>V<span class="N-week_title-span text-center">iernes</span> </p> </div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col pt-2">
+                                                                            <p>S<span class="N-week_title-span text-center">abado</span> </p> </div>
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom col pt-2">
+                                                                            <p>D<span class="N-week_title-span text-center">omingo</span></p> </div>
+                                                                    </div>
+                                                            <!--1--> <div class="row">
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col pt-2">
+                                                                            <i class="fa-solid fa-person-running ps-1" style="color: #a56ef3;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2">
+                                                                            <i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col text-center pt-2"></div>
+                                                                    </div>
+                                                            <!--2--> <div class="row">
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col pt-2">
+                                                                            <span class="material-symbols-outlined" style="color: #a56ef3;">self_improvement</span></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"><i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"><i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col text-center pt-2"></div>
+                                                                    </div>
+                                                            <!--3--> <div class="row">
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col pt-2">
+                                                                            <i class="fa-brands fa-readme ps-1" style="color: #a56ef3;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"><i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col text-center pt-2"></div>
+                                                                    </div>
+                                                            <!--4--> <div class="row">
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col pt-2">
+                                                                            <i class="fa-solid fa-guitar ps-1" style="color: #a56ef3;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"><i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col text-center pt-2"></div>
+                                                                    </div>
+                                                            <!--5--> <div class="row">
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col pt-2">
+                                                                            <i class="fa-solid fa-bicycle ps-1" style="color: #a56ef3;"></i></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"><i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i> </div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col text-center pt-2"><i class="fa-solid fa-check fa-lg" style="color: #00E096;"></i> </div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col"></div>
+                                                                    </div>
+                                                            <!--6--> <div class="row">
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col"><p class="N-week_txt">...</p> </div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col"></div>
+                                                                    </div>
+                                                            <!--7--> <div class="row">
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col"><p class="N-week_txt">...</p> </div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col"></div>
+                                                                    </div>
+                                                            <!--8--> <div class="row">
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-bottom border-end col"><p class="N-week_txt">...</p> </div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-bottom col"></div>
+                                                                    </div>
+                                                            <!--9--> <div class="row">
+                                                                        <div class="N-week_rectangle text-black fw-semibold border-end col"><p class="N-week_txt">...</p> </div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold border-end col"></div>
+                                                                        <div class="N-week_rectangle text-white fw-semibold col"></div>
+                                                                    </div>
+                                                    </div> 
+                                              </div><!--CONTENIDO WEEK-->
+                                    </div>
+                                    <div class="d-flex container-fluid justify-content-between rounded-3 bg-white mt-2 p-2 N-week_input">
+                                        <div class="text-center d-flex gap-1">
+                                            <span class="material-symbols-outlined">add</span>
+                                            <p>Agregar habito</p>
+                                        </div>
+                                        <div class="d-flex gap-1">
+                                            <span class="material-symbols-outlined">notifications_active</span>
+                                            <span class="material-symbols-outlined">alarm</span>
+                                            <span class="material-symbols-outlined">calendar_month</span>
+                                        </div>
+                                    </div>
+                                </section><!--WEEK-------------------------------------->
+                            </div>
+
+                            <div id="carouselExampleIndicators" class="carousel slide N-bg-primero rounded-3 col-12 col-xl-4 N-aside_contenedor" data-bs-ride="true"><!--CARRUSEL-ASIDE-SECTION--------------------------------------------------------------------------------------------------------------------->
+                                <div class="carousel-indicators">
+                                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <section class="d-flex flex-column align-items-center p-3 h-100"> <!--ASIDE SECTION------------------------------------------------------------------------------------------>
+                                        <div class="container-fluid p-4 rounded-3 justify-content-around align-items-center">
+                                            <div>
+                                                <div class="N-aside_rectangle N-aside_title fw-bold text-black rounded-3 text-center border-bottom border-3 mb-2 bg-white pt-1"> Define tu habito | Cantidad</div>
+                                                <input type="text" class="rounded-3 container-fluid mt-2 p-1 ps-2 border-0" placeholder="Habito">
+                                                    <div class="d-flex gap-2 mt-3">
+                                                        <select class="form-select">
+                                                          <option selected>Al menos</option>
+                                                          <option value="1">Menos de</option>
+                                                          <option value="2">Exactamente</option>
+                                                          <option value="3">Sin Objetivo</option>
+                                                        </select>
+                                                        <input type="text" class="rounded-3 container-fluid border-0" placeholder="Objetivo">
+                                                    </div>
+                                                    <div class="d-flex gap-2 mt-3 mb-2">
+                                                        <input type="number" min="0" max="100" class="rounded-3 w-50 ps-2 border-0" placeholder="Cantidad" required> 
+                                                        <p class="text-white pt-3">en el dia.</p>
+                                                    </div>
+                                                    <p class="mt-2 text-white">Ej. 'Correr, al menos 5km en el dia'</p>
+                                                    <textarea name="" id="" cols="30" rows="8" class="container-fluid mt-2 rounded-3 p-3 border-0" placeholder="Description (opcional)"></textarea>
+                                            </div>
+                                            <div class="d-flex container-fluid justify-content-between p-3 rounded-3 bg-white mt-3 mb-3 N-aside_input align-items-center">
+                                                <div class="text-center d-flex gap-1">
+                                                    <span class="material-symbols-outlined">add</span>
+                                                    <p>Agregar habito</p>
+                                                </div>
+                                                <div class="d-flex gap-1">
+                                                    <span class="material-symbols-outlined">notifications_active</span>
+                                                    <span class="material-symbols-outlined">alarm</span>
+                                                    <span class="material-symbols-outlined">calendar_month</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                  </div>
+                                  <div class="carousel-item">
+                                    <section class="d-flex flex-column align-items-center p-3 h-100"> <!--ASIDE SECTION------------------------------------------------------------------------------------------>
+                                        <div class="container-fluid p-4 rounded-3 justify-content-around align-items-center">
+                                            <div>
+                                                <div class="N-aside_rectangle N-aside_title fw-bold text-black rounded-3 text-center border-bottom border-3 mb-2 bg-white pt-1"> Define tu habito | Cronometro</div>
+                                                <input type="text" class="rounded-3 container-fluid mt-2 p-1 ps-2 border-0" placeholder="Habito">
+                                                    <div class="d-flex gap-2 mt-2">
+                                                        <select class="form-select">
+                                                          <option selected>Al menos</option>
+                                                          <option value="1">Menos de</option>
+                                                          <option value="2">Exactamente</option>
+                                                          <option value="3">Sin Objetivo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <div class="d-flex flex-column gap-2"> <label for="tiempo" class="text-white fw-bold">Tiempo:</label>
+                                                                <div class="d-flex gap-2">
+                                                                    <input type="time" id="tiempo" name="tiempo" step="3600" class="rounded-3 pt-2~ p-2 border-0" required>
+                                                                    <p class="text-white pt-3">en el dia.</p>
+                                                                </div>  
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <p class="mt-2 text-white">Ej. 'Meditar, al menos 30 minutos en el dia'</p>
+                                                    <textarea name="" id="" cols="30" rows="8" class="container-fluid mt-2 rounded-3 p-3" placeholder="Description (opcional)"></textarea>
+                                            </div>
+                                            <div class="d-flex container-fluid justify-content-between p-3 rounded-3 bg-white mt-3 mb-3 N-aside_input align-items-center">
+                                                <div class="text-center d-flex gap-1">
+                                                    <span class="material-symbols-outlined">add</span>
+                                                    <p>Agregar habito</p>
+                                                </div>
+                                                <div class="d-flex gap-1">
+                                                    <span class="material-symbols-outlined">notifications_active</span>
+                                                    <span class="material-symbols-outlined">alarm</span>
+                                                    <span class="material-symbols-outlined">calendar_month</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                  </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                            </div><!--CARRUSEL-ASIDE-SECTION--------------------------------------------------------------------------------------------------------------------->
+                        </div>
+                    </div>   
+                </main>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script src="./js/carlos.js"></script>
+    <script src="./js/habitos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

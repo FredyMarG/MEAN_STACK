@@ -1,0 +1,147 @@
+<!--
+  ============================================================================
+  FUNDAMENTOS DE HTML5: ETIQUETAS SEMÁNTICAS E INPUTS (Html-Basic/index.html)
+  ============================================================================
+  Propósito: Explorar los distintos controles de formulario HTML5 (`color`,
+  `radio`, `range`, `select`, `email`, `checkbox`), jerarquía de encabezados
+  (`h1`-`h6`), imágenes locales/remotas y etiquetas de estructura semántica
+  (`<header>`, `<nav>`, `<main>`, `<aside>`, `<section>`, `<footer>`).
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/images.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <title>Html_Basic - Etiquetas y Formularios HTML5</title>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="sem-block sem-header">
+            Encabezado Semántico (<code>&lt;header&gt;</code>) — Catálogo Interactivo de Etiquetas HTML5
+        </header>
+
+        <nav class="sem-block sem-nav">
+            Menú de Navegación (<code>&lt;nav&gt;</code>):
+            <a href="#controles">Controles Input</a> •
+            <a href="#tipografia">Tipografía H1-H6</a> •
+            <a href="#multimedia">Multimedia</a> •
+            <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Google ↗</a>
+        </nav>
+
+        <div class="content-grid">
+            <main class="sem-block sem-main">
+                <!-- Sección 1: Controles de entrada HTML5 -->
+                <section id="controles" class="card-box">
+                    <h3>1. Controles Nativos de Formulario HTML5</h3>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <label>Selector de Color (<code>type="color"</code>)</label>
+                            <input type="color" id="colorPicker" value="#2563eb">
+                        </div>
+
+                        <div class="control-item">
+                            <label>Botones de Radio (<code>type="radio"</code>)</label>
+                            <div>
+                                <label><input type="radio" name="pato" value="Opción A" checked> Radio A</label>
+                                <label class="ms-2"><input type="radio" name="pato" value="Opción B"> Radio B</label>
+                            </div>
+                        </div>
+
+                        <div class="control-item">
+                            <label>Control Deslizante (<code>type="range"</code>): <strong id="rangeVal">50</strong>%</label>
+                            <input type="range" id="rangeInput" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="control-item">
+                            <label for="seleccion">Lista Desplegable (<code>&lt;select&gt;</code>)</label>
+                            <select name="seleccion" id="seleccion">
+                                <option value="">Seleccione una opción</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                        <div class="control-item">
+                            <label>Correo Electrónico (<code>type="email"</code>)</label>
+                            <input type="email" id="emailInput" placeholder="correo@ejemplo.com">
+                        </div>
+
+                        <div class="control-item">
+                            <label>Casillas de Verificación (<code>type="checkbox"</code>)</label>
+                            <div>
+                                <label for="opc1"><input type="checkbox" name="perro" id="opc1" checked> Opción 1</label>
+                                <label for="opc2" class="ms-2"><input type="checkbox" name="perro" id="opc2"> Opción 2</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" id="btnAceptar" class="btn-primary-custom">Aceptar y Probar Valores</button>
+                        <span id="feedbackText" class="feedback-badge"></span>
+                    </div>
+                </section>
+
+                <!-- Sección 2: Párrafos y Jerarquía Tipográfica -->
+                <section id="tipografia" class="card-box">
+                    <h3>2. Párrafos (<code>&lt;p&gt;</code>) y Jerarquía Tipográfica (<code>&lt;h1&gt;</code> - <code>&lt;h6&gt;</code>)</h3>
+                    <p>El lenguaje HTML5 proporciona una estructura semántica clara para documentos web modernos, facilitando la accesibilidad y el posicionamiento en motores de búsqueda.</p>
+                    <p>Cada nivel de encabezado define la importancia jerárquica del título dentro de la arquitectura de la información.</p>
+                    <div class="headings-showcase">
+                        <h1>Título H1</h1>
+                        <h2>Título H2</h2>
+                        <h3>Título H3</h3>
+                        <h4>Título H4</h4>
+                        <h5>Título H5</h5>
+                        <h6>Título H6</h6>
+                    </div>
+                </section>
+
+                <!-- Sección 3: Multimedia e Imágenes -->
+                <section id="multimedia" class="card-box sem-section">
+                    <h3>3. Sección Multimedia (<code>&lt;section&gt;</code> &amp; <code>&lt;img&gt;</code>)</h3>
+                    <div class="images-row">
+                        <figure>
+                            <img src="assets/img/images.jpg" alt="Imagen local desde assets">
+                            <figcaption>Imagen local (<code>assets/img/images.jpg</code>)</figcaption>
+                        </figure>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="sem-block sem-aside">
+                <h4>Barra Lateral (<code>&lt;aside&gt;</code>)</h4>
+                <p>Espacio destinado a contenido complementario, widgets, anuncios o estado en vivo de los controles del formulario.</p>
+                <div class="live-box">
+                    <strong>Color activo:</strong>
+                    <div id="colorPreview" class="color-swatch"></div>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="sem-block sem-footer">
+            Pie de página semántico (<code>&lt;footer&gt;</code>) — Fundamentos HTML5 &amp; CSS3
+        </footer>
+    </div>
+
+    <script>
+        const colorPicker = document.getElementById("colorPicker");
+        const colorPreview = document.getElementById("colorPreview");
+        const rangeInput = document.getElementById("rangeInput");
+        const rangeVal = document.getElementById("rangeVal");
+        const btnAceptar = document.getElementById("btnAceptar");
+        const feedbackText = document.getElementById("feedbackText");
+
+        colorPicker.addEventListener("input", (e) => {
+            colorPreview.style.backgroundColor = e.target.value;
+        });
+        rangeInput.addEventListener("input", (e) => {
+            rangeVal.textContent = e.target.value;
+        });
+        btnAceptar.addEventListener("click", () => {
+            const sel = document.getElementById("seleccion").value || "sin selección";
+            feedbackText.textContent = `✓ Color: ${colorPicker.value} | Rango: ${rangeInput.value}% | Select: ${sel}`;
+        });
+    </script>
+</body>
+</html>

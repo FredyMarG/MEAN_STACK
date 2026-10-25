@@ -1,0 +1,81 @@
+/**
+ * ============================================================================
+ * ARCHIVO: style.css (html5_exercise/flexbox/style.css)
+ * DESCRIPCIÓN: Maquetación de bloques semánticos HTML5 utilizando CSS3 Flexbox,
+ *              sombras suaves y proporciones responsivas.
+ * ============================================================================
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    padding: 16px;
+}
+
+h1 {
+    font-size: 1.35rem;
+    letter-spacing: 1px;
+    margin: 16px 0;
+}
+
+header, nav, section, aside, footer {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 6px 16px rgba(30, 58, 138, 0.18);
+    transition: transform 0.2s ease;
+}
+
+header:hover, nav:hover, section:hover, aside:hover, footer:hover {
+    transform: translateY(-2px);
+}
+
+header, nav, footer {
+    margin: 16px 20px;
+}
+
+section {
+    width: 70%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+article {
+    width: 88%;
+    height: 55%;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    margin-top: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+aside {
+    width: 30%;
+    height: 300px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+}

@@ -1,0 +1,2 @@
+.navbar { display: flex; gap: 1rem; padding: 1rem; background: #1e293b; }
+.navbar a { color: #f8fafc; text-decoration: none; font-weight: 600; }

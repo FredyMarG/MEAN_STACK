@@ -1,0 +1,105 @@
+############################
+# 🔥 SISTEMA / OS
+############################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+############################
+# 🔐 VARIABLES DE ENTORNO
+############################
+.env
+.env.*
+*.env
+
+############################
+# 📦 NODE / JAVASCRIPT
+############################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+############################
+# ⚙️ BUILD / DIST
+############################
+dist/
+build/
+out/
+coverage/
+.tmp/
+.cache/
+
+############################
+# 🧪 TESTING
+############################
+coverage/
+.nyc_output/
+
+############################
+# ⚡ ANGULAR
+############################
+.angular/
+.angular/cache/
+.angular/cache-loader/
+.angular-cli.json
+
+############################
+# ⚛️ REACT / FRONTEND
+############################
+.next/
+.nuxt/
+.vite/
+*.local
+
+############################
+# 🧰 IDE / EDITORES
+############################
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+############################
+# 🐍 PYTHON (por si acaso)
+############################
+__pycache__/
+*.pyc
+
+############################
+# 🐘 BASE DE DATOS
+############################
+*.sqlite
+*.db
+
+############################
+# 🔥 LOGS
+############################
+logs/
+*.log
+
+############################
+# 📁 ARCHIVOS TEMPORALES
+############################
+tmp/
+temp/
+
+############################
+# 🔒 ARCHIVOS SENSIBLES
+############################
+*.pem
+*.key
+*.crt
+
+############################
+# 🚫 GIT INTERNOS (IMPORTANTE)
+############################
+**/.git

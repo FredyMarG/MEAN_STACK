@@ -1,0 +1,87 @@
+<!--
+  ============================================================================
+  FUNDAMENTOS HTML + CSS: LISTAS Y TABLAS (Html-Css-Basic/index.html)
+  ============================================================================
+  Propósito: Demostrar el uso de listas desordenadas (`<ul>`), listas ordenadas
+  con numeración romana (`<ol type="I">`) y tablas estructuradas (`<thead>`,
+  `<tbody>`, `<tr>`, `<th>`, `<td>`) con inserción dinámica de filas.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>HTML + CSS Básico: Listas y Tablas</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Estructuras de Listas y Tablas en HTML5 + CSS3</h1>
+
+        <div class="cards-row">
+            <!-- Lista desordenada con viñeta circular -->
+            <nav class="card">
+                <h3>Lista Desordenada (<code>&lt;ul&gt;</code>)</h3>
+                <ul style="list-style-type: circle;">
+                    <li>Home</li>
+                    <li>Servicios</li>
+                    <li>Portafolio</li>
+                </ul>
+            </nav>
+
+            <!-- Lista ordenada con numeración romana -->
+            <nav class="card">
+                <h3>Lista Ordenada Romana (<code>&lt;ol type="I"&gt;</code>)</h3>
+                <ol type="I">
+                    <li>Home</li>
+                    <li>Servicios</li>
+                    <li>Portafolio</li>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Tabla de datos con encabezado, cuerpo y formulario de inserción -->
+        <section class="card">
+            <h3>Directorio en Tabla (<code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>)</h3>
+            <form id="addRowForm" class="inline-form">
+                <input type="text" id="nombreInput" placeholder="Nombre" required>
+                <input type="text" id="apellidoInput" placeholder="Apellido" required>
+                <button type="submit">Agregar Fila</button>
+            </form>
+
+            <table id="peopleTable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Carlos</td>
+                        <td>Colmenares</td>
+                    </tr>
+                    <tr>
+                        <td>Andres</td>
+                        <td>Gaitan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById("addRowForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nom = document.getElementById("nombreInput").value.trim();
+            const ape = document.getElementById("apellidoInput").value.trim();
+            if (!nom || !ape) return;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${nom}</td><td>${ape}</td>`;
+            document.querySelector("#peopleTable tbody").appendChild(tr);
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

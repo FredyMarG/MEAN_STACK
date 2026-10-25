@@ -1,0 +1,65 @@
+/**
+ * ============================================================================
+ * HOJA DE ESTILOS: CLON DE SNAPCHAT WEB (Snapchat/assets/css/style.css)
+ * ============================================================================
+ * Complemento: Se creó la hoja de estilos personalizada con el amarillo
+ * característico de Snapchat (`#FFFC00`), tipografía y posicionamiento.
+ */
+
+.bg-yellow {
+  background-color: #fffc00 !important;
+}
+
+.color-yellow {
+  color: #fffc00 !important;
+}
+
+.navbar {
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  height: 72px;
+}
+
+.main {
+  min-height: 85vh;
+  padding-top: 90px;
+  padding-bottom: 40px;
+}
+
+.main-1 {
+  width: 48%;
+  min-width: 320px;
+}
+
+.txt1 {
+  font-weight: 800;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.txt2 {
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.boton {
+  border: none;
+  padding: 6px 14px;
+}
+
+.boton a {
+  text-decoration: none;
+}
+
+.footer {
+  background: #f8f9fa;
+  padding: 50px 0;
+  position: relative;
+}
+
+.idioma {
+  bottom: 15px;
+  left: 12.5%;
+}

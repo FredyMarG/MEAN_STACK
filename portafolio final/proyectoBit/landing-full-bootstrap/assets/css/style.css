@@ -1,0 +1,367 @@
+/**
+ * ============================================================================
+ * ARCHIVO: style.css (proyectobit/landing-full-bootstrap)
+ * DESCRIPCIÓN: Hoja de estilos principal para la Landing Page de
+ *              "Procrastination Nightmare".
+ * ============================================================================
+ */
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #444444;
+}
+
+a {
+  text-decoration: none;
+  color: #49b5e7;
+}
+
+a:hover {
+  color: #76c7ed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Dosis", sans-serif;
+}
+
+/* Header */
+#header {
+  background: #ffffff;
+  transition: all 0.5s;
+  z-index: 997;
+  padding: 14px 0;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.06);
+}
+
+#header .logo {
+  font-size: 22px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #0f394c;
+}
+
+#header .logo img {
+  max-height: 40px;
+  border-radius: 50%;
+}
+
+/* Navbar */
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 10px 28px;
+  font-family: "Dosis", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f394c;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.navbar a:hover,
+.navbar .active {
+  color: #49b5e7;
+}
+
+.navbar .btn-app {
+  background: #49b5e7;
+  color: #fff !important;
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+
+.mobile-nav-toggle {
+  color: #0f394c;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+/* Hero Section */
+#hero {
+  width: 100%;
+  min-height: 85vh;
+  background: #f9f8ff;
+  padding-top: 90px;
+}
+
+#hero h1 {
+  margin: 0;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 52px;
+  color: #0f394c;
+  text-transform: uppercase;
+}
+
+#hero h2 {
+  color: #1c698c;
+  margin: 15px 0 30px 0;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.btn-get-started {
+  font-family: "Dosis", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 28px;
+  border-radius: 6px;
+  transition: 0.5s;
+  color: #fff;
+  background: #49b5e7;
+  text-transform: uppercase;
+}
+
+.btn-get-started:hover {
+  background: #1da2e0;
+  color: #fff;
+}
+
+.btn-secondary-hero {
+  font-family: "Dosis", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 6px;
+  border: 2px solid #49b5e7;
+  color: #0f394c;
+}
+
+/* Sections */
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  background-color: #f4fbfe;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: #0f394c;
+}
+
+/* About & Icon Boxes */
+.about .icon-box {
+  margin-top: 28px;
+}
+
+.about .icon-box .icon {
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 2px solid #d0ecf9;
+  border-radius: 50px;
+  color: #49b5e7;
+  font-size: 24px;
+}
+
+.about .icon-box .title {
+  margin-left: 76px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.about .icon-box .description {
+  margin-left: 76px;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+/* Services */
+.services .icon-box {
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(68, 88, 144, 0.08);
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+}
+
+.services .icon-box:hover {
+  transform: translateY(-5px);
+}
+
+.services .icon {
+  margin-bottom: 12px;
+  font-size: 38px;
+}
+
+.services .title {
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.services .title a {
+  color: #111;
+}
+
+/* Portfolio */
+.portfolio .portfolio-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.portfolio .portfolio-info {
+  background: rgba(15, 57, 76, 0.85);
+  color: #fff;
+  padding: 16px;
+  text-align: center;
+}
+
+.portfolio .portfolio-info h4 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.portfolio .portfolio-links a {
+  color: #fff;
+  font-size: 22px;
+  margin: 0 6px;
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 60px 0;
+  background: #0f394c;
+  color: #fff;
+}
+
+.testimonials .testimonial-item {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.testimonials .testimonial-item .testimonial-img {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.25);
+  margin: 0 auto 12px auto;
+  object-fit: cover;
+}
+
+.testimonials .testimonial-item h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 8px 0 4px 0;
+}
+
+.testimonials .testimonial-item h4 {
+  font-size: 14px;
+  color: #9cdaf6;
+  margin: 0 0 15px 0;
+}
+
+/* Footer */
+#footer {
+  background: #fff;
+  padding: 0 0 24px 0;
+  color: #444444;
+  font-size: 14px;
+  background: #ebf7fc;
+}
+
+#footer .footer-newsletter {
+  padding: 45px 0;
+  background: #f0f9fd;
+  text-align: center;
+}
+
+#footer .footer-newsletter form {
+  margin-top: 24px;
+  background: #fff;
+  padding: 6px 10px;
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+}
+
+#footer .footer-newsletter form input[type="email"] {
+  border: 0;
+  padding: 6px 10px;
+  width: 100%;
+  outline: none;
+}
+
+#footer .footer-newsletter form input[type="submit"] {
+  border: 0;
+  font-size: 15px;
+  padding: 8px 22px;
+  background: #49b5e7;
+  color: #fff;
+  border-radius: 4px;
+}
+
+#footer .footer-top {
+  padding: 50px 0 25px 0;
+  background: #fff;
+}
+
+#footer .footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#footer .footer-links ul li {
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+}
+
+#footer .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #49b5e7;
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 4px;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+}

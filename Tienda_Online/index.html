@@ -1,0 +1,127 @@
+<!--
+  ============================================================================
+  TIENDA ONLINE - BIT SHOP E-COMMERCE INTERACTIVO (Tienda_Online/index.html)
+  ============================================================================
+  Propósito: Tienda virtual interactiva con barra de navegación, panel
+  colapsable Mega-Menu de categorías (Promociones, Nosotros, Catálogo, Soporte),
+  buscador en tiempo real, grilla de productos tecnológicos y carrito de compras
+  lateral (Offcanvas) con cálculo dinámico de totales.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5.3 CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="style.css">
+    <title>BIT Shop - Tienda Online</title>
+</head>
+<body class="bg-light">
+
+    <!-- Barra de Navegación Principal con Mega-Menu Colapsable -->
+    <nav class="navbar bg-white shadow-sm sticky-top py-3">
+        <div class="container">
+          <a class="navbar-brand fw-bold text-primary fs-4 d-flex align-items-center gap-2" href="#">
+            <span class="material-symbols-outlined fs-2">shopping_bag</span>
+            BIT Shop
+          </a>
+
+          <div class="d-flex align-items-center gap-3 ms-auto me-3">
+            <div class="input-group input-group-sm d-none d-md-flex" style="width: 260px;">
+              <span class="input-group-text bg-light border-end-0">
+                <span class="material-symbols-outlined fs-6">search</span>
+              </span>
+              <input type="search" id="searchInput" class="form-control bg-light border-start-0" placeholder="Buscar producto...">
+            </div>
+
+            <button class="btn btn-primary position-relative d-flex align-items-center gap-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+              <span class="material-symbols-outlined fs-5">shopping_cart</span>
+              <span class="d-none d-sm-inline">Carrito</span>
+              <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+            </button>
+          </div>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Mega-Menu de Tarjetas de Categorías -->
+          <div class="collapse show navbar-collapse mt-3" id="navbarNavAltMarkup">
+            <div class="mega-menu-container d-flex flex-wrap gap-3 p-4 rounded-4 justify-content-center align-items-center">
+                <div data-filter="promociones" class="category-card bg-white text-success p-3 rounded-4 shadow-sm d-flex justify-content-center flex-column align-items-center text-center gap-2">
+                    <span class="material-symbols-outlined icon-lg">monetization_on</span>
+                    <span class="fw-bold">Promociones</span>
+                    <small class="text-muted">Ofertas hasta -30%</small>
+                </div>
+
+                <div data-filter="nosotros" class="category-card p-3 rounded-4 shadow-sm d-flex justify-content-center flex-column align-items-center text-center gap-2 bg-primary text-white">
+                    <span class="material-symbols-outlined icon-lg">group</span>
+                    <span class="fw-bold">Nosotros</span>
+                    <small class="text-white-50">Garantía Oficial BIT</small>
+                </div>
+
+                <div data-filter="all" class="category-card active-cat bg-white text-success p-3 rounded-4 shadow-sm d-flex justify-content-center flex-column align-items-center text-center gap-2">
+                    <span class="material-symbols-outlined icon-lg">shopping_bag</span>
+                    <span class="fw-bold">Catálogo Completo</span>
+                    <small class="text-muted">Todos los equipos</small>
+                </div>
+
+                <div data-filter="accesorios" class="category-card p-3 rounded-4 shadow-sm d-flex justify-content-center flex-column align-items-center text-center gap-2 bg-primary text-white">
+                    <span class="material-symbols-outlined icon-lg">support_agent</span>
+                    <span class="fw-bold">Periféricos &amp; Soporte</span>
+                    <small class="text-white-50">Audio, Teclados y más</small>
+                </div>
+            </div>
+          </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal del Catálogo -->
+    <main class="container py-5">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <div>
+          <h2 class="fw-bold mb-1" id="sectionTitle">Catálogo de Tecnología</h2>
+          <p class="text-muted mb-0">Haz clic en las tarjetas superiores para filtrar o agrega productos a tu carrito.</p>
+        </div>
+        <span id="resultsCount" class="badge bg-secondary-subtle text-secondary-emphasis px-3 py-2"></span>
+      </div>
+
+      <!-- Banner Informativo (se muestra al elegir "Nosotros") -->
+      <div id="aboutBanner" class="alert alert-primary border-0 rounded-4 shadow-sm p-4 mb-4 d-none">
+        <h4 class="fw-bold">🚀 Sobre BIT Shop Colombia</h4>
+        <p class="mb-0">Somos la tienda especializada para desarrolladores Full-Stack MEAN. Todos nuestros equipos incluyen configuración lista para Node.js, Angular, MongoDB y Docker con garantía de 12 meses.</p>
+      </div>
+
+      <!-- Grilla Dinámica de Productos -->
+      <div id="productsGrid" class="row g-4"></div>
+    </main>
+
+    <!-- Offcanvas Carrito de Compras -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+      <div class="offcanvas-header bg-primary text-white">
+        <h5 class="offcanvas-title fw-bold d-flex align-items-center gap-2" id="cartOffcanvasLabel">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          Tu Carrito de Compras
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+        <div id="cartItemsContainer" class="flex-grow-1 overflow-auto"></div>
+        <div class="border-top pt-3 mt-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="fw-semibold text-muted">Total a pagar:</span>
+            <span id="cartTotalValue" class="fs-4 fw-bold text-primary">$0 COP</span>
+          </div>
+          <button id="checkoutBtn" class="btn btn-success w-100 fw-bold py-2">Finalizar Compra</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

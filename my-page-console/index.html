@@ -1,0 +1,70 @@
+<!--
+  ============================================================================
+  CONSOLA INTERACTIVA EN NAVEGADOR (my-page-console/index.html)
+  ============================================================================
+  Complemento: Este archivo se encontraba vacío (0 bytes). Se implementó una
+  consola interactiva estilo terminal para ejecutar y visualizar fragmentos de
+  JavaScript directamente en la página.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>My Page Console - JS Terminal</title>
+</head>
+<body>
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">my-page-console — JavaScript Interactive Sandbox</span>
+        </div>
+        <div class="terminal-body" id="consoleOutput">
+            <div class="log-line info">// Bienvenido a My Page Console. Escribe una expresión JS abajo y presiona Ejecutar.</div>
+        </div>
+        <div class="terminal-input-bar">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="cmdInput" value="['MongoDB', 'Express', 'Angular', 'Node.js'].join(' 🚀 ')" placeholder="Escribe código JavaScript aquí...">
+            <button id="runBtn">Ejecutar</button>
+        </div>
+    </div>
+
+    <script>
+        const cmdInput = document.getElementById("cmdInput");
+        const runBtn = document.getElementById("runBtn");
+        const output = document.getElementById("consoleOutput");
+
+        function executeCode() {
+            const code = cmdInput.value.trim();
+            if (!code) return;
+            const cmdLine = document.createElement("div");
+            cmdLine.className = "log-line cmd";
+            cmdLine.textContent = "> " + code;
+            output.appendChild(cmdLine);
+
+            try {
+                const res = Function('"use strict"; return (' + code + ')')();
+                const resLine = document.createElement("div");
+                resLine.className = "log-line result";
+                resLine.textContent = "← " + JSON.stringify(res);
+                output.appendChild(resLine);
+            } catch (err) {
+                const errLine = document.createElement("div");
+                errLine.className = "log-line error";
+                errLine.textContent = "✖ " + err.message;
+                output.appendChild(errLine);
+            }
+            output.scrollTop = output.scrollHeight;
+        }
+
+        runBtn.addEventListener("click", executeCode);
+        cmdInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") executeCode();
+        });
+        executeCode();
+    </script>
+</body>
+</html>

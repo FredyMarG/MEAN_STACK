@@ -1,0 +1,57 @@
+/**
+ * ============================================================================
+ * ARCHIVO: style.css (Tienda_Online/style.css)
+ * DESCRIPCIÓN: Estilos modernos para BIT Shop con animaciones de tarjetas,
+ *              mega-menú degradado y diseño de catálogo E-Commerce.
+ * ============================================================================
+ */
+
+.mega-menu-container {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.category-card {
+  width: 22%;
+  min-width: 175px;
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  border: 2px solid transparent;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2) !important;
+}
+
+.category-card.active-cat {
+  border-color: #38bdf8;
+}
+
+.icon-lg {
+  font-size: 52px;
+}
+
+.product-card {
+  border: none;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1) !important;
+}
+
+.product-icon-box {
+  height: 150px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+}
+
+.product-icon-box .material-symbols-outlined {
+  font-size: 64px;
+}

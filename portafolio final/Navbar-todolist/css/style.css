@@ -1,0 +1,177 @@
+/**
+ * ============================================================================
+ * HOJA DE ESTILOS: SIDEBAR EXPANDIBLE Y TO-DO LIST (Navbar-todolist/css/style.css)
+ * ============================================================================
+ * Corrección aplicada: En CSS los números decimales usan punto (`.`) y no coma (`,`).
+ * Se corrigió `transition: width 0, 2s linear` -> `0.2s` y `rgba(0, 0, 0, 0, 1)` -> `0.1`.
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  outline: none;
+  text-decoration: none;
+}
+
+body {
+  background: #484e5c;
+}
+
+nav {
+  background: #363b45;
+  width: 70px;
+  left: 0;
+  transition: width 0.2s linear;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  transition: all 0.5s ease;
+  margin-left: 10px;
+}
+
+.logo img {
+  width: 45px;
+  height: 45px;
+}
+
+a {
+  color: #8d95a5;
+  width: 300px;
+  padding: 10px;
+}
+
+.material-icons {
+  width: 40px;
+  height: 40px;
+  padding-top: 3px;
+  border: solid 1px #0ab3c2;
+  color: #0ab3c2;
+  border-radius: 10px;
+  font-size: 30px;
+}
+
+.material-icons-outlined {
+  width: 40px;
+  height: 40px;
+  padding-top: 3px;
+  font-size: 30px;
+}
+
+.nav-item {
+  top: -10px;
+}
+
+nav:hover {
+  width: 200px;
+  transition: all 0.5s ease;
+}
+
+.logout {
+  bottom: 0;
+}
+
+h1 {
+  color: darkslategrey;
+}
+
+.container {
+  width: 30%;
+}
+
+input {
+  padding: 15px 10px;
+  outline: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none;
+  width: 400px;
+}
+
+.li-container {
+  color: darkslategray;
+}
+
+.ul-todo > li {
+  list-style: none;
+  background-color: lightgray;
+  border-radius: 10px;
+  margin-top: 15px;
+  display: flex;
+}
+
+li p {
+  margin: 0;
+  padding: 15px;
+  width: 100%;
+}
+
+.btn-delete {
+  margin-left: auto;
+  border: none;
+  background-color: #e31746;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  outline: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 10%;
+  font-size: 1.2em;
+}
+
+.btn-delete:hover {
+  cursor: pointer;
+  background-color: darkred;
+}
+
+.btn-add {
+  padding: 5px 15px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: teal;
+  font-size: 1.4rem;
+  outline: none;
+}
+
+.btn-add:hover {
+  cursor: pointer;
+  background-color: darkcyan;
+}
+
+.empty {
+  color: darkslategrey;
+}
+
+.vacio {
+  display: none;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.c-form-nav {
+  align-items: center;
+  position: relative;
+}
+
+.c-form-nav-input {
+  background-color: #484e5c;
+  outline: none;
+  border: none;
+}
+
+.c-form-nav-icon {
+  position: absolute;
+  right: 1rem;
+}
+
+@media (max-width: 568px) {
+  .c-form-nav {
+    display: none !important;
+  }
+}

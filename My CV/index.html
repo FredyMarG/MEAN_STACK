@@ -1,0 +1,78 @@
+<!--
+  ============================================================================
+  CURRÍCULUM VITAE / PORTAFOLIO PERSONAL (My CV/index.html)
+  ============================================================================
+  Propósito: Presentación profesional de Fredy Martinez (Software Developer &
+  Scrum Master) con tarjetas de especialidades y sección de contacto.
+  Mejoras aplicadas:
+  1. Se corrigió el cierre huérfano `</div>` dentro de `<nav>`.
+  2. Se reemplazó el texto placeholder "Lorem ipsum..." por un perfil profesional
+     real enfocado en desarrollo Full-Stack MEAN/MERN y liderazgo ágil.
+  3. Se descomentó y estilizó la sección `#contacto`.
+-->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Fredy Martinez | Software Developer CV</title>
+  </head>
+  <body>
+    <nav class="navbar bg-blue">
+        <div class="nav-container">
+            <ul class="nav-options">    
+                <li><span class="material-icons home-icon">code</span></li>    
+                <li><a class="navlink" href="#">Sobre mí</a></li>
+                <li><a class="navlink" href="#portafolio">Especialidades</a></li>
+                <li><a class="navlink" href="#contacto">Contacto</a></li>
+                <li><a class="navlink" href="../index.html">Portafolio Completo</a></li>
+            </ul>
+        </div>
+        <div class="right">
+            <button class="btn-white">Iniciar sesión</button>
+        </div>
+    </nav>
+
+    <main class="main-container">
+      <section class="section-l">
+        <img src="assets/img/my-image.jpg" alt="Foto de perfil de Fredy Martinez" class="my-image">
+        <span class="my-name">
+          Fredy Martinez
+        </span>
+        <span class="profession">
+          Full-Stack MEAN Software Developer &amp; Scrum Master
+        </span>
+      </section>
+      <section class="section-r">
+        Desarrollador de Software Full-Stack especializado en el ecosistema MEAN (MongoDB, Express.js, Angular y Node.js) y TypeScript, con sólida experiencia en gestión ágil de proyectos como Scrum Master certificado. Apasionado por construir arquitecturas escalables, APIs REST seguras con autenticación JWT e interfaces de usuario modernas y responsivas.
+      </section>
+    </main>
+
+    <div id="portafolio">
+      <div class="cont">
+        <img src="assets/img/gestion_proyectos.png" class="imgtop" alt="Gestión de proyectos">
+        <div class="title">Gestión de proyectos</div>
+        <div class="text">Soy un Scrum Master certificado y he ayudado a mejorar las prácticas ágiles en mis funciones anteriores. Me apasiona el desarrollo de software y las nuevas metodologías ágiles.</div>
+      </div>
+      <div class="cont">
+        <img src="assets/img/pila_completa.png" class="imgtop" alt="Ingeniería de pila completa">
+        <div class="title">Ingeniería de pila completa</div>
+        <div class="text">Cuento con más de 3 años de experiencia profesional en el área de ingeniería de software y desarrollo web. Más recientemente, he estado trabajando con Angular, ExpressJS, MongoDB y ReactJS, pero nunca olvidaré a mi primer amor, Python3, el backend y yo, un solo corazón.</div>
+      </div>
+      <div class="cont">
+        <img src="assets/img/full_stack.png" class="imgtop" alt="Web Full-stack Especializado">
+        <div class="title">Web Full-stack Especializado</div>
+        <div class="text">Tengo 1 año de experiencia especializándome y trabajando con tecnologías de desarrollo web tanto para páginas web como para aplicaciones web manejando buenas prácticas y los patrones de desarrollo más actuales utilizando los Stacks más usados para desarrollar aplicaciones web premium (MERN y MEAN).</div>
+      </div>
+    </div>
+
+    <footer id="contacto">
+      <div class="contact-item"><span class="material-icons">public</span> Portafolio MEAN Stack</div>
+      <div class="contact-item"><span class="material-icons">terminal</span> GitHub / Git</div>
+      <div class="contact-item"><span class="material-icons">mail</span> Contacto Profesional</div>
+    </footer>
+  </body>
+</html>

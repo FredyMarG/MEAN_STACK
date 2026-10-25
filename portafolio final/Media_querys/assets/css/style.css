@@ -1,0 +1,127 @@
+/**
+ * ============================================================================
+ * DISEÑO RESPONSIVO CON MEDIA QUERIES (Media_querys/assets/css/style.css)
+ * ============================================================================
+ * Propósito: Demostrar el enfoque Mobile-First utilizando puntos de quiebre
+ * (`@media (min-width: ...)`) que transforman las dimensiones y el color del
+ * elemento `.square` según el ancho del viewport:
+ * - < 600px (Móvil): 200x200px, color `blueviolet`.
+ * - >= 600px (Tablet): 100x100px, color `black`.
+ * - >= 900px (Desktop): 300x300px, color `#da0000` (rojo).
+ */
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+.demo-wrapper {
+    text-align: center;
+    max-width: 680px;
+    width: 100%;
+}
+
+.subtitle {
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.info-bar {
+    display: inline-flex;
+    gap: 14px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.bp-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.sim-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.sim-buttons button {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sim-buttons button:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.square {
+    width: 200px;
+    height: 200px;
+    background-color: blueviolet;
+    color: #ffffff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transition: all 0.35s ease;
+}
+
+@media (min-width: 600px) {
+    .square {
+        width: 100px;
+        height: 100px;
+        background-color: black;
+    }
+}
+
+@media (min-width: 900px) {
+    .square {
+        width: 300px;
+        height: 300px;
+        background-color: #da0000;
+    }
+}
+
+/* Clases de simulación interactiva */
+.square.sim-mobile {
+    width: 200px !important;
+    height: 200px !important;
+    background-color: blueviolet !important;
+}
+
+.square.sim-tablet {
+    width: 100px !important;
+    height: 100px !important;
+    background-color: black !important;
+}
+
+.square.sim-desktop {
+    width: 300px !important;
+    height: 300px !important;
+    background-color: #da0000 !important;
+}

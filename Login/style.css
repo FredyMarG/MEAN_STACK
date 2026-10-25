@@ -1,0 +1,22 @@
+/**
+ * ============================================================================
+ * ESTILOS PERSONALIZADOS PARA LOGIN MODAL (Login/style.css)
+ * ============================================================================
+ */
+
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.auth-hero-card {
+    background: rgba(255, 255, 255, 0.96);
+    max-width: 480px;
+    width: 92%;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+}
