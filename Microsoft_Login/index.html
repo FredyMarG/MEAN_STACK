@@ -1,34 +1,129 @@
+<!--
+  ============================================================================
+  CLON MICROSOFT ACCOUNT LOGIN (Microsoft_Login/index.html)
+  ============================================================================
+  Propósito educativo (Curso MEAN Stack):
+  Simular fielmente el flujo de inicio de sesión en 2 pasos de Microsoft:
+  1. Paso 1: Ingresar correo electrónico / usuario y pulsar "Next".
+  2. Paso 2: Mostrar el correo reconocido con botón "←" para volver y campo de contraseña.
+-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <title>Sign in to your Microsoft account</title>
+  <style>
+    /* Scrollbars sutiles a juego con el tema claro de Microsoft */
+    * { scrollbar-width: thin; scrollbar-color: rgba(0, 103, 184, 0.45) #f2f2f2; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f2f2f2; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 103, 184, 0.45); border-radius: 999px; border: 2px solid #f2f2f2; }
+  </style>
 </head>
-<body style="background-color: lightgrey;" class="d-flex justify-content-center align-items-center">
+<body style="background-color: #f2f2f2; min-height: 100vh;" class="d-flex justify-content-center align-items-center p-3">
 
-    <div class="d-flex flex-wrap" style="margin-top: 6%; width: 30%;">
-        <div class="p-5 bg-white">
-            <div class="w-100">
-                <img src="assets/img/img1.png" alt="" class="w-50">
-            </div>            
-            <label for="user" class="w-100 fw-bold fs-3">Sign in</label>
-            <input type="text" name="user" style="border: 0; border-bottom: 1px solid black;" class="w-100">
-            <div class="" style="margin-top: 30px;">¿No account?<a href="#" style="margin-left: 10px;">Create one</a></div>
-            <p style="margin-top:30px;"><a href="#">Sign in with a security key</a></p>
-            <button class="btn btn-primary" style="margin-left: 250px;">Next</button>
+  <div class="d-flex flex-column" style="width: min(94%, 440px);">
+    <form id="msLoginForm" class="p-4 p-sm-5 bg-white shadow-sm">
+      <div class="mb-3">
+        <img src="assets/img/img1.png" alt="Microsoft Logo" style="max-width: 120px;" />
+      </div>
+
+      <!-- Paso 1: Correo / Usuario -->
+      <div id="stepEmail">
+        <label for="user" class="w-100 fw-bold fs-4 mb-2">Sign in</label>
+        <input id="user" type="email" name="user" placeholder="Email, phone, or Skype"
+          style="border: 0; border-bottom: 1px solid #0067b8; outline: none;" class="w-100 py-2" />
+        <div class="mt-3 small">No account? <a href="#" id="linkCreate">Create one!</a></div>
+        <p class="mt-2 small"><a href="#" id="linkKey">Sign in with a security key</a></p>
+        <div class="d-flex justify-content-end mt-4">
+          <button type="button" id="btnNext" class="btn btn-primary px-4">Next</button>
         </div>
-        <div class="bg-white d-flex w-100 align-items-center justify-content-center" style="margin-top: 20px;">
-            <span class="material-symbols-outlined m-2" style="font-size:30px;">
-                key
-            </span>
-            <p class="m-2"><a href="#">Sign in options</a></p>
+      </div>
+
+      <!-- Paso 2: Contraseña -->
+      <div id="stepPass" class="d-none">
+        <div class="d-flex align-items-center gap-2 mb-2 small text-secondary">
+          <button type="button" id="btnBack" class="btn btn-sm btn-light border px-2 py-0" title="Volver">←</button>
+          <span id="chosenEmail" class="text-truncate fw-semibold"></span>
         </div>
+        <label for="msPassword" class="w-100 fw-bold fs-4 mb-2">Enter password</label>
+        <input id="msPassword" type="password" placeholder="Password"
+          style="border: 0; border-bottom: 1px solid #0067b8; outline: none;" class="w-100 py-2" />
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-primary px-4">Sign in</button>
+        </div>
+      </div>
+
+      <!-- Mensajes de validación o inicio exitoso -->
+      <div id="msFeedback" class="small mt-3 d-none"></div>
+    </form>
+
+    <div class="bg-white d-flex w-100 align-items-center justify-content-center shadow-sm py-2 mt-3">
+      <span class="material-symbols-outlined me-2" style="font-size:26px;">key</span>
+      <a href="#" id="linkOptions" class="text-decoration-none small">Sign-in options</a>
     </div>
+  </div>
 
-    <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script>
+    // Referencias a pasos, inputs y mensajes de estado
+    const stepEmail = document.getElementById("stepEmail");
+    const stepPass = document.getElementById("stepPass");
+    const userInput = document.getElementById("user");
+    const passInput = document.getElementById("msPassword");
+    const chosenEmail = document.getElementById("chosenEmail");
+    const fb = document.getElementById("msFeedback");
+
+    /** Muestra un mensaje de error o confirmación debajo del formulario. */
+    function showFeedback(msg, isError = false) {
+      fb.classList.remove("d-none", "text-danger", "text-success");
+      fb.classList.add(isError ? "text-danger" : "text-success");
+      fb.textContent = msg;
+    }
+
+    // Avanza del Paso 1 (correo) al Paso 2 (contraseña) validando formato mínimo
+    document.getElementById("btnNext").addEventListener("click", () => {
+      const email = userInput.value.trim();
+      if (!email || !email.includes("@")) {
+        showFeedback("Enter a valid email address.", true);
+        userInput.focus();
+        return;
+      }
+      fb.classList.add("d-none");
+      chosenEmail.textContent = email;
+      stepEmail.classList.add("d-none");
+      stepPass.classList.remove("d-none");
+      passInput.focus();
+    });
+
+    // Regresa del Paso 2 al Paso 1 para cambiar de cuenta
+    document.getElementById("btnBack").addEventListener("click", () => {
+      fb.classList.add("d-none");
+      stepPass.classList.add("d-none");
+      stepEmail.classList.remove("d-none");
+      userInput.focus();
+    });
+
+    // Valida la contraseña en el Paso 2 y confirma el inicio de sesión simulado
+    document.getElementById("msLoginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!passInput.value || passInput.value.length < 4) {
+        showFeedback("Please enter a valid password (at least 4 characters).", true);
+        return;
+      }
+      showFeedback(`✓ Signed in as ${chosenEmail.textContent} (Microsoft demo).`, false);
+    });
+
+    // Evita navegación muerta en enlaces informativos
+    ["linkCreate", "linkKey", "linkOptions"].forEach((id) => {
+      document.getElementById(id).addEventListener("click", (e) => {
+        e.preventDefault();
+        showFeedback("Demo educativa local: ingresa cualquier correo con '@' para probar el flujo.", false);
+      });
+    });
+  </script>
 </body>
-</html> 
+</html>

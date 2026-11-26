@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="url(#g2)"/>
+  <circle cx="120" cy="80" r="85" fill="rgba(45,212,191,0.16)"/>
+  <!-- Pesa rusa (kettlebell) + botella deportiva -->
+  <path d="M235 125a35 35 0 0 1 70 0" fill="none" stroke="#5eead4" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="270" cy="175" r="48" fill="#14b8a6"/>
+  <rect x="355" y="118" width="44" height="104" rx="14" fill="#e2e8f0"/>
+  <rect x="365" y="98" width="24" height="22" rx="6" fill="#38bdf8"/>
+  <text x="300" y="270" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#f8fafc">KIT DEPORTIVO COMPLETO</text>
+</svg>

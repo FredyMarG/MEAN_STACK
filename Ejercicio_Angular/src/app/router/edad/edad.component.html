@@ -1,5 +1,31 @@
-<section class="p-4">
-  <h2>Verificador de Edad</h2>
-  <input type="number" [(ngModel)]="edad" />
-  <p>{{ esMayorDeEdad() }}</p>
+<!--
+  ============================================================================
+  ARCHIVO: Ejercicio_Angular/src/app/router/edad/edad.component.html
+  DESCRIPCIÓN: Componente o archivo de la SPA multirruta en Angular (Ejercicio_Angular).
+  ============================================================================
+-->
+<section class="container py-3" style="max-width: 540px;">
+  <div class="card shadow-sm border-0 p-4">
+    <h3 class="fw-bold mb-3">Verificador de Edad</h3>
+    <label for="edadInput" class="form-label">Ingresa tu edad (0 - 120):</label>
+    <div class="input-group mb-3">
+      <input id="edadInput" type="number" min="0" max="120" class="form-control" [(ngModel)]="edad" placeholder="Ej. 21" />
+      <button class="btn btn-primary" (click)="guardarRegistro()" [disabled]="!esValida">Guardar</button>
+    </div>
+    <div class="alert" [ngClass]="!esValida ? 'alert-warning' : (edad! >= 18 ? 'alert-success' : 'alert-info')">
+      {{ mensajeEstado }}
+    </div>
+    <div *ngIf="historial.length" class="mt-3">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="text-muted mb-0">Últimas verificaciones:</h6>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="limpiarHistorial()">Limpiar</button>
+      </div>
+      <ul class="list-group list-group-flush small">
+        <li class="list-group-item d-flex justify-content-between" *ngFor="let item of historial">
+          <span>{{ item.edad }} años</span>
+          <strong>{{ item.estado }}</strong>
+        </li>
+      </ul>
+    </div>
+  </div>
 </section>

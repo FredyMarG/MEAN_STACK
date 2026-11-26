@@ -1,0 +1,57 @@
+/**
+ * ============================================================================
+ * ESTILOS GLOBALES — PROCRASTINATION NIGHTMARE ANGULAR (src/styles.css)
+ * ============================================================================
+ * Propósito: Definir la paleta oscura moderna (#0b1120 / #111827 / #38bdf8),
+ * barras de desplazamiento personalizadas y utilidades compartidas.
+ */
+
+:root {
+  --pn-bg-dark: #0b1120;
+  --pn-bg-card: #111827;
+  --pn-accent: #38bdf8;
+  --pn-accent-alt: #818cf8;
+  --pn-border: rgba(148, 163, 184, 0.2);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--pn-bg-dark);
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Scrollbars modernos */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.5) #0f172a;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #38bdf8, #818cf8);
+  border-radius: 999px;
+  border: 2px solid #0f172a;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+.pn-card {
+  background: rgba(17, 24, 39, 0.92);
+  border: 1px solid var(--pn-border);
+  border-radius: 1rem;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+}

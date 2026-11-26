@@ -1,0 +1,27 @@
+<!--
+  ============================================================================
+  ARCHIVO: Never-Give-Up/src/app/app.component.html
+  DESCRIPCIÓN: Componente botón reutilizable con @Input/@Output en Angular (Never-Give-Up).
+  ============================================================================
+-->
+<main class="container py-5" style="max-width: 640px;">
+  <div class="card border-0 shadow-sm p-4 text-center">
+    <h2 class="fw-bold mb-2">🔁 Angular @Input / @Output — Botón Reutilizable</h2>
+    <p class="text-muted mb-4">Demostración de comunicación Padre ↔ Hijo con <code>@Input()</code> y <code>@Output()</code></p>
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+      <app-button label="¡Seguir Adelante!" variant="primary" (clicked)="registrarClic('Primario')"></app-button>
+      <app-button label="Completar Meta" variant="success" (clicked)="registrarClic('Éxito')"></app-button>
+      <app-button label="Deshabilitado" variant="danger" [disabled]="true"></app-button>
+    </div>
+
+    <div class="alert alert-info d-flex justify-content-between align-items-center mb-0">
+      <span>
+        Interacciones registradas: <strong>{{ contador }}</strong>
+        <span *ngIf="ultimoEvento"> — Último botón: <strong>{{ ultimoEvento }}</strong></span>
+      </span>
+      <button *ngIf="contador > 0" type="button" class="btn btn-sm btn-outline-dark" (click)="reiniciarContador()">Reiniciar</button>
+    </div>
+  </div>
+</main>
+<router-outlet></router-outlet>

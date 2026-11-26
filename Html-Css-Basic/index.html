@@ -48,6 +48,7 @@
                 <input type="text" id="nombreInput" placeholder="Nombre" required>
                 <input type="text" id="apellidoInput" placeholder="Apellido" required>
                 <button type="submit">Agregar Fila</button>
+                <button type="button" id="btnClearRows" class="btn-clear-rows">Limpiar Agregados</button>
             </form>
 
             <table id="peopleTable">
@@ -55,16 +56,19 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Carlos</td>
                         <td>Colmenares</td>
+                        <td><span style="color:#64748b;font-size:0.85rem;">Base</span></td>
                     </tr>
                     <tr>
                         <td>Andres</td>
                         <td>Gaitan</td>
+                        <td><span style="color:#64748b;font-size:0.85rem;">Base</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -72,16 +76,83 @@
     </div>
 
     <script>
+        // Clave en localStorage para conservar filas agregadas por el usuario
+        const STORAGE_KEY = "html_css_basic_rows_v1";
+        const tbody = document.querySelector("#peopleTable tbody");
+
+        /** Lee de forma segura las filas guardadas en `localStorage`. */
+        function getSavedRows() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        }
+
+        /** Inserta una fila nueva en `<tbody>` usando `textContent` (sin XSS). */
+        function appendRow(nom, ape, index) {
+            const tr = document.createElement("tr");
+            tr.dataset.savedIndex = String(index);
+
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+
+            td1.textContent = nom;
+            td2.textContent = ape;
+
+            const delBtn = document.createElement("button");
+            delBtn.type = "button";
+            delBtn.className = "btn-del-row";
+            delBtn.textContent = "×";
+            delBtn.title = "Eliminar fila";
+            td3.appendChild(delBtn);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tbody.appendChild(tr);
+        }
+
+        /** Renderiza las filas guardadas manteniendo las 2 filas base originales. */
+        function renderSavedRows() {
+            tbody.querySelectorAll("tr[data-saved-index]").forEach((tr) => tr.remove());
+            getSavedRows().forEach((r, idx) => appendRow(r.nom, r.ape, idx));
+        }
+
+        // Agrega una nueva fila al enviar el formulario
         document.getElementById("addRowForm").addEventListener("submit", (e) => {
             e.preventDefault();
             const nom = document.getElementById("nombreInput").value.trim();
             const ape = document.getElementById("apellidoInput").value.trim();
             if (!nom || !ape) return;
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${nom}</td><td>${ape}</td>`;
-            document.querySelector("#peopleTable tbody").appendChild(tr);
+
+            const saved = getSavedRows();
+            saved.push({ nom, ape });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+            renderSavedRows();
             e.target.reset();
         });
+
+        // Delegación de eventos para eliminar una fila guardada específica
+        tbody.addEventListener("click", (e) => {
+            if (!e.target.classList.contains("btn-del-row")) return;
+            const tr = e.target.closest("tr[data-saved-index]");
+            if (!tr) return;
+            const idx = Number(tr.dataset.savedIndex);
+            const updated = getSavedRows().filter((_, i) => i !== idx);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+            renderSavedRows();
+        });
+
+        // Limpia todas las filas agregadas dejando solo los 2 registros base
+        document.getElementById("btnClearRows").addEventListener("click", () => {
+            localStorage.removeItem(STORAGE_KEY);
+            renderSavedRows();
+        });
+
+        renderSavedRows();
     </script>
 </body>
 </html>

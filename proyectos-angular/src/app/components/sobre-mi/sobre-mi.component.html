@@ -1,0 +1,20 @@
+<!-- Vista de perfil profesional (/sobre-mi) -->
+<section class="py-2">
+  <div class="pf-card p-4 p-md-5 mx-auto" style="max-width: 780px;">
+    <span class="badge bg-info text-dark mb-2">Perfil Profesional</span>
+    <h1 class="fw-bold text-white mb-1">{{ nombre }}</h1>
+    <h5 class="text-info mb-3">{{ profesion }}</h5>
+    <p class="text-secondary mb-4">{{ resumen }}</p>
+
+    <h6 class="fw-bold text-white mb-2">Stack &amp; Competencias</h6>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      <span class="badge bg-dark border border-secondary text-light px-3 py-2" *ngFor="let skill of habilidades">
+        {{ skill }}
+      </span>
+    </div>
+
+    <a routerLink="/proyectos" class="btn btn-info text-dark fw-bold rounded-pill px-4">
+      Ver Proyectos del Portafolio →
+    </a>
+  </div>
+</section>

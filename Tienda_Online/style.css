@@ -6,52 +6,71 @@
  * ============================================================================
  */
 
+/* Contenedor del mega-menú superior con fondo degradado oscuro */
 .mega-menu-container {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 }
 
+/* Tarjetas clicables de categoría dentro del mega-menú */
 .category-card {
-  width: 22%;
-  min-width: 175px;
-  cursor: pointer;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-  border: 2px solid transparent;
+  width: 22%;                            /* Ocupa ~1/4 del ancho en escritorio */
+  min-width: 175px;                      /* Evita que se encoja demasiado en móvil */
+  cursor: pointer;                       /* Muestra mano al pasar el cursor */
+  transition: transform 0.22s ease, box-shadow 0.22s ease; /* Animación de hover */
+  border: 2px solid transparent;         /* Reserva espacio para el borde activo */
 }
 
+/* Efecto de elevación al pasar sobre una categoría */
 .category-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-5px);           /* Sube 5px suavemente */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2) !important; /* Sombra pronunciada */
 }
 
+/* Resalta la categoría seleccionada actualmente */
 .category-card.active-cat {
-  border-color: #38bdf8;
+  border-color: #38bdf8;                 /* Borde azul cian */
 }
 
+/* Tamaño de ícono grande en categorías */
 .icon-lg {
   font-size: 52px;
 }
 
+/* Tarjeta individual de producto en la grilla */
 .product-card {
-  border: none;
-  border-radius: 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
+  border: none;                          /* Sin borde clásico */
+  border-radius: 16px;                   /* Esquinas muy redondeadas */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición al hover */
+  overflow: hidden;                      /* Recorta elementos hijos en las esquinas */
 }
 
+/* Elevación suave al pasar sobre la tarjeta del producto */
 .product-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1) !important;
 }
 
+/* Cabecera visual donde se centra el ícono del producto */
 .product-icon-box {
-  height: 150px;
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  display: flex;
+  height: 150px;                         /* Altura fija de cabecera */
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); /* Azul claro */
+  display: flex;                         /* Centra el ícono con Flexbox */
   align-items: center;
   justify-content: center;
-  color: #2563eb;
+  color: #2563eb;                        /* Azul intenso para el ícono */
 }
 
+/* Tamaño del ícono Material dentro de la cabecera del producto */
 .product-icon-box .material-symbols-outlined {
   font-size: 64px;
 }
+
+/* Barras de desplazamiento a juego con el azul de la tienda (#2563eb) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(37, 99, 235, 0.5) #f8fafc;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: rgba(37, 99, 235, 0.5); border-radius: 999px; border: 2px solid #f8fafc; }
+::-webkit-scrollbar-thumb:hover { background: #2563eb; }

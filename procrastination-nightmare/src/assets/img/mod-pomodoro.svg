@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" role="img" aria-label="Temporizador Pomodoro">
+  <rect width="400" height="280" rx="18" fill="#0f172a"/>
+  <circle cx="200" cy="135" r="78" fill="#111827" stroke="#1e293b" stroke-width="12"/>
+  <circle cx="200" cy="135" r="78" fill="none" stroke="#38bdf8" stroke-width="12" stroke-dasharray="380 490" stroke-linecap="round" transform="rotate(-90 200 135)"/>
+  <text x="200" y="145" text-anchor="middle" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="34" font-weight="800">25:00</text>
+  <rect x="135" y="232" width="130" height="26" rx="13" fill="#38bdf8"/>
+  <text x="200" y="249" text-anchor="middle" fill="#0f172a" font-family="system-ui,sans-serif" font-size="12" font-weight="700">ENFOQUE ACTIVO</text>
+</svg>

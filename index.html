@@ -1,121 +1,88 @@
 <!--
   ============================================================================
-  PORTAFOLIO MAESTRO FULL-STACK MEAN — FREDY MARTINEZ (index.html)
+  CENTRO DE PRÁCTICAS Y PROYECTOS — CURSO MEAN STACK (index.html)
   ============================================================================
-  Propósito: Punto de entrada centralizado que presenta todos los proyectos
-  y módulos de la carpeta MEAN_STACK en un portafolio interactivo profesional.
-  Permite explorar los proyectos por categoría, buscar por tecnología,
-  ejecutar vistas previas en vivo dentro de un modal interactivo e inspeccionar
-  la arquitectura y el contenido técnico de cada proyecto.
+  Propósito: Interfaz centralizada para explorar, filtrar y probar en vivo los
+  módulos, ejercicios y proyectos del curso Full-Stack MEAN (MongoDB, Express,
+  Angular y Node.js), sin elementos de portafolio personal ni controles muertos.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fredy Martinez | Portafolio Full-Stack MEAN Developer</title>
-  <!-- Bootstrap 5.3 CSS -->
+  <title>MEAN Stack Lab | Centro de Prácticas y Proyectos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Estilos del Portafolio Maestro -->
-  <link rel="stylesheet" href="portfolio-styles.css">
+  <link rel="stylesheet" href="mean-hub.css">
 </head>
 <body>
 
-  <!-- Barra de Navegación Fija -->
-  <nav class="navbar navbar-expand-lg navbar-dark portfolio-navbar sticky-top py-3">
+  <!-- Barra de Navegación del Curso MEAN -->
+  <nav class="navbar navbar-expand-lg navbar-dark mean-navbar sticky-top py-3">
     <div class="container">
-      <a class="navbar-brand fw-bold fs-4" href="#">
-        <span class="brand-gradient">&lt;FredyMartinez /&gt;</span>
-        <span class="badge bg-info text-dark ms-2 fs-6">MEAN Stack</span>
+      <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" href="#">
+        <span class="brand-gradient">MEAN Stack Lab</span>
+        <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 fs-6">Curso Full-Stack</span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks" aria-label="Menú">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navLinks">
         <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-          <li class="nav-item"><a class="nav-link text-light" href="#sobre-mi">Perfil</a></li>
-          <li class="nav-item"><a class="nav-link text-light" href="#catalogo">Catálogo de Proyectos</a></li>
-          <li class="nav-item"><a class="nav-link text-light" href="#arquitectura">Pilares Técnicos</a></li>
-          <li class="nav-item">
-            <button class="btn btn-outline-info btn-sm rounded-pill px-3" onclick="openPreviewModal('CV Personal — Fredy Martinez', 'My CV/index.html')">
-              Ver Mi CV Clásico
-            </button>
-          </li>
-          <li class="nav-item">
-            <a href="portafolio%20final.zip" download="portafolio final.zip" class="btn btn-info btn-sm rounded-pill px-3 fw-bold text-dark">
-              ⬇ Descargar Portafolio Final (.ZIP)
-            </a>
-          </li>
+          <li class="nav-item"><a class="nav-link text-light" href="#ruta-mean">Ruta MEAN</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#catalogo">Módulos y Proyectos</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#guia-ejecucion">Cómo Ejecutar</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Sección Hero / Presentación -->
-  <header id="sobre-mi" class="hero-section">
+  <!-- Hero del Curso MEAN Stack -->
+  <header id="ruta-mean" class="hero-section">
     <div class="container">
       <div class="row align-items-center g-4">
-        <div class="col-lg-3 text-center">
-          <div class="avatar-ring mx-auto">
-            <img src="My CV/assets/img/my-image.jpg" alt="Fredy Martinez" class="avatar-img">
-          </div>
-        </div>
-        <div class="col-lg-9">
-          <span class="badge bg-primary bg-opacity-25 text-info border border-info border-opacity-25 mb-2 px-3 py-2">
-            🚀 Full-Stack Software Developer &amp; Certified Scrum Master
+        <div class="col-lg-8">
+          <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 mb-3 px-3 py-2">
+            🍃 MongoDB • ⚡ Express.js • 🅰️ Angular • 🟢 Node.js
           </span>
           <h1 class="display-5 fw-bold mb-3">
-            Portafolio de Ingeniería <span class="brand-gradient">MEAN Stack</span>
+            Centro de Prácticas <span class="brand-gradient">MEAN Stack</span>
           </h1>
           <p class="lead text-secondary mb-4">
-            Repositorio integral de proyectos y desarrollos que abarca el ecosistema completo del desarrollo web moderno: desde maquetación semántica en <strong>HTML5/CSS3</strong>, réplicas de interfaces y algoritmos en <strong>JavaScript ES6+ / TypeScript</strong>, hasta APIs RESTful con autenticación <strong>JWT en Node.js + Express + MongoDB</strong> y aplicaciones SPA en <strong>Angular 15</strong>.
+            Explora todos los ejercicios, talleres y proyectos integradores del curso: desde fundamentos en <strong>HTML5/CSS3</strong> y lógica en <strong>JavaScript ES6+ / TypeScript</strong>, hasta APIs RESTful con <strong>Node.js + Express + MongoDB</strong> y aplicaciones SPA en <strong>Angular</strong>.
           </p>
-
-          <!-- Píldoras de Tecnologías -->
-          <div class="d-flex flex-wrap gap-2 mb-4">
-            <span class="stack-pill">🍃 MongoDB &amp; Mongoose</span>
-            <span class="stack-pill">⚡ Express.js &amp; REST APIs</span>
-            <span class="stack-pill">🅰️ Angular 15 SPA</span>
-            <span class="stack-pill">🟢 Node.js</span>
-            <span class="stack-pill">🔷 TypeScript</span>
-            <span class="stack-pill">🔐 JWT Auth &amp; RBAC</span>
-            <span class="stack-pill">🎨 Bootstrap 5 &amp; CSS3 Flexbox</span>
-            <span class="stack-pill">🔄 Scrum Master</span>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="stack-pill">🍃 MongoDB + Respaldo JSON</span>
+            <span class="stack-pill">⚡ Express REST &amp; JWT</span>
+            <span class="stack-pill">🅰️ Angular 16 SPA</span>
+            <span class="stack-pill">🟢 Node.js &amp; TypeScript</span>
+            <span class="stack-pill">💾 Web Storage (localStorage)</span>
           </div>
-
-          <div class="d-flex flex-wrap gap-3 mb-4">
-            <a href="portafolio%20final.zip" download="portafolio final.zip" class="btn btn-info fw-bold text-dark px-4 py-2 rounded-pill shadow-sm">
-              ⬇ Descargar Proyecto "portafolio final.zip"
-            </a>
-            <a href="#catalogo" class="btn btn-outline-light px-4 py-2 rounded-pill">
-              Explorar Proyectos Interactivos ↓
-            </a>
-          </div>
-
-          <!-- Métricas del Repositorio -->
+        </div>
+        <div class="col-lg-4">
           <div class="row g-3">
-            <div class="col-6 col-sm-3">
+            <div class="col-6">
               <div class="stat-card">
-                <div class="stat-number">36+</div>
-                <div class="stat-label">Módulos y Proyectos</div>
+                <div class="stat-number" id="totalModulesStat">34</div>
+                <div class="stat-label">Módulos Activos</div>
               </div>
             </div>
-            <div class="col-6 col-sm-3">
+            <div class="col-6">
               <div class="stat-card">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Código Documentado</div>
+                <div class="stat-number" id="liveDemosStat">25</div>
+                <div class="stat-label">Demos en Vivo</div>
               </div>
             </div>
-            <div class="col-6 col-sm-3">
+            <div class="col-6">
               <div class="stat-card">
-                <div class="stat-number">19</div>
-                <div class="stat-label">Demos Interactivas</div>
+                <div class="stat-number">4</div>
+                <div class="stat-label">APIs Backend</div>
               </div>
             </div>
-            <div class="col-6 col-sm-3">
+            <div class="col-6">
               <div class="stat-card">
-                <div class="stat-number">MEAN</div>
-                <div class="stat-label">Stack Completo</div>
+                <div class="stat-number">5</div>
+                <div class="stat-label">Apps Angular</div>
               </div>
             </div>
           </div>
@@ -124,115 +91,118 @@
     </div>
   </header>
 
-  <!-- Catálogo de Proyectos con Filtros y Buscador -->
+  <!-- Catálogo de Módulos del Curso -->
   <main id="catalogo" class="py-5">
     <div class="container">
       <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3">
         <div>
-          <h2 class="fw-bold mb-1">Catálogo de Proyectos y Módulos</h2>
+          <h2 class="fw-bold mb-1">Módulos y Proyectos del Curso</h2>
           <p class="text-secondary mb-0">
-            Explora el contenido técnico de cada proyecto y ejecútalos en vivo directamente desde el portafolio.
+            Filtra por módulo del stack, busca por tecnología y abre cualquier práctica frontend en vivo.
           </p>
         </div>
         <span id="projectCountBadge" class="badge bg-secondary bg-opacity-25 text-light px-3 py-2 fs-6"></span>
       </div>
 
-      <!-- Barra de Filtros y Búsqueda -->
+      <!-- Filtros y Búsqueda -->
       <div class="row g-3 align-items-center mb-4">
         <div class="col-lg-8">
           <div class="d-flex flex-wrap gap-2">
             <button class="filter-btn active" data-category="all">Todos</button>
-            <button class="filter-btn" data-category="fullstack">🌟 Full-Stack &amp; Producto</button>
+            <button class="filter-btn" data-category="fullstack">🌟 Full-Stack MEAN</button>
             <button class="filter-btn" data-category="backend">⚙️ Backend Node / TS / Mongo</button>
             <button class="filter-btn" data-category="angular">🅰️ Angular SPA</button>
             <button class="filter-btn" data-category="js">⚡ JavaScript &amp; APIs</button>
-            <button class="filter-btn" data-category="ui">🎨 Clones UI &amp; Maquetación</button>
+            <button class="filter-btn" data-category="ui">🎨 Maquetación &amp; UI</button>
             <button class="filter-btn" data-category="html">🧱 Fundamentos &amp; Git</button>
           </div>
         </div>
         <div class="col-lg-4">
-          <input type="search" id="projectSearch" class="form-control search-input" placeholder="🔍 Buscar por nombre, carpeta o tecnología...">
+          <input type="search" id="searchInput" class="form-control search-input" placeholder="Buscar módulo o tecnología (ej. JWT, Angular, Pomodoro)...">
         </div>
       </div>
 
-      <!-- Grilla Dinámica de Tarjetas -->
-      <div id="projectsGrid" class="row g-4">
-        <!-- Renderizado por portfolio-app.js -->
-      </div>
+      <!-- Grilla de Tarjetas -->
+      <div id="projectsGrid" class="row g-4"></div>
     </div>
   </main>
 
-  <!-- Pilares Técnicos del Portafolio -->
-  <section id="arquitectura" class="py-5 border-top border-secondary border-opacity-25">
+  <!-- Guía Rápida de Ejecución -->
+  <section id="guia-ejecucion" class="py-5 border-top border-secondary border-opacity-25">
     <div class="container">
-      <h3 class="fw-bold mb-4 text-center">🏗️ Pilares Técnicos del Ecosistema MEAN</h3>
+      <h3 class="fw-bold mb-4">Guía Rápida de Ejecución Local</h3>
       <div class="row g-4">
         <div class="col-md-4">
           <div class="project-card">
-            <h5 class="text-info fw-bold mb-2">1. Frontend &amp; Arquitectura SPA</h5>
-            <p class="small text-secondary mb-0">
-              Desarrollo de interfaces responsivas con HTML5 semántico, CSS3 Flexbox, Media Queries y Bootstrap 5, junto con aplicaciones Single Page Application (SPA) en Angular 15 con enrutamiento modular, componentes reutilizables, formularios reactivos e integración de librerías como FullCalendar.
+            <h5 class="text-success fw-bold mb-2">1. Backends Node / Express / Mongo</h5>
+            <p class="small text-secondary mb-2">
+              <code>BitShop_API</code> (puerto <code>5000</code>, panel Login-first en <code>/</code>) y <code>Turismo_MEAN/TurismoBack</code> (puerto <code>4000</code>) se ejecutan con <code>nodemon</code> y respaldo JSON local.
             </p>
+            <code class="d-block small text-info">cd BitShop_API &amp;&amp; npm run dev</code>
+            <code class="d-block small text-info mt-1">cd Turismo_MEAN/TurismoBack &amp;&amp; npm run dev</code>
           </div>
         </div>
         <div class="col-md-4">
           <div class="project-card">
-            <h5 class="text-info fw-bold mb-2">2. JavaScript ES6+, DOM &amp; Consumo de APIs</h5>
-            <p class="small text-secondary mb-0">
-              Implementación de lógica algorítmica, programación orientada a objetos (POO), manipulación dinámica del DOM, persistencia local con Web Storage API (`localStorage`) y consumo asíncrono de APIs REST mediante `fetch`, promesas y `async/await`.
+            <h5 class="text-info fw-bold mb-2">2. API TypeScript &amp; Scripts Node</h5>
+            <p class="small text-secondary mb-2">
+              <code>ts_api</code> se ejecuta con recarga automática vía <code>nodemon</code> + <code>ts-node</code> (panel Login-first en <code>/</code>) o compilado con <code>npm run build</code>.
             </p>
+            <code class="d-block small text-info">cd ts_api &amp;&amp; npm run dev</code>
           </div>
         </div>
         <div class="col-md-4">
           <div class="project-card">
-            <h5 class="text-info fw-bold mb-2">3. Backend Node.js, TypeScript &amp; MongoDB</h5>
-            <p class="small text-secondary mb-0">
-              Construcción de servidores RESTful con Express.js (tanto en JavaScript como en TypeScript con patrón de barriles), protección de rutas mediante JSON Web Tokens (JWT), control de acceso por roles y modelado de datos NoSQL en MongoDB y Mongoose.
+            <h5 class="text-warning fw-bold mb-2">3. Aplicaciones Angular</h5>
+            <p class="small text-secondary mb-2">
+              <code>Turismo_MEAN/TurismoFront</code> se conecta al backend en el puerto <code>4000</code> (con respaldo offline en <code>localStorage</code>).
             </p>
+            <code class="d-block small text-info">cd Turismo_MEAN/TurismoFront &amp;&amp; npm run dev</code>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="py-4 text-center text-secondary border-top border-secondary border-opacity-25 small">
-    <div class="container">
-      Portafolio Full-Stack MEAN — <strong>Fredy Martinez</strong> • Desarrollo Web &amp; Arquitectura de Software.
-    </div>
+  <footer class="py-4 text-center text-secondary small border-top border-secondary border-opacity-25">
+    MEAN Stack Lab • Workspace educativo organizado y optimizado (MongoDB • Express • Angular • Node.js)
   </footer>
 
-  <!-- Modal para Vista Previa Interactiva (Iframe) e Inspector de Código -->
-  <div class="modal fade modal-dark" id="portfolioModal" tabindex="-1" aria-hidden="true">
+  <!-- Modal de Vista Previa Interactiva -->
+  <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content shadow-lg">
-        <div class="modal-header border-secondary border-opacity-25">
-          <h5 class="modal-title fw-bold text-info" id="previewModalTitle">Vista Previa</h5>
-          <div class="ms-auto d-flex align-items-center gap-2">
-            <a id="previewExternalLink" href="#" target="_blank" class="btn btn-sm btn-outline-info">Abrir en Pestaña Nueva ↗</a>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title fw-bold" id="previewModalTitle">Vista Previa</h5>
+          <div class="d-flex gap-2 ms-auto me-3">
+            <a id="previewOpenNewTab" href="#" target="_blank" class="btn btn-sm btn-outline-info">Abrir en Pestaña Nueva ↗</a>
           </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body p-3">
-          <!-- Contenedor de Iframe para proyectos web interactivos -->
-          <div id="iframeContainer">
-            <iframe id="previewIframe" class="preview-iframe" src="about:blank"></iframe>
-          </div>
-          <!-- Contenedor de Código para proyectos Backend / Angular / MongoDB -->
-          <div id="codeInspectorContainer" class="d-none">
-            <div class="alert alert-info bg-opacity-10 border-info text-light mb-3">
-              <strong>Contenido del Proyecto:</strong> <span id="codeReviewNotes"></span>
-            </div>
-            <pre id="codeBlockContent" class="code-block-modal mb-0"></pre>
-          </div>
+        <div class="modal-body p-0">
+          <iframe id="previewFrame" title="Vista Previa" style="width:100%;height:75vh;border:none;background:#fff;"></iframe>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap 5.3 Bundle JS -->
+  <!-- Modal de Detalle Técnico -->
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title fw-bold" id="infoModalTitle">Detalle del Módulo</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p id="infoModalDesc" class="text-secondary"></p>
+          <pre id="infoModalCmd" class="bg-black text-info p-3 rounded border border-secondary small mb-0"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Script del Portafolio Maestro -->
-  <script src="portfolio-app.js"></script>
+  <script src="mean-hub.js"></script>
 </body>
 </html>

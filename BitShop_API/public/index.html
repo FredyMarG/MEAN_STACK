@@ -1,0 +1,486 @@
+<!--
+  ============================================================================
+  BIT-SHOP API STUDIO (BitShop_API/public/index.html)
+  ============================================================================
+  Propósito: Interfaz web interactiva con puerta de autenticación (Login-first).
+  1. Vista inicial (`#authView`): Muestra únicamente el inicio de sesión JWT
+     y el registro de nuevos usuarios antes de acceder al catálogo.
+  2. Vista autenticada (`#appView`): Una vez obtenido el token JWT, desbloquea
+     el catálogo de productos (con filtro `?q=`), creación, edición, eliminación,
+     consulta de usuarios y consola de respuestas JSON en vivo.
+  Seguridad: Renderizado seguro anti-XSS mediante `escapeHtml()`.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BitShop_API Studio — Login y Gestión REST</title>
+  <!-- Estilos base de Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Paleta oscura consistente con el ecosistema MEAN Stack Lab */
+    body {
+      background: radial-gradient(circle at top, #0f172a 0%, #0b1120 65%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    .studio-card {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #38bdf8;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 280px;
+      overflow: auto;
+    }
+    /* Scrollbars oscuros a juego con el tema BitShop_API */
+    * { scrollbar-width: thin; scrollbar-color: rgba(56, 189, 248, 0.45) #020617; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #020617; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.45); border-radius: 999px; border: 2px solid #020617; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.8); }
+  </style>
+</head>
+<body class="py-4">
+  <div class="container">
+    <!-- ======================================================================
+         VISTA 1: PUERTA DE AUTENTICACIÓN (Visible cuando no hay sesión JWT)
+         ====================================================================== -->
+    <section id="authView" class="row justify-content-center align-items-center min-vh-100 py-4">
+      <div class="col-md-8 col-lg-5">
+        <div class="studio-card p-4">
+          <!-- Encabezado de bienvenida -->
+          <div class="text-center mb-4">
+            <span class="badge bg-info text-dark mb-2">API REST + JWT + RBAC</span>
+            <h2 class="fw-bold mb-1">🛒 BitShop_API Studio</h2>
+            <p class="small text-secondary mb-0">
+              Inicia sesión o regístrate para acceder al catálogo y administración de productos.
+            </p>
+          </div>
+
+          <!-- Pestañas para alternar entre Iniciar Sesión y Registrar Usuario -->
+          <ul class="nav nav-pills nav-fill bg-dark p-1 rounded-3 mb-3 border border-secondary">
+            <li class="nav-item">
+              <button id="tabLoginBtn" type="button" class="nav-link active fw-semibold">🔐 Iniciar Sesión</button>
+            </li>
+            <li class="nav-item">
+              <button id="tabRegisterBtn" type="button" class="nav-link text-light fw-semibold">📝 Registrarse</button>
+            </li>
+          </ul>
+
+          <!-- Mensaje de estado de autenticación (errores o confirmación) -->
+          <div id="authAlert" class="alert d-none py-2 small mb-3" role="alert"></div>
+
+          <!-- Formulario 1: Login JWT -->
+          <form id="loginForm" class="d-flex flex-column gap-3">
+            <div>
+              <label for="loginEmail" class="form-label small text-secondary mb-1">Correo electrónico</label>
+              <input id="loginEmail" type="email" class="form-control bg-dark text-white border-secondary" placeholder="admin@bitshop.local" value="admin@bitshop.local" required />
+            </div>
+            <div>
+              <label for="loginPass" class="form-label small text-secondary mb-1">Contraseña</label>
+              <input id="loginPass" type="password" class="form-control bg-dark text-white border-secondary" placeholder="Contraseña" value="Admin123*" required />
+            </div>
+            <button type="submit" class="btn btn-info text-dark fw-bold">Entrar con JWT</button>
+            <!-- Accesos rápidos de prueba para Admin y Cliente -->
+            <div class="d-flex gap-2">
+              <button type="button" id="btnDemoAdmin" class="btn btn-outline-secondary btn-sm flex-fill">Usar Demo Admin</button>
+              <button type="button" id="btnDemoClient" class="btn btn-outline-secondary btn-sm flex-fill">Usar Demo Cliente</button>
+            </div>
+          </form>
+
+          <!-- Formulario 2: Registro público (Rol Cliente) -->
+          <form id="registerForm" class="d-none flex-column gap-3">
+            <div>
+              <label for="regUsername" class="form-label small text-secondary mb-1">Nombre de usuario *</label>
+              <input id="regUsername" type="text" class="form-control bg-dark text-white border-secondary" placeholder="Ej. laura_dev" required />
+            </div>
+            <div>
+              <label for="regEmail" class="form-label small text-secondary mb-1">Correo electrónico *</label>
+              <input id="regEmail" type="email" class="form-control bg-dark text-white border-secondary" placeholder="laura@correo.com" required />
+            </div>
+            <div class="row g-2">
+              <div class="col-6">
+                <label for="regPass" class="form-label small text-secondary mb-1">Contraseña *</label>
+                <input id="regPass" type="password" class="form-control bg-dark text-white border-secondary" placeholder="Mín. 6 caracteres" required />
+              </div>
+              <div class="col-6">
+                <label for="regPhone" class="form-label small text-secondary mb-1">Teléfono *</label>
+                <input id="regPhone" type="text" class="form-control bg-dark text-white border-secondary" placeholder="3001234567" required />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success fw-bold">Crear Cuenta (Cliente)</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 2: PANEL PRINCIPAL (Visible únicamente tras iniciar sesión JWT)
+         ====================================================================== -->
+    <section id="appView" class="d-none">
+      <!-- Cabecera con usuario autenticado y botón de cierre de sesión -->
+      <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary gap-2">
+        <div>
+          <span class="badge bg-info text-dark mb-1">API REST + JWT + RBAC</span>
+          <h2 class="fw-bold mb-0">🛒 BitShop_API Studio</h2>
+          <small class="text-secondary">Sesión autenticada: gestiona productos, usuarios y revisa la respuesta JSON</small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span id="authBadge" class="badge bg-success px-3 py-2">🔑 Token JWT activo</span>
+          <button id="btnLogout" type="button" class="btn btn-outline-danger btn-sm">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <div class="row g-4">
+        <!-- Columna izquierda: Crear / Editar Producto y Consulta de Usuarios -->
+        <div class="col-lg-4 d-flex flex-column gap-4">
+          <!-- Crear / Editar Producto (Protegido JWT) -->
+          <div class="studio-card p-3">
+            <h5 id="prodFormTitle" class="fw-bold mb-3">➕ Crear Producto (JWT)</h5>
+            <form id="createProdForm" class="d-flex flex-column gap-2">
+              <input id="prodName" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Nombre del producto *" required />
+              <div class="row g-2">
+                <div class="col-6"><input id="prodPrice" type="number" min="0" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Precio *" required /></div>
+                <div class="col-6"><input id="prodStock" type="number" min="0" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Stock *" value="10" required /></div>
+              </div>
+              <input id="prodDesc" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Descripción (opcional)" />
+              <div class="d-flex gap-2">
+                <button id="btnSaveProduct" type="submit" class="btn btn-success btn-sm fw-bold flex-fill">Crear Producto</button>
+                <button id="btnCancelEdit" type="button" class="btn btn-outline-secondary btn-sm d-none">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Consulta de Usuarios (Protegido JWT) -->
+          <div class="studio-card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-bold mb-0">👥 Usuarios (JWT)</h6>
+              <button id="btnLoadUsers" type="button" class="btn btn-outline-info btn-sm">Consultar</button>
+            </div>
+            <small class="text-secondary">Consulta <code>GET /api/user/get-users</code> enviando el JWT en <code>Authorization</code>.</small>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Catálogo con búsqueda + Consola JSON -->
+        <div class="col-lg-8 d-flex flex-column gap-4">
+          <div class="studio-card p-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+              <h5 class="fw-bold mb-0">📦 Catálogo de Productos</h5>
+              <div class="d-flex gap-2">
+                <input id="searchProdInput" type="search" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="🔍 Filtrar (?q=)...">
+                <button id="btnReloadProducts" type="button" class="btn btn-outline-info btn-sm" title="Recargar catálogo">↻</button>
+              </div>
+            </div>
+            <div id="productsGrid" class="row g-3"></div>
+          </div>
+
+          <div class="studio-card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-bold mb-0">📡 Respuesta JSON en Vivo</h6>
+              <span id="httpStatusBadge" class="badge bg-dark border border-secondary">Listo</span>
+            </div>
+            <pre id="jsonConsole" class="p-3 small mb-0">// Aquí verás la respuesta HTTP y JSON de cada operación...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // =========================================================================
+    // ESTADO GLOBAL Y REFERENCIAS DEL DOM
+    // =========================================================================
+    const TOKEN_KEY = "bitshop_studio_jwt";
+    const USER_KEY = "bitshop_studio_user";
+
+    let token = localStorage.getItem(TOKEN_KEY) || "";
+    let currentUser = JSON.parse(localStorage.getItem(USER_KEY) || "null");
+    let editingProductId = null;
+    let cachedProducts = [];
+    let searchTimer = null;
+
+    const authView = document.getElementById("authView");
+    const appView = document.getElementById("appView");
+    const authAlert = document.getElementById("authAlert");
+    const authBadge = document.getElementById("authBadge");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const tabLoginBtn = document.getElementById("tabLoginBtn");
+    const tabRegisterBtn = document.getElementById("tabRegisterBtn");
+    const jsonConsole = document.getElementById("jsonConsole");
+    const httpStatusBadge = document.getElementById("httpStatusBadge");
+    const productsGrid = document.getElementById("productsGrid");
+    const searchProdInput = document.getElementById("searchProdInput");
+
+    /**
+     * Escapa caracteres HTML peligrosos para evitar inyección XSS al renderizar texto dinámico.
+     * @param {string} str
+     * @returns {string}
+     */
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    /**
+     * Muestra un mensaje temporal dentro de la tarjeta de autenticación.
+     * @param {string} message
+     * @param {"danger"|"success"|"info"} type
+     */
+    function showAuthAlert(message, type = "danger") {
+      authAlert.className = `alert alert-${type} py-2 small mb-3`;
+      authAlert.textContent = message;
+    }
+
+    /** Oculta el mensaje de alerta de la vista de autenticación. */
+    function clearAuthAlert() {
+      authAlert.className = "alert d-none py-2 small mb-3";
+      authAlert.textContent = "";
+    }
+
+    /**
+     * Alterna entre la pestaña de Login y la pestaña de Registro.
+     * @param {"login"|"register"} mode
+     */
+    function switchAuthTab(mode) {
+      clearAuthAlert();
+      const isLogin = mode === "login";
+      tabLoginBtn.classList.toggle("active", isLogin);
+      tabLoginBtn.classList.toggle("text-light", !isLogin);
+      tabRegisterBtn.classList.toggle("active", !isLogin);
+      tabRegisterBtn.classList.toggle("text-light", isLogin);
+
+      loginForm.classList.toggle("d-none", !isLogin);
+      loginForm.classList.toggle("d-flex", isLogin);
+      registerForm.classList.toggle("d-none", isLogin);
+      registerForm.classList.toggle("d-flex", !isLogin);
+    }
+
+    /**
+     * Controla qué vista está activa (`#authView` o `#appView`) según exista un JWT válido.
+     */
+    async function syncSessionView() {
+      if (token) {
+        authView.classList.add("d-none");
+        appView.classList.remove("d-none");
+        const label = currentUser?.username
+          ? `🔑 ${currentUser.username} (${currentUser.role || "usuario"})`
+          : "🔑 Token JWT activo";
+        authBadge.textContent = label;
+        await loadProducts();
+      } else {
+        appView.classList.add("d-none");
+        authView.classList.remove("d-none");
+        productsGrid.innerHTML = "";
+        cachedProducts = [];
+      }
+    }
+
+    /**
+     * Ejecuta una petición HTTP hacia la API adjuntando el token JWT si existe
+     * y actualiza la consola JSON en vivo.
+     * @param {string} url
+     * @param {RequestInit} options
+     */
+    async function apiCall(url, options = {}) {
+      const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const res = await fetch(url, { ...options, headers });
+      const data = await res.json().catch(() => ({}));
+      httpStatusBadge.textContent = `HTTP ${res.status}`;
+      httpStatusBadge.className = `badge ${res.ok ? "bg-success" : "bg-danger"}`;
+      jsonConsole.textContent = JSON.stringify(data, null, 2);
+      return { res, data };
+    }
+
+    /**
+     * Consulta los productos (con filtro `?q=` opcional) y renderiza las tarjetas del catálogo.
+     */
+    async function loadProducts() {
+      const q = searchProdInput.value.trim();
+      const url = q ? `/api/products/get-products?q=${encodeURIComponent(q)}` : "/api/products/get-products";
+      const { res, data } = await apiCall(url);
+      if (!res.ok || !Array.isArray(data)) return;
+
+      cachedProducts = data;
+      productsGrid.innerHTML = data.length
+        ? data.map((p) => `
+          <div class="col-md-6">
+            <div class="p-3 rounded-3 bg-dark border border-secondary h-100 d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-start gap-2">
+                <h6 class="fw-bold text-white mb-1">${escapeHtml(p.name)}</h6>
+                <span class="badge bg-info text-dark">Stock: ${Number(p.availableElements ?? p.availableElemnts ?? 0)}</span>
+              </div>
+              <p class="small text-secondary flex-grow-1 mb-2">${escapeHtml(p.description || "")}</p>
+              <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary">
+                <strong class="text-success">$${Number(p.price).toLocaleString("es-CO")}</strong>
+                <div class="btn-group btn-group-sm">
+                  <button type="button" class="btn btn-outline-primary edit-prod-btn" data-id="${escapeHtml(p._id)}">Editar</button>
+                  <button type="button" class="btn btn-outline-danger del-prod-btn" data-id="${escapeHtml(p._id)}">Eliminar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join("")
+        : `<div class="col-12 text-center text-secondary py-4">No se encontraron productos.</div>`;
+    }
+
+    /** Sale del modo edición y restablece el formulario de creación de producto. */
+    function resetProductForm() {
+      editingProductId = null;
+      document.getElementById("createProdForm").reset();
+      document.getElementById("prodStock").value = "10";
+      document.getElementById("prodFormTitle").textContent = "➕ Crear Producto (JWT)";
+      document.getElementById("btnSaveProduct").textContent = "Crear Producto";
+      document.getElementById("btnCancelEdit").classList.add("d-none");
+    }
+
+    // =========================================================================
+    // EVENTOS DE AUTENTICACIÓN (LOGIN, REGISTRO, TABS Y LOGOUT)
+    // =========================================================================
+    tabLoginBtn.addEventListener("click", () => switchAuthTab("login"));
+    tabRegisterBtn.addEventListener("click", () => switchAuthTab("register"));
+
+    document.getElementById("btnDemoAdmin").addEventListener("click", () => {
+      document.getElementById("loginEmail").value = "admin@bitshop.local";
+      document.getElementById("loginPass").value = "Admin123*";
+    });
+
+    document.getElementById("btnDemoClient").addEventListener("click", () => {
+      document.getElementById("loginEmail").value = "cliente@bitshop.local";
+      document.getElementById("loginPass").value = "Cliente123*";
+    });
+
+    // Envío del formulario de Login JWT
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearAuthAlert();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPass").value;
+      const { res, data } = await apiCall("/api/user/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password })
+      });
+
+      if (res.ok && data.token) {
+        token = data.token;
+        currentUser = data.user || null;
+        localStorage.setItem(TOKEN_KEY, token);
+        localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+        await syncSessionView();
+      } else {
+        showAuthAlert(data.msj || "Credenciales inválidas. Verifica correo y contraseña.", "danger");
+      }
+    });
+
+    // Envío del formulario de Registro público
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearAuthAlert();
+      const email = document.getElementById("regEmail").value.trim();
+      const body = {
+        username: document.getElementById("regUsername").value.trim(),
+        email,
+        password: document.getElementById("regPass").value,
+        phone: document.getElementById("regPhone").value.trim()
+      };
+      const { res, data } = await apiCall("/api/user/create-user", {
+        method: "POST",
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        e.target.reset();
+        switchAuthTab("login");
+        document.getElementById("loginEmail").value = email;
+        document.getElementById("loginPass").value = "";
+        showAuthAlert("Cuenta creada con éxito. Ahora inicia sesión con tu contraseña.", "success");
+      } else {
+        showAuthAlert(data.msj || "No fue posible registrar el usuario.", "danger");
+      }
+    });
+
+    // Cierre de sesión: limpia token y regresa a la pantalla de Login
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      token = "";
+      currentUser = null;
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+      resetProductForm();
+      clearAuthAlert();
+      syncSessionView();
+    });
+
+    // =========================================================================
+    // EVENTOS DE PRODUCTOS Y USUARIOS (SOLO EN VISTA AUTENTICADA)
+    // =========================================================================
+    document.getElementById("createProdForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = {
+        name: document.getElementById("prodName").value.trim(),
+        price: Number(document.getElementById("prodPrice").value),
+        availableElements: Number(document.getElementById("prodStock").value),
+        description: document.getElementById("prodDesc").value.trim()
+      };
+      const url = editingProductId
+        ? `/api/products/update-product/${editingProductId}`
+        : "/api/products/create-product";
+      const method = editingProductId ? "PUT" : "POST";
+
+      const { res } = await apiCall(url, { method, body: JSON.stringify(body) });
+      if (res.ok) {
+        resetProductForm();
+        await loadProducts();
+      }
+    });
+
+    document.getElementById("btnCancelEdit").addEventListener("click", resetProductForm);
+
+    // Delegación de eventos para Editar o Eliminar cada producto
+    productsGrid.addEventListener("click", async (e) => {
+      const editBtn = e.target.closest(".edit-prod-btn");
+      if (editBtn) {
+        const prod = cachedProducts.find((p) => p._id === editBtn.dataset.id);
+        if (!prod) return;
+        editingProductId = prod._id;
+        document.getElementById("prodName").value = prod.name;
+        document.getElementById("prodPrice").value = prod.price;
+        document.getElementById("prodStock").value = prod.availableElements ?? 0;
+        document.getElementById("prodDesc").value = prod.description || "";
+        document.getElementById("prodFormTitle").textContent = "✏️ Editar Producto (JWT)";
+        document.getElementById("btnSaveProduct").textContent = "Actualizar Producto";
+        document.getElementById("btnCancelEdit").classList.remove("d-none");
+        return;
+      }
+
+      const delBtn = e.target.closest(".del-prod-btn");
+      if (delBtn) {
+        const { res } = await apiCall(`/api/products/delete-product/${delBtn.dataset.id}`, { method: "DELETE" });
+        if (res.ok) await loadProducts();
+      }
+    });
+
+    // Búsqueda en vivo con debounce de 250 ms
+    searchProdInput.addEventListener("input", () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(loadProducts, 250);
+    });
+
+    document.getElementById("btnLoadUsers").addEventListener("click", () => apiCall("/api/user/get-users"));
+    document.getElementById("btnReloadProducts").addEventListener("click", loadProducts);
+
+    // Arranque inicial: muestra Login si no hay token, o entra directo si ya hay sesión guardada
+    syncSessionView();
+  </script>
+</body>
+</html>

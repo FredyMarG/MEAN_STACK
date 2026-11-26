@@ -1,0 +1,304 @@
+<!--
+  ============================================================================
+  TS_API STUDIO (ts_api/public/index.html)
+  ============================================================================
+  Propósito: Interfaz web interactiva con puerta de autenticación (Login-first)
+  para probar todos los endpoints de la API TypeScript + Express (`ts_api`):
+  1. Vista inicial (`#authView`): Exige iniciar sesión vía `POST /api/login`.
+  2. Vista autenticada (`#appView`): Permite probar operaciones aritméticas
+     (`/api/operaciones/*`), saludo (`/api/saludo/:name`), constante Pi
+     (`/api/math/pi`) y visualizar la respuesta HTTP/JSON en vivo.
+  Seguridad: Escapado anti-XSS con `escapeHtml()`.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ts_api Studio — TypeScript + Express</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Tema oscuro consistente con el laboratorio MEAN Stack */
+    body {
+      background: radial-gradient(circle at top, #0f172a 0%, #0b1120 65%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    .studio-card {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #38bdf8;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 280px;
+      overflow: auto;
+    }
+    /* Scrollbars oscuros a juego con el tema ts_api */
+    * { scrollbar-width: thin; scrollbar-color: rgba(56, 189, 248, 0.45) #020617; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #020617; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.45); border-radius: 999px; border: 2px solid #020617; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.8); }
+  </style>
+</head>
+<body class="py-4">
+  <div class="container">
+    <!-- ======================================================================
+         VISTA 1: LOGIN PREVIO (Visible mientras no exista sesión activa)
+         ====================================================================== -->
+    <section id="authView" class="row justify-content-center align-items-center min-vh-100 py-4">
+      <div class="col-md-8 col-lg-5">
+        <div class="studio-card p-4">
+          <div class="text-center mb-4">
+            <span class="badge bg-primary mb-2">TypeScript + Express</span>
+            <h2 class="fw-bold mb-1">⚡ ts_api Studio</h2>
+            <p class="small text-secondary mb-0">
+              Inicia sesión con <code>POST /api/login</code> para acceder a los módulos de la API.
+            </p>
+          </div>
+
+          <!-- Alerta de validación o error de login -->
+          <div id="authAlert" class="alert d-none py-2 small mb-3" role="alert"></div>
+
+          <!-- Formulario de inicio de sesión -->
+          <form id="loginForm" class="d-flex flex-column gap-3">
+            <div>
+              <label for="loginUsername" class="form-label small text-secondary mb-1">Usuario *</label>
+              <input id="loginUsername" type="text" class="form-control bg-dark text-white border-secondary" placeholder="demo_dev" value="demo_dev" required />
+            </div>
+            <div>
+              <label for="loginEmail" class="form-label small text-secondary mb-1">Correo electrónico *</label>
+              <input id="loginEmail" type="email" class="form-control bg-dark text-white border-secondary" placeholder="demo@tsapi.local" value="demo@tsapi.local" required />
+            </div>
+            <div>
+              <label for="loginPass" class="form-label small text-secondary mb-1">Contraseña *</label>
+              <input id="loginPass" type="password" class="form-control bg-dark text-white border-secondary" placeholder="Contraseña" value="Demo123*" required />
+            </div>
+            <button type="submit" class="btn btn-primary fw-bold">Iniciar Sesión</button>
+            <button type="button" id="btnFillDemo" class="btn btn-outline-secondary btn-sm">Rellenar credenciales demo</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 2: PANEL INTERACTIVO (Visible tras iniciar sesión)
+         ====================================================================== -->
+    <section id="appView" class="d-none">
+      <!-- Cabecera con usuario conectado y cierre de sesión -->
+      <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary gap-2">
+        <div>
+          <span class="badge bg-primary mb-1">TypeScript + Express</span>
+          <h2 class="fw-bold mb-0">⚡ ts_api Studio</h2>
+          <small class="text-secondary">Prueba en vivo los endpoints modulares de matemáticas, saludo y operaciones</small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span id="userBadge" class="badge bg-success px-3 py-2">Sesión activa</span>
+          <button id="btnLogout" type="button" class="btn btn-outline-danger btn-sm">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <div class="row g-4">
+        <!-- Columna izquierda: Operaciones aritméticas, Saludo y Math -->
+        <div class="col-lg-5 d-flex flex-column gap-4">
+          <!-- Módulo 1: Operaciones aritméticas -->
+          <div class="studio-card p-3">
+            <h5 class="fw-bold mb-3">🧮 Operaciones Aritméticas</h5>
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label for="num1" class="form-label small text-secondary mb-1">Número 1</label>
+                <input id="num1" type="number" step="any" class="form-control form-control-sm bg-dark text-white border-secondary" value="24" />
+              </div>
+              <div class="col-6">
+                <label for="num2" class="form-label small text-secondary mb-1">Número 2</label>
+                <input id="num2" type="number" step="any" class="form-control form-control-sm bg-dark text-white border-secondary" value="6" />
+              </div>
+            </div>
+            <div class="d-grid gap-2" style="grid-template-columns: repeat(2, 1fr);">
+              <button type="button" class="btn btn-outline-info btn-sm op-btn" data-op="suma">+ Suma</button>
+              <button type="button" class="btn btn-outline-info btn-sm op-btn" data-op="resta">- Resta</button>
+              <button type="button" class="btn btn-outline-info btn-sm op-btn" data-op="multiplicacion">× Multiplicación</button>
+              <button type="button" class="btn btn-outline-info btn-sm op-btn" data-op="division">÷ División</button>
+            </div>
+          </div>
+
+          <!-- Módulo 2: Saludos predefinidos -->
+          <div class="studio-card p-3">
+            <h5 class="fw-bold mb-3">👋 Saludos (`/api/saludo/*`)</h5>
+            <div class="d-flex flex-wrap gap-2">
+              <button type="button" class="btn btn-success btn-sm fw-semibold saludo-btn" data-path="hola">Hola</button>
+              <button type="button" class="btn btn-outline-success btn-sm fw-semibold saludo-btn" data-path="saludo">¿Cómo estás?</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold saludo-btn" data-path="bye">Adiós</button>
+            </div>
+          </div>
+
+          <!-- Módulo 3: Inspección Math y Healthcheck -->
+          <div class="studio-card p-3 d-flex justify-content-between align-items-center gap-2">
+            <div>
+              <h6 class="fw-bold mb-0">📐 Math & Diagnóstico</h6>
+              <small class="text-secondary">Prueba <code>/api/math/suma</code> o <code>/api/health</code></small>
+            </div>
+            <div class="d-flex gap-2">
+              <button id="btnMathInspect" type="button" class="btn btn-outline-warning btn-sm">Inspección</button>
+              <button id="btnHealth" type="button" class="btn btn-outline-light btn-sm">Health</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Resultado visual y Consola JSON en vivo -->
+        <div class="col-lg-7 d-flex flex-column gap-4">
+          <div class="studio-card p-3">
+            <h5 class="fw-bold mb-2">✨ Resultado Destacado</h5>
+            <div id="resultHighlight" class="p-3 rounded-3 bg-dark border border-secondary text-info fw-semibold">
+              Ejecuta cualquier endpoint para ver el resultado aquí.
+            </div>
+          </div>
+
+          <div class="studio-card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-bold mb-0">📡 Respuesta JSON en Vivo</h6>
+              <span id="httpStatusBadge" class="badge bg-dark border border-secondary">Listo</span>
+            </div>
+            <pre id="jsonConsole" class="p-3 small mb-0">// Haz clic en una operación para inspeccionar el JSON de respuesta...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // =========================================================================
+    // ESTADO DE SESIÓN Y REFERENCIAS DEL DOM
+    // =========================================================================
+    const SESSION_KEY = "ts_api_studio_user";
+    let currentUser = JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
+
+    const authView = document.getElementById("authView");
+    const appView = document.getElementById("appView");
+    const authAlert = document.getElementById("authAlert");
+    const userBadge = document.getElementById("userBadge");
+    const resultHighlight = document.getElementById("resultHighlight");
+    const httpStatusBadge = document.getElementById("httpStatusBadge");
+    const jsonConsole = document.getElementById("jsonConsole");
+
+    /**
+     * Escapa caracteres HTML especiales para prevenir XSS al mostrar texto dinámico.
+     * @param {string} str
+     * @returns {string}
+     */
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    /**
+     * Muestra la vista de Login o el Panel principal según exista usuario en sesión.
+     */
+    function syncView() {
+      if (currentUser) {
+        authView.classList.add("d-none");
+        appView.classList.remove("d-none");
+        userBadge.textContent = `👤 ${currentUser.username} (${currentUser.email})`;
+      } else {
+        appView.classList.add("d-none");
+        authView.classList.remove("d-none");
+      }
+    }
+
+    /**
+     * Ejecuta una petición HTTP hacia `ts_api` y actualiza la consola JSON y el resumen visual.
+     * @param {string} url
+     * @param {RequestInit} options
+     */
+    async function callApi(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await res.json().catch(() => ({}));
+      httpStatusBadge.textContent = `HTTP ${res.status}`;
+      httpStatusBadge.className = `badge ${res.ok ? "bg-success" : "bg-danger"}`;
+      jsonConsole.textContent = JSON.stringify(data, null, 2);
+
+      const summary = data.msg ?? (data.pi !== undefined ? `π = ${data.pi}` : (data.service || "Respuesta recibida"));
+      resultHighlight.innerHTML = `<span class="${res.ok ? "text-info" : "text-danger"}">${escapeHtml(summary)}</span>`;
+      return { res, data };
+    }
+
+    // =========================================================================
+    // EVENTOS DE LOGIN Y LOGOUT
+    // =========================================================================
+    document.getElementById("btnFillDemo").addEventListener("click", () => {
+      document.getElementById("loginUsername").value = "demo_dev";
+      document.getElementById("loginEmail").value = "demo@tsapi.local";
+      document.getElementById("loginPass").value = "Demo123*";
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      authAlert.classList.add("d-none");
+      const payload = {
+        username: document.getElementById("loginUsername").value.trim(),
+        email: document.getElementById("loginEmail").value.trim(),
+        password: document.getElementById("loginPass").value
+      };
+
+      const { res, data } = await callApi("/api/login", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok && data.ok) {
+        currentUser = data.user;
+        localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+        syncView();
+      } else {
+        authAlert.className = "alert alert-danger py-2 small mb-3";
+        authAlert.textContent = data.msg || "No se pudo iniciar sesión.";
+      }
+    });
+
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      currentUser = null;
+      localStorage.removeItem(SESSION_KEY);
+      syncView();
+    });
+
+    // =========================================================================
+    // EVENTOS DE LOS MÓDULOS DE LA API
+    // =========================================================================
+    document.querySelectorAll(".op-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const op = btn.dataset.op;
+        const a = encodeURIComponent(document.getElementById("num1").value);
+        const b = encodeURIComponent(document.getElementById("num2").value);
+        callApi(`/api/operaciones/${op}/${a}/${b}`);
+      });
+    });
+
+    document.querySelectorAll(".saludo-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        callApi(`/api/saludo/${btn.dataset.path}`);
+      });
+    });
+
+    document.getElementById("btnMathInspect").addEventListener("click", () => {
+      const a = encodeURIComponent(document.getElementById("num1").value);
+      const b = encodeURIComponent(document.getElementById("num2").value);
+      callApi(`/api/math/suma/${a}/${b}?origen=studio`);
+    });
+    document.getElementById("btnHealth").addEventListener("click", () => callApi("/api/health"));
+
+    // Sincronización inicial al cargar la página
+    syncView();
+  </script>
+</body>
+</html>

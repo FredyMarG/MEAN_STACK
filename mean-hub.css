@@ -1,0 +1,148 @@
+/* ============================================================================
+   ESTILOS DEL CENTRO DE PRÁCTICAS MEAN STACK (mean-hub.css)
+   ============================================================================ */
+
+/* Variables CSS globales para mantener una paleta oscura consistente */
+:root {
+  --bg-dark: #0b1120;                     /* Fondo principal azul noche */
+  --bg-card: #111827;                     /* Fondo de tarjetas y paneles */
+  --border-subtle: rgba(148, 163, 184, 0.16); /* Borde sutil translúcido */
+  --accent-green: #10b981;                /* Verde esmeralda (Mongo/Node) */
+  --accent-cyan: #38bdf8;                 /* Cian brillante para acentos */
+}
+
+/* Estilo base del cuerpo del documento */
+body {
+  background-color: var(--bg-dark);       /* Aplica el fondo oscuro principal */
+  color: #f1f5f9;                         /* Texto claro de alto contraste */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* Tipografía nativa */
+}
+
+/* Barra de navegación superior fija con efecto vidrio esmerilado */
+.mean-navbar {
+  background: rgba(11, 17, 32, 0.92);     /* Fondo semitransparente */
+  backdrop-filter: blur(10px);            /* Desenfoque del contenido detrás */
+  border-bottom: 1px solid var(--border-subtle); /* Línea divisoria inferior */
+}
+
+/* Degradado aplicado al título de marca usando recorte de texto */
+.brand-gradient {
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+  -webkit-background-clip: text;          /* Recorta el fondo al contorno de las letras */
+  -webkit-text-fill-color: transparent;   /* Hace transparente el relleno para ver el degradado */
+}
+
+/* Sección Hero de bienvenida con brillo radial sutil */
+.hero-section {
+  padding: 3.5rem 0 2.5rem;               /* Espaciado vertical superior e inferior */
+  border-bottom: 1px solid var(--border-subtle); /* Separador inferior */
+  background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 45%);
+}
+
+/* Etiquetas tipo píldora para tecnologías del stack */
+.stack-pill {
+  background: rgba(30, 41, 59, 0.9);      /* Fondo pizarra oscuro */
+  border: 1px solid var(--border-subtle); /* Borde suave */
+  color: #cbd5e1;                         /* Color de texto gris claro */
+  padding: 0.4rem 0.85rem;                /* Relleno interno */
+  border-radius: 999px;                   /* Bordes completamente redondeados */
+  font-size: 0.85rem;                     /* Tamaño de fuente compacto */
+}
+
+/* Tarjetas de estadísticas y tarjetas de proyectos */
+.stat-card,
+.project-card {
+  background: var(--bg-card);             /* Fondo de tarjeta */
+  border: 1px solid var(--border-subtle); /* Borde sutil */
+  border-radius: 0.9rem;                  /* Esquinas redondeadas */
+  padding: 1.25rem;                       /* Margen interno uniforme */
+  height: 100%;                           /* Iguala alturas dentro del grid */
+  transition: transform 0.2s ease, border-color 0.2s ease; /* Animación suave al hover */
+}
+
+/* Efecto de elevación al pasar el cursor sobre una tarjeta de proyecto */
+.project-card:hover {
+  transform: translateY(-3px);            /* Eleva la tarjeta 3px */
+  border-color: rgba(56, 189, 248, 0.45); /* Ilumina el borde en cian */
+}
+
+/* Número grande dentro de los cuadros de estadísticas */
+.stat-number {
+  font-size: 1.75rem;                     /* Tamaño destacado */
+  font-weight: 800;                       /* Negrita extra */
+  color: var(--accent-cyan);              /* Color cian */
+}
+
+/* Etiqueta descriptiva debajo del número estadístico */
+.stat-label {
+  font-size: 0.82rem;                     /* Texto secundario pequeño */
+  color: #94a3b8;                         /* Gris pizarra */
+}
+
+/* Botones de filtro por categoría */
+.filter-btn {
+  background: #1e293b;                    /* Fondo base del botón */
+  color: #cbd5e1;                         /* Texto claro */
+  border: 1px solid var(--border-subtle); /* Borde sutil */
+  padding: 0.45rem 0.95rem;               /* Relleno cómodo */
+  border-radius: 999px;                   /* Forma de píldora */
+  font-size: 0.85rem;                     /* Fuente compacta */
+  cursor: pointer;                        /* Cursor interactivo */
+  transition: all 0.2s ease;              /* Transición suave de colores */
+}
+
+/* Estado activo o hover del botón de filtro */
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--accent-cyan);         /* Fondo cian resaltado */
+  color: #0f172a;                         /* Texto oscuro para contraste */
+  font-weight: 600;                       /* Seminegrita */
+  border-color: var(--accent-cyan);       /* Borde a juego */
+}
+
+/* Campo de búsqueda del catálogo */
+.search-input {
+  background-color: #1e293b;              /* Fondo oscuro del input */
+  border: 1px solid var(--border-subtle); /* Borde sutil */
+  color: #f8fafc;                         /* Texto escrito en blanco */
+}
+
+/* Estado de foco del buscador */
+.search-input:focus {
+  background-color: #1e293b;              /* Mantiene el fondo oscuro */
+  color: #f8fafc;                         /* Mantiene texto blanco */
+  border-color: var(--accent-cyan);       /* Borde cian al enfocar */
+  box-shadow: 0 0 0 0.2rem rgba(56, 189, 248, 0.2); /* Halo luminoso */
+}
+
+/* Color del texto placeholder dentro del buscador */
+.search-input::placeholder {
+  color: #94a3b8;                         /* Gris legible */
+}
+
+/* ============================================================================
+   BARRAS DE DESPLAZAMIENTO (SCROLLBARS) A JUEGO CON EL TEMA OSCURO
+   ============================================================================ */
+* {
+  scrollbar-width: thin;                  /* Estilo delgado en Firefox */
+  scrollbar-color: rgba(56, 189, 248, 0.45) #0b1120;
+}
+
+::-webkit-scrollbar {
+  width: 8px;                             /* Ancho de scroll vertical */
+  height: 8px;                            /* Alto de scroll horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1120;                    /* Carril oscuro igual al fondo */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.4);    /* Pulgar cian translúcido */
+  border-radius: 999px;                   /* Bordes redondeados */
+  border: 2px solid #0b1120;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.75);   /* Más brillante al pasar el cursor */
+}

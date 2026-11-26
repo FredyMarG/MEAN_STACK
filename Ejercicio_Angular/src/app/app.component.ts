@@ -1,3 +1,9 @@
+/**
+ * ============================================================================
+ * ARCHIVO: Ejercicio_Angular/src/app/app.component.ts
+ * DESCRIPCIÓN: Componente o archivo de la SPA multirruta en Angular (Ejercicio_Angular).
+ * ============================================================================
+ */
 import { Component } from '@angular/core';
 
 @Component({

@@ -2,21 +2,36 @@
  * ============================================================================
  * ESTILOS PERSONALIZADOS PARA LOGIN MODAL (Login/style.css)
  * ============================================================================
+ * Propósito: Estilizar el fondo degradado azul noche, la tarjeta central de
+ * bienvenida, los bordes del modal Bootstrap y los scrollbars a juego.
  */
 
+/* Fondo degradado de pantalla completa */
 body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Tarjeta central de presentación */
 .auth-hero-card {
-    background: rgba(255, 255, 255, 0.96);
-    max-width: 480px;
-    width: 92%;
+  background: rgba(255, 255, 255, 0.96);
+  max-width: 480px;
+  width: 92%;
 }
 
+/* Redondeo moderno del modal de Bootstrap */
 .modal-content {
-    border: none;
-    border-radius: 16px;
-    overflow: hidden;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
 }
+
+/* Scrollbars oscuros con acento azul Bootstrap */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.55) #0f172a;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.55); border-radius: 999px; border: 2px solid #0f172a; }
+::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.85); }

@@ -116,6 +116,8 @@
                     <strong>Color activo:</strong>
                     <div id="colorPreview" class="color-swatch"></div>
                 </div>
+                <!-- Panel JSON en vivo con los valores de todos los controles -->
+                <pre id="controlsJson" class="json-live">// Pulsa "Aceptar y Probar Valores"</pre>
             </aside>
         </div>
 
@@ -125,23 +127,50 @@
     </div>
 
     <script>
+        // Referencias a los controles interactivos del formulario
         const colorPicker = document.getElementById("colorPicker");
         const colorPreview = document.getElementById("colorPreview");
         const rangeInput = document.getElementById("rangeInput");
         const rangeVal = document.getElementById("rangeVal");
         const btnAceptar = document.getElementById("btnAceptar");
         const feedbackText = document.getElementById("feedbackText");
+        const controlsJson = document.getElementById("controlsJson");
 
+        /** Recopila los valores actuales de los 6 controles y actualiza el panel JSON. */
+        function actualizarResumenControles() {
+            const radioActivo = document.querySelector("input[name='pato']:checked")?.value || "ninguno";
+            const checkboxes = Array.from(document.querySelectorAll("input[name='perro']:checked")).map((c) => c.id);
+            const payload = {
+                color: colorPicker.value,
+                radio: radioActivo,
+                rango: Number(rangeInput.value),
+                select: document.getElementById("seleccion").value || null,
+                email: document.getElementById("emailInput").value.trim() || null,
+                checkboxes
+            };
+            controlsJson.textContent = JSON.stringify(payload, null, 2);
+            return payload;
+        }
+
+        // Actualiza el cuadro de color en tiempo real
         colorPicker.addEventListener("input", (e) => {
             colorPreview.style.backgroundColor = e.target.value;
+            actualizarResumenControles();
         });
+
+        // Actualiza el porcentaje numérico al mover el deslizador
         rangeInput.addEventListener("input", (e) => {
             rangeVal.textContent = e.target.value;
+            actualizarResumenControles();
         });
+
+        // Muestra confirmación y resumen JSON al pulsar "Aceptar y Probar Valores"
         btnAceptar.addEventListener("click", () => {
-            const sel = document.getElementById("seleccion").value || "sin selección";
-            feedbackText.textContent = `✓ Color: ${colorPicker.value} | Rango: ${rangeInput.value}% | Select: ${sel}`;
+            const data = actualizarResumenControles();
+            feedbackText.textContent = `✓ Color: ${data.color} | Rango: ${data.rango}% | Radio: ${data.radio}`;
         });
+
+        actualizarResumenControles();
     </script>
 </body>
 </html>

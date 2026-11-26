@@ -1,0 +1,13 @@
+{
+  "name": "simpsons-db-explorer",
+  "version": "1.0.0",
+  "description": "Explorador y API CRUD en Node.js para la colección NoSQL de Los Simpsons (50 personajes)",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "author": "Fredy Martinez",
+  "license": "ISC"
+}

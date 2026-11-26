@@ -1,3 +1,9 @@
+<!--
+  ============================================================================
+  ARCHIVO: Media_querys/index.html
+  DESCRIPCIÓN: Demostración interactiva de Responsive Design y breakpoints con Media Queries.
+  ============================================================================
+-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,11 +36,13 @@
     </div>
 
     <script>
+        // Referencias a los indicadores de ancho, badge y cuadrado de demostración
         const vpWidth = document.getElementById("vpWidth");
         const bpBadge = document.getElementById("bpBadge");
         const square = document.getElementById("targetSquare");
         const squareLabel = document.getElementById("squareLabel");
 
+        /** Detecta el ancho real de la ventana y muestra el breakpoint activo. */
         function updateInfo() {
             const w = window.innerWidth;
             vpWidth.textContent = w + "px";
@@ -47,22 +55,28 @@
             }
         }
 
+        /** Simula manualmente cada breakpoint aplicando clases CSS auxiliares. */
         window.simulateBp = function(mode) {
             square.className = "square";
             if (mode === "mobile") {
                 square.classList.add("sim-mobile");
                 squareLabel.textContent = "200x200px (Móvil)";
+                bpBadge.textContent = "Simulación Móvil (< 600px) • 200x200 • BlueViolet";
             } else if (mode === "tablet") {
                 square.classList.add("sim-tablet");
                 squareLabel.textContent = "100x100px (Tablet)";
+                bpBadge.textContent = "Simulación Tablet (600px–899px) • 100x100 • Black";
             } else if (mode === "desktop") {
                 square.classList.add("sim-desktop");
                 squareLabel.textContent = "300x300px (Desktop)";
+                bpBadge.textContent = "Simulación Desktop (≥ 900px) • 300x300 • Red (#da0000)";
             } else {
                 squareLabel.textContent = ".square (Automático)";
+                updateInfo();
             }
         };
 
+        // Actualiza automáticamente al redimensionar la ventana del navegador
         window.addEventListener("resize", updateInfo);
         updateInfo();
     </script>

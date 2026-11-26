@@ -1,1 +1,0 @@
-# rickandmorty_api

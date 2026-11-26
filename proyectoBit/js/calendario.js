@@ -5,17 +5,17 @@
  *              de Procrastination Nightmare.
  * FUNCIONALIDADES:
  *   1. Inicialización de Popovers de Bootstrap en los eventos del calendario.
- *   2. Creación de nuevos eventos desde el modal (#k-agregar-event-modal),
- *      agregándolos a la lista lateral, al selector de subtareas y a la celda
- *      del día correspondiente en el calendario.
- *   3. Filtrado dinámico de la lista de eventos por color de categoría.
- *   4. Cambio dinámico de subtareas según el evento seleccionado y barra de
- *      progreso de subtareas completadas.
+ *   2. Creación de nuevos eventos desde el modal (#k-agregar-event-modal).
+ *   3. Cancelación / eliminación de eventos tanto desde la lista lateral como
+ *      de su insignia en la grilla del calendario y selector de subtareas.
+ *   4. Filtrado dinámico de la lista de eventos por color de categoría.
+ *   5. Cambio dinámico de subtareas y persistencia en `localStorage`.
  * ============================================================================
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Mapa de subtareas por evento
+  const CAL_STORAGE_KEY = "proyectoBit_calendar_state_v1";
+
   const subtasksByEvent = {
     "Nuevo excel": [
       "Abrir el archivo de Excel con los datos de ventas",
@@ -48,7 +48,32 @@ document.addEventListener("DOMContentLoaded", () => {
     ]
   };
 
-  // Inicializar popovers de Bootstrap
+  function escapeHtml(str) {
+    return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[ch]));
+  }
+
+  function loadCalState() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(CAL_STORAGE_KEY) || "{}");
+      return {
+        added: Array.isArray(parsed.added) ? parsed.added : [],
+        removed: Array.isArray(parsed.removed) ? parsed.removed : []
+      };
+    } catch {
+      return { added: [], removed: [] };
+    }
+  }
+
+  const calState = loadCalState();
+
+  function saveCalState() {
+    try {
+      localStorage.setItem(CAL_STORAGE_KEY, JSON.stringify(calState));
+    } catch {}
+  }
+
   function initPopovers() {
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     [...popoverTriggerList].forEach((el) => {
@@ -59,14 +84,132 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   initPopovers();
 
-  // Referencias del DOM
   const eventListContainer = document.querySelector(".k-event-list");
   const filterRadios = document.querySelectorAll('.col.bg-card input[name="k-event-color"]');
   const eventSelect = document.querySelector(".col.bg-card select.form-select");
   const modalEl = document.getElementById("k-agregar-event-modal");
-
-  // Mapa de clases de color
   const colorClasses = ["bg-primary", "bg-septenary", "bg-quaternary", "bg-quinary", "bg-senary"];
+
+  /** Agrega un botón de cancelar evento (`×`) a cualquier tarjeta `.k-event`. */
+  function attachCancelButton(eventEl, title) {
+    if (!eventEl || eventEl.querySelector(".k-cancel-event-btn")) return;
+    eventEl.classList.add("align-items-center");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn-sm btn-outline-light ms-auto k-cancel-event-btn";
+    btn.title = "Cancelar evento";
+    btn.setAttribute("aria-label", `Cancelar evento ${title}`);
+    btn.textContent = "×";
+    btn.style.lineHeight = "1";
+    btn.style.padding = "2px 7px";
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      cancelEvent(title, eventEl);
+    });
+    eventEl.appendChild(btn);
+  }
+
+  /** Cancela un evento en la lista lateral, en la grilla del calendario y en el selector. */
+  function cancelEvent(title, eventEl) {
+    const normalized = title.trim().toLowerCase();
+
+    if (eventEl) {
+      eventEl.remove();
+    } else if (eventListContainer) {
+      eventListContainer.querySelectorAll(".k-event").forEach((ev) => {
+        const txt = ev.querySelector(".k-event-text")?.textContent.trim().toLowerCase();
+        if (txt === normalized) ev.remove();
+      });
+    }
+
+    // Quitar insignia del día en la grilla del calendario y destruir popover activo
+    document.querySelectorAll(".k-container-day .col button[data-bs-toggle='popover']").forEach((popBtn) => {
+      const btnTitle = (popBtn.getAttribute("data-bs-title") || popBtn.textContent || "").trim().toLowerCase();
+      const textSpan = popBtn.querySelector(".k-event-text")?.textContent.trim().toLowerCase();
+      if (btnTitle === normalized || textSpan === normalized) {
+        const inst = bootstrap.Popover.getInstance(popBtn);
+        if (inst) inst.dispose();
+        const wrapper = popBtn.closest(".text-center") || popBtn;
+        wrapper.remove();
+      }
+    });
+
+    // Quitar del selector de subtareas
+    if (eventSelect) {
+      Array.from(eventSelect.options).forEach((opt) => {
+        if (opt.value.trim().toLowerCase() === normalized) opt.remove();
+      });
+      if (eventSelect.options.length > 0) {
+        renderSubtasks(eventSelect.value);
+      } else {
+        subtaskContainer.innerHTML = `<div class="text-secondary small py-2">No hay eventos activos.</div>`;
+      }
+    }
+
+    // Actualizar persistencia
+    calState.added = calState.added.filter((ev) => ev.title.toLowerCase() !== normalized);
+    if (!calState.removed.includes(normalized)) {
+      calState.removed.push(normalized);
+    }
+    saveCalState();
+  }
+
+  /** Inserta un evento en la lista lateral, selector y celda del calendario. */
+  function mountEventInUI({ title, chosenColor, formattedTime, dayNum, desc }, skipOptionIfExists = false) {
+    if (eventListContainer) {
+      const item = document.createElement("div");
+      item.className = `k-event ${chosenColor} d-flex gap-3 p-3 rounded-3 glow`;
+      item.innerHTML = `
+        <span class="k-event-time fw-bold">${escapeHtml(formattedTime)}</span>
+        <span class="k-event-text">${escapeHtml(title)}</span>
+      `;
+      attachCancelButton(item, title);
+      eventListContainer.prepend(item);
+    }
+
+    subtasksByEvent[title] = [
+      desc,
+      "Preparar recursos necesarios",
+      "Completar y marcar seguimiento"
+    ];
+
+    if (eventSelect) {
+      const exists = Array.from(eventSelect.options).some((o) => o.value === title);
+      if (!exists || !skipOptionIfExists) {
+        const opt = document.createElement("option");
+        opt.value = title;
+        opt.textContent = title;
+        eventSelect.appendChild(opt);
+      }
+      eventSelect.value = title;
+      renderSubtasks(title);
+    }
+
+    const dayCells = document.querySelectorAll(".k-container-day .col");
+    for (const cell of dayCells) {
+      const spanDay = cell.querySelector("span");
+      if (spanDay && spanDay.textContent.trim() === dayNum && !cell.classList.contains("text-notificaciones")) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "text-center mt-1";
+        wrapper.innerHTML = `
+          <button
+            type="button"
+            class="btn btn-lg ${chosenColor} p-2 rounded-3 w-100"
+            data-bs-toggle="popover"
+            data-bs-title="${escapeHtml(title)}"
+            data-bs-content="Tarea: ${escapeHtml(desc)}"
+            data-bs-custom-class="custom-popover"
+          >
+            <span class="d-none d-md-inline k-event-text text-white">${escapeHtml(title)}</span>
+            <span class="d-md-none k-event-text text-white">+</span>
+          </button>
+        `;
+        cell.appendChild(wrapper);
+        initPopovers();
+        break;
+      }
+    }
+  }
 
   // 1. Filtrado por color en la tarjeta lateral
   filterRadios.forEach((radio) => {
@@ -84,7 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Doble clic en un radio restablece el filtro para mostrar todos
     radio.addEventListener("dblclick", () => {
       radio.checked = false;
       eventListContainer.querySelectorAll(".k-event").forEach((ev) => {
@@ -114,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (text, idx) => `
         <div class="text-white d-flex gap-3 pb-2 pt-2 align-items-center">
           <input type="checkbox" class="form-check-input k-checkbox mt-0" id="subtaskCheck${idx}" />
-          <label class="form-check-label" for="subtaskCheck${idx}" style="cursor:pointer;">${text}</label>
+          <label class="form-check-label" for="subtaskCheck${idx}" style="cursor:pointer;">${escapeHtml(text)}</label>
         </div>
       `
       )
@@ -132,7 +274,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (eventSelect) {
-    // Normalizar los valores de las opciones al nombre visible
     Array.from(eventSelect.options).forEach((opt) => {
       opt.value = opt.textContent.trim();
     });
@@ -142,13 +283,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Inicializar botón de cancelar en eventos ya existentes y aplicar estado guardado
+  if (eventListContainer) {
+    Array.from(eventListContainer.querySelectorAll(".k-event")).forEach((ev) => {
+      const title = ev.querySelector(".k-event-text")?.textContent.trim() || "";
+      if (calState.removed.includes(title.toLowerCase())) {
+        cancelEvent(title, ev);
+      } else {
+        attachCancelButton(ev, title);
+      }
+    });
+  }
+  calState.added.forEach((evData) => mountEventInUI(evData, true));
+
   // 3. Agregar nuevo evento desde el modal
   if (modalEl) {
     const addBtn = modalEl.querySelector(".btn.btn-primary");
     const titleInput = modalEl.querySelector('input[placeholder="Titulo*"]');
     const dateInputs = modalEl.querySelectorAll('input[type="datetime-local"]');
     const descInput = modalEl.querySelector("#k-event-txt-area");
-    const modalColorRadios = modalEl.querySelectorAll('input[name="k-event-color"]');
+    const modalColorRadios = modalEl.querySelectorAll('input[name="k-modal-color"], input[name="k-event-color"]');
 
     if (addBtn) {
       addBtn.addEventListener("click", () => {
@@ -158,7 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Determinar color seleccionado
         let chosenColor = "bg-primary";
         modalColorRadios.forEach((r) => {
           if (r.checked) {
@@ -167,7 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
 
-        // Formatear fecha y hora
         let dayNum = "15";
         let formattedTime = "15 Mar - 10 : 00 AM";
         if (dateInputs[0] && dateInputs[0].value) {
@@ -186,59 +338,13 @@ document.addEventListener("DOMContentLoaded", () => {
           ? descInput.value.trim()
           : "Evento programado desde el calendario.";
 
-        // 3.1 Agregar a la lista lateral de eventos
-        if (eventListContainer) {
-          const item = document.createElement("div");
-          item.className = `k-event ${chosenColor} d-flex gap-3 p-3 rounded-3 glow`;
-          item.innerHTML = `
-            <span class="k-event-time fw-bold">${formattedTime}</span>
-            <span class="k-event-text">${title}</span>
-          `;
-          eventListContainer.prepend(item);
-        }
+        const evData = { title, chosenColor, formattedTime, dayNum, desc };
+        calState.removed = calState.removed.filter((r) => r !== title.toLowerCase());
+        calState.added.push(evData);
+        saveCalState();
 
-        // 3.2 Agregar al selector de subtareas
-        subtasksByEvent[title] = [
-          desc,
-          "Preparar recursos necesarios",
-          "Completar y marcar seguimiento"
-        ];
-        if (eventSelect) {
-          const opt = document.createElement("option");
-          opt.value = title;
-          opt.textContent = title;
-          eventSelect.appendChild(opt);
-          eventSelect.value = title;
-          renderSubtasks(title);
-        }
+        mountEventInUI(evData);
 
-        // 3.3 Insertar insignia con Popover en la celda del día del calendario
-        const dayCells = document.querySelectorAll(".k-container-day .col");
-        for (const cell of dayCells) {
-          const spanDay = cell.querySelector("span");
-          if (spanDay && spanDay.textContent.trim() === dayNum && !cell.classList.contains("text-notificaciones")) {
-            const wrapper = document.createElement("div");
-            wrapper.className = "text-center mt-1";
-            wrapper.innerHTML = `
-              <button
-                type="button"
-                class="btn btn-lg ${chosenColor} p-2 rounded-3 w-100"
-                data-bs-toggle="popover"
-                data-bs-title="${title}"
-                data-bs-content="Tarea: ${desc}"
-                data-bs-custom-class="custom-popover"
-              >
-                <span class="d-none d-md-inline k-event-text text-white">${title}</span>
-                <span class="d-md-none k-event-text text-white">+</span>
-              </button>
-            `;
-            cell.appendChild(wrapper);
-            initPopovers();
-            break;
-          }
-        }
-
-        // Limpiar campos y cerrar el modal
         if (titleInput) titleInput.value = "";
         if (descInput) descInput.value = "";
         dateInputs.forEach((inp) => (inp.value = ""));

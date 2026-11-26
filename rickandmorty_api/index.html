@@ -1,38 +1,127 @@
 <!--
   ============================================================================
-  EXPLORADOR COMPLETO DE THE RICK AND MORTY API (rickandmorty_api/index.html)
+  EXPLORADOR MULTIVERSO — THE RICK AND MORTY API (rickandmorty_api/index.html)
   ============================================================================
-  Propósito: Catálogo visual de personajes de Rick and Morty con filtro de
-  búsqueda en tiempo real y consumo dinámico de la API pública.
-  Complemento realizado: Se conectó con el nuevo controlador `script.js` que
-  estaba vacío (0 bytes) y se conservaron las tarjetas de respaldo.
+  Propósito educativo (Curso MEAN Stack):
+  Interfaz oscura moderna para consumir la API pública de Rick and Morty con:
+  1. Búsqueda por nombre en tiempo real (debounce).
+  2. Filtros combinados (`status`, `gender`, `species`) vía URLSearchParams.
+  3. Favoritos persistentes en `localStorage` y vista filtrada de favoritos.
+  4. Modal de detalle completo del personaje y paginación.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <title>The Rick and Morty API Explorer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rick &amp; Morty Multiverse Explorer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+  <style>
+    /* Tema oscuro Multiverso (verde portal + cian) */
+    body {
+      background: radial-gradient(circle at top, #064e3b 0%, #0b1120 55%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+    .rm-panel {
+      background: rgba(17, 24, 39, 0.92);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    .rm-card {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .rm-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74, 222, 128, 0.55);
+      box-shadow: 0 14px 30px rgba(74, 222, 128, 0.14);
+    }
+    .rm-title-gradient {
+      background: linear-gradient(90deg, #4ade80, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Scrollbars oscuros a juego con el verde portal */
+    * { scrollbar-width: thin; scrollbar-color: rgba(74, 222, 128, 0.45) #0b1120; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0b1120; }
+    ::-webkit-scrollbar-thumb { background: rgba(74, 222, 128, 0.45); border-radius: 999px; border: 2px solid #0b1120; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(74, 222, 128, 0.85); }
+  </style>
 </head>
-<body class="bg-white">
-
-    <div class="container py-4">
-        <h1 style="font-size: 3.5rem;" class="w-100 mx-auto text-center fw-bold mb-3">The Rick and Morty API</h1>
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-6 d-flex gap-2">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar personaje por nombre (ej. Rick, Morty, Summer)...">
-                <button id="searchBtn" class="btn btn-dark px-4">Buscar</button>
-            </div>
+<body class="py-4">
+  <div class="container">
+    <!-- Cabecera y barra de filtros del multiverso -->
+    <header class="rm-panel p-4 mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+          <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 mb-1">
+            Fetch API + async/await + localStorage
+          </span>
+          <h1 class="h2 fw-bold mb-0 rm-title-gradient">🛸 The Rick and Morty Explorer</h1>
         </div>
-    </div>
+        <div class="d-flex align-items-center gap-2">
+          <span id="totalBadge" class="badge bg-info text-dark px-3 py-2">0 resultados</span>
+          <button id="btnFavFilter" type="button" class="btn btn-outline-warning btn-sm fw-semibold">
+            ⭐ Favoritos (<span id="favCount">0</span>)
+          </button>
+        </div>
+      </div>
 
-    <div id="charactersContainer" class="w-100 bg-black d-flex flex-wrap justify-content-around align-items-stretch p-4 gap-4">
-        <!-- Renderizado dinámico desde script.js -->
-    </div>
+      <!-- Controles de búsqueda y filtros combinados de la API -->
+      <div class="row g-2">
+        <div class="col-md-4">
+          <input id="searchInput" type="search" class="form-control form-control-sm bg-dark text-white border-secondary"
+            placeholder="🔍 Buscar personaje (ej. Rick, Morty)..." />
+        </div>
+        <div class="col-md-3">
+          <select id="statusFilter" class="form-select form-select-sm bg-dark text-white border-secondary">
+            <option value="">Estado: Todos</option>
+            <option value="alive">Alive (Vivo)</option>
+            <option value="dead">Dead (Fallecido)</option>
+            <option value="unknown">Unknown (Desconocido)</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select id="genderFilter" class="form-select form-select-sm bg-dark text-white border-secondary">
+            <option value="">Género: Todos</option>
+            <option value="male">Male (Masculino)</option>
+            <option value="female">Female (Femenino)</option>
+            <option value="genderless">Genderless (Sin género)</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+          <button id="searchBtn" type="button" class="btn btn-success btn-sm fw-bold flex-fill">Buscar</button>
+          <button id="clearBtn" type="button" class="btn btn-outline-secondary btn-sm" title="Limpiar filtros">↺</button>
+        </div>
+      </div>
+    </header>
 
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Contenedor principal de tarjetas y paginación -->
+    <main id="charactersContainer" class="row g-4"></main>
+  </div>
+
+  <!-- Modal de detalle completo del personaje -->
+  <div class="modal fade" id="charDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title fw-bold text-success" id="modalCharName">Detalle del Personaje</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="modalCharBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

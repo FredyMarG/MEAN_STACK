@@ -1,0 +1,32 @@
+{
+  "database": "DBZ-V2",
+  "characters": [
+    {
+      "_id": "6ecd71dae09873dc075696e4",
+      "name": "Vegeta",
+      "species": "Saiyan",
+      "edad": 53,
+      "gender": "Male",
+      "powerLevel": 1200000,
+      "universe": 7
+    },
+    {
+      "_id": "04c37cb883a544c6d8d3a1c3",
+      "name": "Son Gohan",
+      "species": "Saiyan",
+      "edad": 23,
+      "gender": "Male",
+      "powerLevel": 880000,
+      "universe": 7
+    },
+    {
+      "_id": "2037bf7202fb503465e13de4",
+      "name": "Piccolo",
+      "species": "Namekian",
+      "edad": 87,
+      "gender": "Male",
+      "powerLevel": 790000,
+      "universe": 7
+    }
+  ]
+}

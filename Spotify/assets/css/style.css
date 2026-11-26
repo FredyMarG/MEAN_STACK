@@ -361,3 +361,21 @@ ul {
 .contleft {
   text-align: right;
 }
+
+/* Corrección de tamaño de avatar en barra de navegación */
+.perfil-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Barras de desplazamiento oscuras a juego con el verde Spotify */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(30, 215, 96, 0.5) #000000;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #000000; }
+::-webkit-scrollbar-thumb { background: rgba(30, 215, 96, 0.5); border-radius: 999px; border: 2px solid #000000; }
+::-webkit-scrollbar-thumb:hover { background: #1ed760; }

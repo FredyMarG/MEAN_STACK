@@ -6,12 +6,14 @@
  * ============================================================================
  */
 
+/* Reset básico y box-sizing universal */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Fondo degradado celeste y altura mínima de pantalla completa */
 body {
     background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -19,12 +21,14 @@ body {
     padding: 16px;
 }
 
+/* Estilo del título principal */
 h1 {
     font-size: 1.35rem;
     letter-spacing: 1px;
     margin: 16px 0;
 }
 
+/* Estilo compartido por los bloques semánticos principales */
 header, nav, section, aside, footer {
     background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
     color: white;
@@ -35,14 +39,17 @@ header, nav, section, aside, footer {
     transition: transform 0.2s ease;
 }
 
+/* Elevación sutil al pasar el cursor sobre cualquier bloque */
 header:hover, nav:hover, section:hover, aside:hover, footer:hover {
     transform: translateY(-2px);
 }
 
+/* Márgenes externos para cabecera, navegación y pie */
 header, nav, footer {
     margin: 16px 20px;
 }
 
+/* Sección principal (70% del ancho) con contenido centrado en columna */
 section {
     width: 70%;
     height: 300px;
@@ -52,6 +59,7 @@ section {
     justify-content: center;
 }
 
+/* Artículo anidado dentro de <section> */
 article {
     width: 88%;
     height: 55%;
@@ -65,6 +73,7 @@ article {
     border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+/* Barra lateral (30% restante) */
 aside {
     width: 30%;
     height: 300px;
@@ -74,8 +83,59 @@ aside {
     justify-content: center;
 }
 
+/* Contenedor Flexbox que alinea <section> y <aside> lado a lado */
 .container {
     display: flex;
     align-items: center;
     margin: 0 20px;
 }
+
+/* Media Query: en pantallas <= 768px apila <section> y <aside> al 100% */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 16px;
+    }
+    section, aside {
+        width: 100%;
+        height: auto;
+        min-height: 180px;
+        margin-left: 0;
+    }
+}
+
+/* Barra interactiva de controles Flexbox dentro de <nav> */
+.flex-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+.flex-controls select {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: none;
+    margin-left: 4px;
+    font-weight: 600;
+}
+
+.flex-code {
+    background: rgba(15, 23, 42, 0.75);
+    color: #bae6fd;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+/* Barras de desplazamiento a juego con el azul Flexbox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(37, 99, 235, 0.5) #bae6fd;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #bae6fd; }
+::-webkit-scrollbar-thumb { background: rgba(37, 99, 235, 0.55); border-radius: 999px; border: 2px solid #bae6fd; }
+::-webkit-scrollbar-thumb:hover { background: rgba(30, 58, 138, 0.85); }

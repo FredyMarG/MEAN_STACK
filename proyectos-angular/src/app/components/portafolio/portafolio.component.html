@@ -1,0 +1,59 @@
+<!-- Vitrina interactiva de proyectos del Portafolio con filtros y búsqueda en vivo -->
+<section class="py-2">
+  <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3">
+    <div>
+      <span class="badge bg-info text-dark mb-2">Vitrina Full-Stack MEAN</span>
+      <h2 class="fw-bold mb-1">Proyectos Destacados</h2>
+      <p class="text-secondary mb-0">Filtra por área o busca por tecnología para explorar cada práctica del curso.</p>
+    </div>
+    <span class="badge bg-secondary bg-opacity-25 text-light px-3 py-2">
+      {{ proyectosFiltrados.length }} proyectos visibles
+    </span>
+  </div>
+
+  <!-- Controles de filtrado por categoría y búsqueda textual -->
+  <div class="row g-3 align-items-center mb-4">
+    <div class="col-lg-8 d-flex flex-wrap gap-2">
+      <button
+        type="button"
+        *ngFor="let cat of categorias"
+        class="btn btn-sm rounded-pill px-3"
+        [ngClass]="categoriaActiva === cat ? 'btn-info text-dark fw-bold' : 'btn-outline-secondary text-light'"
+        (click)="seleccionarCategoria(cat)">
+        {{ cat }}
+      </button>
+    </div>
+    <div class="col-lg-4">
+      <input
+        type="search"
+        class="form-control form-control-sm bg-dark text-white border-secondary"
+        placeholder="🔍 Buscar tecnología o proyecto..."
+        (input)="actualizarBusqueda($any($event.target).value)" />
+    </div>
+  </div>
+
+  <!-- Grilla responsiva de tarjetas de proyectos -->
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let p of proyectosFiltrados">
+      <article class="pf-card p-4 h-100 d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+          <h5 class="fw-bold text-white mb-0">{{ p.titulo }}</h5>
+          <span class="badge bg-primary bg-opacity-75">{{ p.categoria }}</span>
+        </div>
+        <p class="small text-secondary flex-grow-1 mb-3">{{ p.descripcion }}</p>
+        <div class="d-flex flex-wrap gap-1 mb-3">
+          <span class="badge bg-dark border border-secondary text-info" *ngFor="let tech of p.tecnologias">
+            {{ tech }}
+          </span>
+        </div>
+        <code class="d-block small text-success bg-black p-2 rounded border border-secondary">
+          {{ p.comando }}
+        </code>
+      </article>
+    </div>
+
+    <div *ngIf="proyectosFiltrados.length === 0" class="col-12 text-center text-secondary py-5">
+      No se encontraron proyectos con ese filtro.
+    </div>
+  </div>
+</section>

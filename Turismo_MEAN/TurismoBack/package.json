@@ -1,0 +1,22 @@
+{
+  "name": "turismo-mean-api",
+  "version": "2.0.0",
+  "description": "API REST de destinos turísticos para Turismo_MEAN (MongoDB + Express + Angular + Node.js)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "author": "Curso MEAN Stack",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.0"
+  }
+}

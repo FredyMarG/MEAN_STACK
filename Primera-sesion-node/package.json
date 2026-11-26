@@ -1,0 +1,14 @@
+{
+  "name": "primera-sesion-node",
+  "version": "1.0.0",
+  "description": "Ejercicios fundamentales de lógica y algoritmos en Node.js con vista interactiva (Curso MEAN Stack)",
+  "main": "hello-world.js",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node hello-world.js",
+    "web": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "author": "Fredy Martinez",
+  "license": "ISC"
+}

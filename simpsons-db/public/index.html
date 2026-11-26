@@ -1,0 +1,336 @@
+<!--
+  ============================================================================
+  EXPLORADOR INTERACTIVO DE LOS SIMPSONS (simpsons-db/public/index.html)
+  ============================================================================
+  Propósito educativo: Practicar consultas NoSQL, filtros combinados y CRUD
+  sobre una colección de 50 personajes de Springfield (`simpsons.json`),
+  incluyendo protección anti-XSS (`escapeHtml`) y consola JSON en vivo.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simpsons DB Explorer — Colección NoSQL</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Tema oscuro con acento amarillo Springfield */
+    body {
+      background: radial-gradient(circle at top, #422006 0%, #0b1120 60%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    .simpson-card {
+      background: #111827;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #facc15;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 240px;
+      overflow: auto;
+    }
+    /* Scrollbars oscuros con acento amarillo Springfield */
+    * { scrollbar-width: thin; scrollbar-color: rgba(250, 204, 21, 0.45) #020617; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #020617; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(250, 204, 21, 0.45); border-radius: 999px; border: 2px solid #020617; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(250, 204, 21, 0.8); }
+  </style>
+</head>
+<body class="py-4">
+  <div class="container">
+    <!-- Cabecera -->
+    <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary gap-2">
+      <div>
+        <span class="badge bg-warning text-dark mb-1">Dataset NoSQL • 50 Personajes</span>
+        <h2 class="fw-bold mb-0">🍩 Simpsons DB Explorer</h2>
+        <small class="text-secondary">Filtra por género, estado de vida o texto y practica CRUD sobre <code>simpsons.json</code></small>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span id="countBadge" class="badge bg-info text-dark px-3 py-2">0 personajes</span>
+        <button id="btnReset" type="button" class="btn btn-outline-warning btn-sm fw-semibold">↺ Restaurar 50</button>
+      </div>
+    </header>
+
+    <div class="row g-4">
+      <!-- Columna izquierda: Crear / Editar personaje y Consola JSON -->
+      <div class="col-lg-4 d-flex flex-column gap-4">
+        <div class="simpson-card p-3">
+          <h5 id="formTitle" class="fw-bold mb-3">➕ Agregar Personaje</h5>
+          <form id="charForm" class="d-flex flex-column gap-2">
+            <input id="nombreInput" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Nombre * (ej. Ned Flanders)" required />
+            <div class="row g-2">
+              <div class="col-6">
+                <select id="generoInput" class="form-select form-select-sm bg-dark text-white border-secondary">
+                  <option value="hombre">Hombre</option>
+                  <option value="mujer">Mujer</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <select id="estadoInput" class="form-select form-select-sm bg-dark text-white border-secondary">
+                  <option value="Vivo">Vivo</option>
+                  <option value="Fallecido">Fallecido</option>
+                </select>
+              </div>
+            </div>
+            <input id="residenciaInput" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Residencia (ej. 744 Evergreen Terrace)" />
+            <input id="empleoInput" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Empleo (opcional)" />
+            <input id="imagenInput" type="url" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="URL de foto https://... (opcional)" />
+            <input id="padresInput" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Padres separados por coma" />
+            <input id="mascotasInput" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Mascotas separadas por coma" />
+            <div class="form-check form-switch my-1">
+              <input id="casadoInput" class="form-check-input" type="checkbox" />
+              <label for="casadoInput" class="form-check-label small text-secondary">Casado / Casada</label>
+            </div>
+            <div class="d-flex gap-2">
+              <button id="btnSave" type="submit" class="btn btn-warning text-dark btn-sm fw-bold flex-fill">Guardar</button>
+              <button id="btnCancel" type="button" class="btn btn-outline-secondary btn-sm d-none">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="simpson-card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold mb-0">📡 Respuesta JSON en Vivo</h6>
+            <span id="statusBadge" class="badge bg-dark border border-secondary">Listo</span>
+          </div>
+          <pre id="jsonConsole" class="p-3 small mb-0"></pre>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Filtros y grilla de personajes -->
+      <div class="col-lg-8">
+        <div class="simpson-card p-3">
+          <div class="row g-2 mb-3">
+            <div class="col-md-5">
+              <input id="filterQ" type="search" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="🔍 Buscar nombre, empleo o dirección..." />
+            </div>
+            <div class="col-md-2">
+              <select id="filterGenero" class="form-select form-select-sm bg-dark text-white border-secondary">
+                <option value="">Género</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <select id="filterEstado" class="form-select form-select-sm bg-dark text-white border-secondary">
+                <option value="">Estado vida</option>
+                <option value="Vivo">Vivo</option>
+                <option value="Fallecido">Fallecido</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select id="filterCasado" class="form-select form-select-sm bg-dark text-white border-secondary">
+                <option value="">Casado</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="charsGrid" class="row g-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // ESTADO Y UTILIDADES DEL EXPLORADOR
+    // =========================================================================
+    let editingId = null;
+    let cachedChars = [];
+    let debounceTimer = null;
+
+    const charsGrid = document.getElementById("charsGrid");
+    const countBadge = document.getElementById("countBadge");
+    const jsonConsole = document.getElementById("jsonConsole");
+    const statusBadge = document.getElementById("statusBadge");
+
+    /**
+     * Escapa caracteres HTML para evitar vulnerabilidades XSS al renderizar datos.
+     * @param {string} str
+     * @returns {string}
+     */
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    /**
+     * Genera un avatar SVG en Data URI con las iniciales del personaje y paleta Springfield,
+     * utilizado cuando el personaje no tiene URL de foto o la carga externa falla.
+     * @param {string} nombre
+     * @returns {string}
+     */
+    function buildAvatarDataUri(nombre) {
+      const words = String(nombre || "S").trim().split(/\s+/);
+      const initials = ((words[0]?.[0] || "") + (words[1]?.[0] || "")).toUpperCase() || "S";
+      const palette = ["#facc15", "#38bdf8", "#4ade80", "#f472b6", "#fb923c"];
+      const color = palette[String(nombre || "").length % palette.length];
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" rx="20" fill="${color}"/><text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="system-ui,sans-serif" font-size="34" font-weight="800" fill="#0f172a">${initials}</text></svg>`;
+      return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    }
+
+    /** Ejecuta una petición fetch y actualiza la consola JSON y el código HTTP. */
+    async function apiCall(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await res.json().catch(() => ({}));
+      statusBadge.textContent = `HTTP ${res.status}`;
+      statusBadge.className = `badge ${res.ok ? "bg-success" : "bg-danger"}`;
+      jsonConsole.textContent = JSON.stringify(data, null, 2);
+      return { res, data };
+    }
+
+    /** Consulta los personajes filtrados y renderiza sus tarjetas. */
+    async function loadCharacters() {
+      const params = new URLSearchParams();
+      const q = document.getElementById("filterQ").value.trim();
+      const genero = document.getElementById("filterGenero").value;
+      const estado = document.getElementById("filterEstado").value;
+      const casado = document.getElementById("filterCasado").value;
+
+      if (q) params.set("q", q);
+      if (genero) params.set("genero", genero);
+      if (estado) params.set("estado_vida", estado);
+      if (casado) params.set("casado", casado);
+
+      const query = params.toString() ? `?${params.toString()}` : "";
+      const { res, data } = await apiCall(`/api/characters${query}`);
+      if (!res.ok) return;
+
+      cachedChars = data.characters || [];
+      countBadge.textContent = `${cachedChars.length} personajes`;
+
+      charsGrid.innerHTML = cachedChars.length
+        ? cachedChars.map((c) => {
+          const padres = (c.id_padres || []).join(", ") || "No registrados";
+          const mascotas = (c.mascotas || []).join(", ") || "Ninguna";
+          const fallbackAvatar = buildAvatarDataUri(c.nombre);
+          const photoSrc = c.imagen && /^https?:\/\//i.test(c.imagen) ? c.imagen : fallbackAvatar;
+          return `
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 bg-dark border border-secondary h-100 d-flex flex-column">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(c.nombre)}" class="rounded-3 border border-secondary flex-shrink-0" style="width:52px;height:52px;object-fit:cover;" onerror="this.onerror=null;this.src='${fallbackAvatar}'" />
+                  <div class="flex-grow-1 min-w-0">
+                    <div class="d-flex justify-content-between align-items-start gap-2">
+                      <h6 class="fw-bold text-warning mb-0 text-truncate">${escapeHtml(c.nombre)}</h6>
+                      <span class="badge ${c.estado_vida === "Vivo" ? "bg-success" : "bg-secondary"}">${escapeHtml(c.estado_vida)}</span>
+                    </div>
+                    <small class="text-secondary">${escapeHtml(c.genero || "otro")}</small>
+                  </div>
+                </div>
+                <div class="small text-secondary mb-2">
+                  <div><strong>Empleo:</strong> ${escapeHtml(c.empleo || "Sin empleo")}</div>
+                  <div><strong>Residencia:</strong> ${escapeHtml(c.residencia || "Springfield")}</div>
+                  <div><strong>Padres:</strong> ${escapeHtml(padres)}</div>
+                  <div><strong>Mascotas:</strong> ${escapeHtml(mascotas)}</div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top border-secondary">
+                  <span class="badge bg-info text-dark">${c.casado ? "Casado/a" : "Soltero/a"}</span>
+                  <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-primary edit-btn" data-id="${escapeHtml(c._id)}">Editar</button>
+                    <button type="button" class="btn btn-outline-danger del-btn" data-id="${escapeHtml(c._id)}">Eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("")
+        : `<div class="col-12 text-center text-secondary py-4">No se encontraron personajes con esos filtros.</div>`;
+    }
+
+    /** Restablece el formulario de creación/edición. */
+    function resetForm() {
+      editingId = null;
+      document.getElementById("charForm").reset();
+      document.getElementById("formTitle").textContent = "➕ Agregar Personaje";
+      document.getElementById("btnSave").textContent = "Guardar";
+      document.getElementById("btnCancel").classList.add("d-none");
+    }
+
+    // Crear o actualizar personaje
+    document.getElementById("charForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = {
+        nombre: document.getElementById("nombreInput").value.trim(),
+        genero: document.getElementById("generoInput").value,
+        estado_vida: document.getElementById("estadoInput").value,
+        residencia: document.getElementById("residenciaInput").value.trim(),
+        empleo: document.getElementById("empleoInput").value.trim() || null,
+        imagen: document.getElementById("imagenInput").value.trim() || null,
+        id_padres: document.getElementById("padresInput").value,
+        mascotas: document.getElementById("mascotasInput").value,
+        casado: document.getElementById("casadoInput").checked
+      };
+
+      const url = editingId ? `/api/characters/${encodeURIComponent(editingId)}` : "/api/characters";
+      const method = editingId ? "PUT" : "POST";
+      const { res } = await apiCall(url, { method, body: JSON.stringify(body) });
+      if (res.ok) {
+        resetForm();
+        await loadCharacters();
+      }
+    });
+
+    document.getElementById("btnCancel").addEventListener("click", resetForm);
+
+    // Delegación para editar y eliminar tarjetas
+    charsGrid.addEventListener("click", async (e) => {
+      const editBtn = e.target.closest(".edit-btn");
+      if (editBtn) {
+        const c = cachedChars.find((item) => item._id === editBtn.dataset.id);
+        if (!c) return;
+        editingId = c._id;
+        document.getElementById("nombreInput").value = c.nombre || "";
+        document.getElementById("generoInput").value = c.genero || "hombre";
+        document.getElementById("estadoInput").value = c.estado_vida || "Vivo";
+        document.getElementById("residenciaInput").value = c.residencia || "";
+        document.getElementById("empleoInput").value = c.empleo || "";
+        document.getElementById("imagenInput").value = c.imagen || "";
+        document.getElementById("padresInput").value = (c.id_padres || []).join(", ");
+        document.getElementById("mascotasInput").value = (c.mascotas || []).join(", ");
+        document.getElementById("casadoInput").checked = Boolean(c.casado);
+        document.getElementById("formTitle").textContent = "✏️ Editar Personaje";
+        document.getElementById("btnSave").textContent = "Actualizar";
+        document.getElementById("btnCancel").classList.remove("d-none");
+        return;
+      }
+
+      const delBtn = e.target.closest(".del-btn");
+      if (delBtn) {
+        const { res } = await apiCall(`/api/characters/${encodeURIComponent(delBtn.dataset.id)}`, { method: "DELETE" });
+        if (res.ok) await loadCharacters();
+      }
+    });
+
+    // Restaurar colección original de 50 personajes
+    document.getElementById("btnReset").addEventListener("click", async () => {
+      const { res } = await apiCall("/api/reset", { method: "POST" });
+      if (res.ok) await loadCharacters();
+    });
+
+    // Filtros en tiempo real con debounce
+    ["filterQ", "filterGenero", "filterEstado", "filterCasado"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(loadCharacters, 200);
+      });
+    });
+
+    loadCharacters();
+  </script>
+</body>
+</html>

@@ -1,6 +1,15 @@
-<nav class="navbar">
-  <a routerLink="/home">Inicio</a>
-  <a routerLink="/edad">Calcular Edad</a>
-  <a routerLink="/calculadora">Calculadora</a>
-  <a routerLink="/primo">Números Primos</a>
+<!-- Barra de navegación SPA con indicador de ruta activa -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark px-3 mb-4 rounded shadow-sm">
+  <a class="navbar-brand fw-bold" routerLink="/home">🅰️ Ejercicio Angular</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ejNav" aria-label="Alternar navegación">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="ejNav">
+    <div class="navbar-nav ms-auto gap-2">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active fw-bold">Inicio</a>
+      <a class="nav-link" routerLink="/edad" routerLinkActive="active fw-bold">Calcular Edad</a>
+      <a class="nav-link" routerLink="/calculadora" routerLinkActive="active fw-bold">Calculadora</a>
+      <a class="nav-link" routerLink="/primo" routerLinkActive="active fw-bold">Números Primos</a>
+    </div>
+  </div>
 </nav>

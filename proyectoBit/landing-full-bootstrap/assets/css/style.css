@@ -365,3 +365,61 @@ section {
   width: 36px;
   height: 36px;
 }
+
+/* Menú móvil y botón volver arriba */
+@media (max-width: 991px) {
+  .mobile-nav-toggle {
+    display: block !important;
+  }
+  .navbar ul {
+    display: none;
+  }
+}
+
+.navbar-mobile {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.92);
+  z-index: 9998;
+}
+
+.navbar-mobile ul {
+  display: flex !important;
+  flex-direction: column;
+  position: absolute;
+  inset: 60px 20px 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff;
+  overflow-y: auto;
+}
+
+.back-to-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 18px;
+  bottom: 18px;
+  z-index: 996;
+  background: #149ddd;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.back-to-top.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Barras de desplazamiento a juego con el azul de la landing (#149ddd) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 157, 221, 0.55) #f8fafc;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: rgba(20, 157, 221, 0.55); border-radius: 999px; border: 2px solid #f8fafc; }
+::-webkit-scrollbar-thumb:hover { background: #149ddd; }

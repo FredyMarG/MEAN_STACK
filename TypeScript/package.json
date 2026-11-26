@@ -1,0 +1,13 @@
+{
+  "name": "typescript-fundamentos",
+  "version": "1.0.0",
+  "description": "Fundamentos de TypeScript (tipos, interfaces, genéricos y clases) para el curso MEAN Stack",
+  "main": "script.js",
+  "scripts": {
+    "dev": "node --watch script.js",
+    "start": "node script.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "author": "Fredy Martinez",
+  "license": "ISC"
+}

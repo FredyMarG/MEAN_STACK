@@ -1,0 +1,285 @@
+<!--
+  ============================================================================
+  MONGO PLAYGROUND WEB — DBZ-V2 (Mongo/public/index.html)
+  ============================================================================
+  Propósito: Interfaz visual interactiva para practicar operaciones CRUD de
+  MongoDB (`find`, `insertOne`, `updateOne`, `deleteOne`) sobre `dbz-v2.json`,
+  mostrando en vivo el equivalente en sintaxis `mongosh` y la respuesta JSON.
+  Seguridad: Renderizado seguro anti-XSS con `escapeHtml()`.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MongoDB DBZ-V2 Playground</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: radial-gradient(circle at top, #052e16 0%, #0b1120 65%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    .mongo-card {
+      background: #111827;
+      border: 1px solid rgba(74, 222, 128, 0.22);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #4ade80;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 240px;
+      overflow: auto;
+    }
+    /* Scrollbars oscuros con acento verde MongoDB */
+    * { scrollbar-width: thin; scrollbar-color: rgba(74, 222, 128, 0.45) #020617; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #020617; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(74, 222, 128, 0.45); border-radius: 999px; border: 2px solid #020617; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(74, 222, 128, 0.8); }
+  </style>
+</head>
+<body class="py-4">
+  <div class="container">
+    <!-- Cabecera principal -->
+    <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary gap-2">
+      <div>
+        <span class="badge bg-success mb-1">MongoDB Simulador + Persistencia JSON</span>
+        <h2 class="fw-bold mb-0">🍃 MongoDB DBZ-V2 Playground</h2>
+        <small class="text-secondary">Practica filtros (`$eq`, `$gte`), inserciones, actualizaciones y eliminaciones en vivo</small>
+      </div>
+      <button id="btnResetSeed" type="button" class="btn btn-outline-warning btn-sm fw-semibold">
+        ↺ Reiniciar DBZ-V2
+      </button>
+    </header>
+
+    <div class="row g-4">
+      <!-- Columna izquierda: Formulario Insertar / Actualizar -->
+      <div class="col-lg-4 d-flex flex-column gap-4">
+        <div class="mongo-card p-3">
+          <h5 id="formTitle" class="fw-bold mb-3">➕ insertOne() Personaje</h5>
+          <form id="charForm" class="d-flex flex-column gap-2">
+            <input id="charName" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Nombre * (ej. Goku)" required />
+            <input id="charSpecies" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Especie * (ej. Saiyan)" required />
+            <div class="row g-2">
+              <div class="col-6">
+                <input id="charAge" type="number" min="1" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Edad" value="40" required />
+              </div>
+              <div class="col-6">
+                <input id="charPower" type="number" min="0" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Power Level" value="1500000" required />
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-1">
+              <button id="btnSaveChar" type="submit" class="btn btn-success btn-sm fw-bold flex-fill">Insertar</button>
+              <button id="btnCancelEdit" type="button" class="btn btn-outline-secondary btn-sm d-none">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Equivalente en sintaxis mongosh -->
+        <div class="mongo-card p-3">
+          <h6 class="fw-bold mb-2">💻 Equivalente en <code>mongosh</code></h6>
+          <pre id="mongoshPreview" class="p-3 small mb-0">db.characters.find({})</pre>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Filtros, Colección y Consola JSON -->
+      <div class="col-lg-8 d-flex flex-column gap-4">
+        <div class="mongo-card p-3">
+          <div class="row g-2 align-items-center mb-3">
+            <div class="col-md-4">
+              <input id="filterSearch" type="search" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="🔍 Buscar nombre/especie..." />
+            </div>
+            <div class="col-md-4">
+              <select id="filterSpecies" class="form-select form-select-sm bg-dark text-white border-secondary">
+                <option value="">Todas las especies</option>
+                <option value="Saiyan">Saiyan ($eq)</option>
+                <option value="Namekian">Namekian ($eq)</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <input id="filterMinPower" type="number" min="0" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Power >= ($gte)" />
+            </div>
+          </div>
+
+          <div id="charactersGrid" class="row g-3"></div>
+        </div>
+
+        <div class="mongo-card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold mb-0">📡 Respuesta JSON (<code>dbz-v2.json</code>)</h6>
+            <span id="statusBadge" class="badge bg-dark border border-secondary">Listo</span>
+          </div>
+          <pre id="jsonConsole" class="p-3 small mb-0"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // ESTADO Y REFERENCIAS DEL DOM
+    // =========================================================================
+    let editingId = null;
+    let cachedChars = [];
+    let filterTimer = null;
+
+    const charactersGrid = document.getElementById("charactersGrid");
+    const mongoshPreview = document.getElementById("mongoshPreview");
+    const jsonConsole = document.getElementById("jsonConsole");
+    const statusBadge = document.getElementById("statusBadge");
+
+    /**
+     * Escapa caracteres HTML especiales para prevenir XSS al renderizar documentos.
+     * @param {string} str
+     * @returns {string}
+     */
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    /** Ejecuta petición fetch, actualiza badge HTTP y consola JSON. */
+    async function apiCall(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await res.json().catch(() => ({}));
+      statusBadge.textContent = `HTTP ${res.status}`;
+      statusBadge.className = `badge ${res.ok ? "bg-success" : "bg-danger"}`;
+      jsonConsole.textContent = JSON.stringify(data, null, 2);
+      return { res, data };
+    }
+
+    /** Consulta personajes aplicando filtros activos y muestra equivalente mongosh. */
+    async function loadCharacters() {
+      const species = document.getElementById("filterSpecies").value;
+      const minPower = document.getElementById("filterMinPower").value.trim();
+      const q = document.getElementById("filterSearch").value.trim();
+
+      const params = new URLSearchParams();
+      const mongoFilter = {};
+      if (species) {
+        params.set("species", species);
+        mongoFilter.species = { $eq: species };
+      }
+      if (minPower) {
+        params.set("minPower", minPower);
+        mongoFilter.powerLevel = { $gte: Number(minPower) };
+      }
+      if (q) params.set("q", q);
+
+      mongoshPreview.textContent = `db.characters.find(${JSON.stringify(mongoFilter, null, 2)}).sort({ powerLevel: -1 })`;
+
+      const query = params.toString() ? `?${params.toString()}` : "";
+      const { res, data } = await apiCall(`/api/characters${query}`);
+      if (!res.ok) return;
+
+      cachedChars = data.characters || [];
+      charactersGrid.innerHTML = cachedChars.length
+        ? cachedChars.map((c) => `
+          <div class="col-md-6">
+            <div class="p-3 rounded-3 bg-dark border border-secondary h-100 d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-start gap-2">
+                <h6 class="fw-bold text-white mb-1">${escapeHtml(c.name)}</h6>
+                <span class="badge bg-success">${escapeHtml(c.species)}</span>
+              </div>
+              <div class="small text-secondary mb-2">
+                Edad: <strong>${Number(c.edad)}</strong> • Power: <strong class="text-warning">${Number(c.powerLevel).toLocaleString("es-CO")}</strong>
+              </div>
+              <div class="d-flex justify-content-end gap-2 mt-auto pt-2 border-top border-secondary">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-btn" data-id="${escapeHtml(c._id)}">updateOne</button>
+                <button type="button" class="btn btn-outline-danger btn-sm del-btn" data-id="${escapeHtml(c._id)}">deleteOne</button>
+              </div>
+            </div>
+          </div>
+        `).join("")
+        : `<div class="col-12 text-center text-secondary py-4">No hay documentos que cumplan el filtro.</div>`;
+    }
+
+    /** Restablece el formulario de creación/edición de personaje. */
+    function resetForm() {
+      editingId = null;
+      document.getElementById("charForm").reset();
+      document.getElementById("charAge").value = "40";
+      document.getElementById("charPower").value = "1500000";
+      document.getElementById("formTitle").textContent = "➕ insertOne() Personaje";
+      document.getElementById("btnSaveChar").textContent = "Insertar";
+      document.getElementById("btnCancelEdit").classList.add("d-none");
+    }
+
+    // Enviar insertOne o updateOne
+    document.getElementById("charForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = {
+        name: document.getElementById("charName").value.trim(),
+        species: document.getElementById("charSpecies").value.trim(),
+        edad: Number(document.getElementById("charAge").value),
+        powerLevel: Number(document.getElementById("charPower").value)
+      };
+
+      const url = editingId ? `/api/characters/${encodeURIComponent(editingId)}` : "/api/characters";
+      const method = editingId ? "PUT" : "POST";
+      mongoshPreview.textContent = editingId
+        ? `db.characters.updateOne({ _id: "${editingId}" }, { $set: ${JSON.stringify(body)} })`
+        : `db.characters.insertOne(${JSON.stringify(body, null, 2)})`;
+
+      const { res } = await apiCall(url, { method, body: JSON.stringify(body) });
+      if (res.ok) {
+        resetForm();
+        await loadCharacters();
+      }
+    });
+
+    document.getElementById("btnCancelEdit").addEventListener("click", resetForm);
+
+    // Delegación para botones updateOne y deleteOne
+    charactersGrid.addEventListener("click", async (e) => {
+      const editBtn = e.target.closest(".edit-btn");
+      if (editBtn) {
+        const doc = cachedChars.find((c) => c._id === editBtn.dataset.id);
+        if (!doc) return;
+        editingId = doc._id;
+        document.getElementById("charName").value = doc.name;
+        document.getElementById("charSpecies").value = doc.species;
+        document.getElementById("charAge").value = doc.edad;
+        document.getElementById("charPower").value = doc.powerLevel;
+        document.getElementById("formTitle").textContent = "✏️ updateOne() Personaje";
+        document.getElementById("btnSaveChar").textContent = "Actualizar";
+        document.getElementById("btnCancelEdit").classList.remove("d-none");
+        return;
+      }
+
+      const delBtn = e.target.closest(".del-btn");
+      if (delBtn) {
+        const id = delBtn.dataset.id;
+        mongoshPreview.textContent = `db.characters.deleteOne({ _id: "${id}" })`;
+        const { res } = await apiCall(`/api/characters/${encodeURIComponent(id)}`, { method: "DELETE" });
+        if (res.ok) await loadCharacters();
+      }
+    });
+
+    // Botón para restaurar el estado inicial DBZ-V2
+    document.getElementById("btnResetSeed").addEventListener("click", async () => {
+      const { res } = await apiCall("/api/reset", { method: "POST" });
+      if (res.ok) await loadCharacters();
+    });
+
+    // Eventos de filtrado con debounce
+    ["filterSearch", "filterSpecies", "filterMinPower"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", () => {
+        clearTimeout(filterTimer);
+        filterTimer = setTimeout(loadCharacters, 200);
+      });
+    });
+
+    loadCharacters();
+  </script>
+</body>
+</html>

@@ -1,7 +1,41 @@
-<section class="p-4">
-  <h2>Calculadora Angular</h2>
-  <input type="number" [(ngModel)]="num1" />
-  <input type="number" [(ngModel)]="num2" />
-  <button (click)="sumar()">Sumar</button>
-  <p>Resultado: {{ resultado }}</p>
+<!--
+  ============================================================================
+  ARCHIVO: Ejercicio_Angular/src/app/router/calculadora/calculadora.component.html
+  DESCRIPCIÓN: Componente o archivo de la SPA multirruta en Angular (Ejercicio_Angular).
+  ============================================================================
+-->
+<section class="container py-3" style="max-width: 540px;">
+  <div class="card shadow-sm border-0 p-4">
+    <h3 class="fw-bold mb-3">Calculadora Aritmética</h3>
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <label for="calcNum1" class="form-label small">Número 1</label>
+        <input id="calcNum1" type="number" class="form-control" [(ngModel)]="num1" />
+      </div>
+      <div class="col-6">
+        <label for="calcNum2" class="form-label small">Número 2</label>
+        <input id="calcNum2" type="number" class="form-control" [(ngModel)]="num2" />
+      </div>
+    </div>
+    <div class="d-flex gap-2 mb-3">
+      <button class="btn btn-primary flex-fill" (click)="operar('+')">+ Sumar</button>
+      <button class="btn btn-secondary flex-fill" (click)="operar('-')">- Restar</button>
+      <button class="btn btn-info text-dark flex-fill" (click)="operar('*')">× Mult</button>
+      <button class="btn btn-warning text-dark flex-fill" (click)="operar('/')">÷ Div</button>
+    </div>
+    <div *ngIf="errorMsg" class="alert alert-danger py-2">{{ errorMsg }}</div>
+    <div *ngIf="!errorMsg && resultado !== null" class="alert alert-success fw-bold mb-0">
+      Resultado: {{ resultado }}
+    </div>
+    <!-- Historial reciente de las últimas 5 operaciones -->
+    <div *ngIf="historial.length" class="mt-3">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="text-muted mb-0">Historial reciente:</h6>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="limpiarHistorial()">Limpiar</button>
+      </div>
+      <ul class="list-group list-group-flush small">
+        <li class="list-group-item" *ngFor="let opItem of historial">{{ opItem }}</li>
+      </ul>
+    </div>
+  </div>
 </section>

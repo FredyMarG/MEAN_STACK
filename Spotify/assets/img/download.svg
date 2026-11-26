@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Fondo circular oscuro con aro verde Spotify -->
+  <circle cx="60" cy="60" r="56" fill="#0f172a" stroke="#1ed760" stroke-width="4"/>
+  <!-- Flecha de descarga y bandeja -->
+  <path d="M60 30v36m0 0l-14-14m14 14l14-14" fill="none" stroke="#1ed760" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M36 74v8a6 6 0 0 0 6 6h36a6 6 0 0 0 6-6v-8" fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round"/>
+</svg>

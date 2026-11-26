@@ -1,3 +1,9 @@
+/**
+ * ============================================================================
+ * ARCHIVO: proyectoBit/css/k-style.css
+ * DESCRIPCIÓN: Módulo de la suite web de productividad Procrastination Nightmare.
+ * ============================================================================
+ */
 * {
   margin: 0;
   padding: 0;
@@ -78,7 +84,7 @@ body {
   color: #00D2E5 ;
 }
 
-.bg-secundary {
+.bg-secondary {
   background-color: #0095FF !important;
 }
 
@@ -175,3 +181,13 @@ body {
   --bs-popover-body-padding-y: .5rem;
 }
 
+
+/* Unificación de paleta oscura moderna en Calendario, Hábitos y Roadmap */
+.bg-card {
+  background-color: #111827 !important;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.bg-body {
+  background-color: #0b1120 !important;
+}

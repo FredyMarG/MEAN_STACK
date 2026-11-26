@@ -1,0 +1,104 @@
+/**
+ * ============================================================================
+ * ESTILOS DEL SHELL LATERAL (procrastination-nightmare/src/app/app.component.css)
+ * ============================================================================
+ */
+
+/* Contenedor raíz de toda la aplicación */
+.pn-layout {
+  min-height: 100vh;                         /* Ocupa al menos el alto completo de la pantalla */
+}
+
+/* Barra lateral fija colapsada por defecto (3.9rem) */
+.pn-sidebar {
+  width: 3.9rem;                             /* Ancho solo para mostrar íconos */
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;                             /* Encima del contenido principal */
+  background: #363b45;
+  overflow: hidden;                          /* Oculta etiquetas cuando está colapsada */
+  transition: width 0.25s ease;              /* Animación fluida al expandir */
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* En escritorio (>= 992px) se expande al pasar el cursor */
+@media (min-width: 992px) {
+  .pn-sidebar:hover {
+    width: 13.5rem;
+  }
+}
+
+/* Contenedor del logotipo y nombre de la app */
+.pn-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 0.75rem;
+  white-space: nowrap;                       /* Evita saltos de línea al colapsar */
+}
+
+.pn-logo-img {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;                            /* Mantiene el tamaño fijo del logo */
+}
+
+.pn-logo-text {
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+}
+
+/* Enlaces de navegación del menú lateral */
+.pn-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.75rem;
+  margin: 0.25rem 0.4rem;
+  border-radius: 0.6rem;
+  color: #8d95a5;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Íconos Flaticon centrados dentro del enlace */
+.pn-nav-link i.fi {
+  font-size: 1.25rem;
+  min-width: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pn-nav-link:hover {
+  color: #38bdf8;                            /* Resaltado cian al hover */
+}
+
+/* Estilo del enlace correspondiente a la ruta activa */
+.pn-nav-link.active-nav {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.06));
+  color: #38bdf8 !important;
+  border-left: 3px solid #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
+  font-weight: 700;
+}
+
+.pn-nav-link.active-nav .pn-nav-label {
+  color: #f8fafc;
+}
+
+/* Área de trabajo derecha (desplazada 3.9rem para dejar sitio al sidebar) */
+.pn-workspace {
+  margin-left: 3.9rem;
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 45%),
+              linear-gradient(160deg, #0b1120 0%, #111827 100%);
+}
+
+/* Barra superior interna del workspace */
+.pn-topbar {
+  background: #2b303a;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}

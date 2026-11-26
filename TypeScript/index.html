@@ -1,0 +1,135 @@
+<!--
+  ============================================================================
+  LABORATORIO INTERACTIVO DE TYPESCRIPT (TypeScript/index.html)
+  ============================================================================
+  Propósito educativo: Explorar y probar de forma visual los conceptos clave
+  de `script.ts` (Interfaces, Union Types, Genéricos <T> y Clases) desde el Hub.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeScript Fundamentos — Lab Interactivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1e3a8a 0%, #0b1120 65%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    .ts-card {
+      background: #111827;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #38bdf8;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 260px;
+      overflow: auto;
+    }
+    /* Scrollbars oscuros a juego con el azul TypeScript */
+    * { scrollbar-width: thin; scrollbar-color: rgba(56, 189, 248, 0.45) #020617; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #020617; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.45); border-radius: 999px; border: 2px solid #020617; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.8); }
+  </style>
+</head>
+<body class="py-4">
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary gap-2">
+      <div>
+        <span class="badge bg-primary mb-1">TypeScript Strict Mode • script.ts</span>
+        <h2 class="fw-bold mb-0">🔷 Fundamentos de TypeScript</h2>
+        <small class="text-secondary">Prueba interfaces, Union Types, genéricos <code>&lt;T&gt;</code> y clases encapsuladas</small>
+      </div>
+      <span class="badge bg-info text-dark px-3 py-2">ES2020 • CommonJS</span>
+    </header>
+
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="ts-card p-3 mb-4">
+          <h5 class="fw-bold mb-3">👤 Crear Perfil Tipado (<code>Developer</code>)</h5>
+          <form id="devForm" class="d-flex flex-column gap-2">
+            <input id="devName" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Nombre *" value="Fredy Martinez" required />
+            <select id="devRole" class="form-select form-select-sm bg-dark text-white border-secondary">
+              <option value="fullstack">fullstack (Union Type)</option>
+              <option value="frontend">frontend (Union Type)</option>
+              <option value="backend">backend (Union Type)</option>
+            </select>
+            <input id="devGithub" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="GitHub opcional (?)" value="@fredy-mean" />
+            <button type="submit" class="btn btn-primary btn-sm fw-bold mt-1">Generar ApiResponse&lt;Developer&gt;</button>
+          </form>
+        </div>
+
+        <div class="ts-card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold mb-0">🎓 Clase <code>CursoModulo</code></h6>
+            <span id="progressBadge" class="badge bg-success">50%</span>
+          </div>
+          <div class="progress bg-dark mb-3" style="height: 10px;">
+            <div id="progressBar" class="progress-bar bg-info" style="width: 50%;"></div>
+          </div>
+          <button id="btnCompleteLesson" type="button" class="btn btn-outline-info btn-sm w-100">+ completarLeccion()</button>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="ts-card p-3">
+          <h6 class="fw-bold mb-2">📦 Salida Tipada (<code>ApiResponse&lt;Developer&gt;</code>)</h6>
+          <pre id="outputJson" class="p-3 small mb-0"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simulación fiel en navegador de `crearPerfil`, `envolverRespuesta<T>` y `CursoModulo`
+    let completed = 2;
+    const total = 4;
+
+    function updateOutput() {
+      const name = document.getElementById("devName").value.trim() || "Estudiante";
+      const role = document.getElementById("devRole").value;
+      const github = document.getElementById("devGithub").value.trim();
+
+      const dev = {
+        id: 1,
+        name,
+        role,
+        stack: ["MongoDB", "Express", "Angular", "Node.js"],
+        active: true,
+        ...(github ? { github } : {})
+      };
+
+      const apiResponse = {
+        ok: true,
+        timestamp: new Date().toISOString(),
+        data: dev
+      };
+
+      document.getElementById("outputJson").textContent = JSON.stringify(apiResponse, null, 2);
+    }
+
+    document.getElementById("devForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      updateOutput();
+    });
+
+    document.getElementById("btnCompleteLesson").addEventListener("click", () => {
+      completed = completed < total ? completed + 1 : 0;
+      const pct = Math.round((completed / total) * 100);
+      document.getElementById("progressBadge").textContent = `${pct}%`;
+      document.getElementById("progressBar").style.width = `${pct}%`;
+    });
+
+    updateOutput();
+  </script>
+</body>
+</html>

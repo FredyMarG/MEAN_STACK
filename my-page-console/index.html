@@ -2,69 +2,179 @@
   ============================================================================
   CONSOLA INTERACTIVA EN NAVEGADOR (my-page-console/index.html)
   ============================================================================
-  Complemento: Este archivo se encontraba vacío (0 bytes). Se implementó una
-  consola interactiva estilo terminal para ejecutar y visualizar fragmentos de
-  JavaScript directamente en la página.
+  Propósito educativo (Curso MEAN Stack):
+  Emulador de terminal JavaScript que:
+  1. Captura `console.log`, `console.warn` y `console.error` en modo estricto.
+  2. Serializa objetos, funciones, BigInt y referencias circulares de forma segura.
+  3. Mantiene historial persistente en `localStorage` navegable con flechas ↑ / ↓.
+  4. Incluye botones de snippets rápidos para probar conceptos de JS al instante.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <title>My Page Console - JS Terminal</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <title>My Page Console - JS Terminal</title>
 </head>
 <body>
-    <div class="terminal-window">
-        <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="terminal-title">my-page-console — JavaScript Interactive Sandbox</span>
-        </div>
-        <div class="terminal-body" id="consoleOutput">
-            <div class="log-line info">// Bienvenido a My Page Console. Escribe una expresión JS abajo y presiona Ejecutar.</div>
-        </div>
-        <div class="terminal-input-bar">
-            <span class="prompt">&gt;</span>
-            <input type="text" id="cmdInput" value="['MongoDB', 'Express', 'Angular', 'Node.js'].join(' 🚀 ')" placeholder="Escribe código JavaScript aquí...">
-            <button id="runBtn">Ejecutar</button>
-        </div>
+  <div class="terminal-window">
+    <!-- Barra superior estilo terminal macOS/Linux -->
+    <div class="terminal-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="terminal-title">my-page-console — JavaScript Interactive Sandbox</span>
+      <button id="clearBtn" type="button" class="clear-btn">Limpiar</button>
     </div>
 
-    <script>
-        const cmdInput = document.getElementById("cmdInput");
-        const runBtn = document.getElementById("runBtn");
-        const output = document.getElementById("consoleOutput");
+    <!-- Barra de snippets rápidos para probar expresiones con un clic -->
+    <div class="snippet-bar">
+      <span class="snippet-label">Snippets:</span>
+      <button type="button" class="snippet-btn" data-code="[1, 2, 3, 4].map(n => n * n)">Array.map</button>
+      <button type="button" class="snippet-btn" data-code="({ curso: 'MEAN', activo: true, hora: new Date().toLocaleTimeString() })">Objeto JSON</button>
+      <button type="button" class="snippet-btn" data-code="console.log('Info'); console.warn('Alerta'); console.error('Error demo')">Consola Mixta</button>
+      <button type="button" class="snippet-btn" data-code="Math.floor(Math.random() * 100) + 1">Número Aleatorio</button>
+    </div>
 
-        function executeCode() {
-            const code = cmdInput.value.trim();
-            if (!code) return;
-            const cmdLine = document.createElement("div");
-            cmdLine.className = "log-line cmd";
-            cmdLine.textContent = "> " + code;
-            output.appendChild(cmdLine);
+    <!-- Área de salida donde se imprimen comandos y resultados -->
+    <div class="terminal-body" id="consoleOutput">
+      <div class="log-line info">// Bienvenido a My Page Console. Escribe JS y presiona Enter (usa ↑ / ↓ para historial).</div>
+    </div>
 
-            try {
-                const res = Function('"use strict"; return (' + code + ')')();
-                const resLine = document.createElement("div");
-                resLine.className = "log-line result";
-                resLine.textContent = "← " + JSON.stringify(res);
-                output.appendChild(resLine);
-            } catch (err) {
-                const errLine = document.createElement("div");
-                errLine.className = "log-line error";
-                errLine.textContent = "✖ " + err.message;
-                output.appendChild(errLine);
-            }
-            output.scrollTop = output.scrollHeight;
-        }
+    <!-- Barra inferior de entrada de comandos -->
+    <div class="terminal-input-bar">
+      <span class="prompt">&gt;</span>
+      <input type="text" id="cmdInput" value="['MongoDB', 'Express', 'Angular', 'Node.js'].join(' 🚀 ')"
+        placeholder="Escribe código JavaScript aquí..." />
+      <button id="runBtn" type="button">Ejecutar</button>
+    </div>
+  </div>
 
-        runBtn.addEventListener("click", executeCode);
-        cmdInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") executeCode();
+  <script>
+    const HISTORY_KEY = "my_page_console_history_v1";
+
+    const cmdInput = document.getElementById("cmdInput");
+    const runBtn = document.getElementById("runBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const output = document.getElementById("consoleOutput");
+
+    // Carga el historial guardado en localStorage (máximo últimos 30 comandos)
+    let history = [];
+    try {
+      const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+      if (Array.isArray(saved)) history = saved.slice(-30);
+    } catch {}
+    let historyIdx = history.length;
+
+    /**
+     * Formatea cualquier valor JS para imprimirlo de forma legible en la terminal,
+     * manejando `undefined`, funciones, `BigInt` y referencias circulares (`WeakSet`).
+     */
+    function safeFormat(val) {
+      if (val === undefined) return "undefined";
+      if (typeof val === "function") return `[Function: ${val.name || "anonymous"}]`;
+      if (typeof val === "bigint") return `${val}n`;
+      try {
+        const seen = new WeakSet();
+        return JSON.stringify(val, (_k, v) => {
+          if (typeof v === "bigint") return `${v}n`;
+          if (typeof v === "object" && v !== null) {
+            if (seen.has(v)) return "[Circular]";
+            seen.add(v);
+          }
+          return v;
         });
-        executeCode();
-    </script>
+      } catch {
+        return String(val);
+      }
+    }
+
+    /** Agrega una línea de texto segura (`textContent`, sin XSS) al cuerpo de la terminal. */
+    function appendLine(text, cls) {
+      const div = document.createElement("div");
+      div.className = "log-line " + cls;
+      div.textContent = text;
+      output.appendChild(div);
+    }
+
+    /**
+     * Evalúa el código ingresado inyectando un `sandboxConsole` en modo estricto,
+     * guarda el comando en el historial persistente y limpia el input.
+     */
+    function executeCode(clearInputAfter = true) {
+      const code = cmdInput.value.trim();
+      if (!code) return;
+
+      // Guarda en historial evitando duplicar exactamente el último comando
+      if (history[history.length - 1] !== code) {
+        history.push(code);
+        if (history.length > 30) history.shift();
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+      }
+      historyIdx = history.length;
+
+      appendLine("> " + code, "cmd");
+
+      const captured = [];
+      const sandboxConsole = {
+        log: (...args) => captured.push({ cls: "result", text: args.map(safeFormat).join(" ") }),
+        warn: (...args) => captured.push({ cls: "info", text: "⚠ " + args.map(safeFormat).join(" ") }),
+        error: (...args) => captured.push({ cls: "error", text: "✖ " + args.map(safeFormat).join(" ") })
+      };
+
+      try {
+        let res;
+        try {
+          // Primero intenta evaluarlo como expresión directa (`return (...)`)
+          res = Function("console", '"use strict"; return (' + code + ')')(sandboxConsole);
+        } catch {
+          // Si es una sentencia (`let x = 1; ...`), la ejecuta como bloque
+          res = Function("console", '"use strict"; ' + code)(sandboxConsole);
+        }
+        captured.forEach((item) => appendLine(item.text, item.cls));
+        if (res !== undefined || captured.length === 0) {
+          appendLine("← " + safeFormat(res), "result");
+        }
+      } catch (err) {
+        appendLine("✖ " + err.message, "error");
+      }
+
+      if (clearInputAfter) cmdInput.value = "";
+      output.scrollTop = output.scrollHeight;
+    }
+
+    // Eventos de botones y teclado
+    runBtn.addEventListener("click", () => executeCode(true));
+    clearBtn.addEventListener("click", () => {
+      output.innerHTML = "";
+    });
+
+    // Navegación del historial con flechas Arriba / Abajo y ejecución con Enter
+    cmdInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        executeCode(true);
+      } else if (e.key === "ArrowUp" && historyIdx > 0) {
+        e.preventDefault();
+        historyIdx--;
+        cmdInput.value = history[historyIdx];
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        historyIdx = Math.min(history.length, historyIdx + 1);
+        cmdInput.value = history[historyIdx] || "";
+      }
+    });
+
+    // Snippets rápidos: cargan y ejecutan el ejemplo seleccionado
+    document.querySelectorAll(".snippet-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        cmdInput.value = btn.dataset.code;
+        executeCode(false);
+      });
+    });
+
+    // Ejecución inicial de bienvenida
+    executeCode(true);
+  </script>
 </body>
 </html>

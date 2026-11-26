@@ -2,36 +2,42 @@
  * ============================================================================
  * HOJA DE ESTILOS: CLON DE SNAPCHAT WEB (Snapchat/assets/css/style.css)
  * ============================================================================
- * Complemento: Se creó la hoja de estilos personalizada con el amarillo
- * característico de Snapchat (`#FFFC00`), tipografía y posicionamiento.
+ * Propósito: Definir el amarillo corporativo de Snapchat (`#FFFC00`),
+ * tipografía de titulares, barra fija superior y pie de página.
  */
 
+/* Fondo amarillo característico de Snapchat */
 .bg-yellow {
   background-color: #fffc00 !important;
 }
 
+/* Color de texto amarillo corporativo */
 .color-yellow {
   color: #fffc00 !important;
 }
 
+/* Barra de navegación fija en la parte superior */
 .navbar {
   width: 100%;
   top: 0;
-  z-index: 1000;
+  z-index: 1000;                             /* Se mantiene encima del contenido al hacer scroll */
   height: 72px;
 }
 
+/* Contenedor principal con espacio superior para compensar la navbar fija */
 .main {
   min-height: 85vh;
   padding-top: 90px;
   padding-bottom: 40px;
 }
 
+/* Columna izquierda del hero */
 .main-1 {
   width: 48%;
-  min-width: 320px;
+  min-width: 320px;                          /* Evita que el texto se comprima demasiado */
 }
 
+/* Titular principal de alto impacto */
 .txt1 {
   font-weight: 800;
   font-size: 3.2rem;
@@ -39,11 +45,13 @@
   margin-bottom: 20px;
 }
 
+/* Subtítulo descriptivo */
 .txt2 {
   font-weight: 500;
   line-height: 1.4;
 }
 
+/* Botón pill personalizado */
 .boton {
   border: none;
   padding: 6px 14px;
@@ -53,13 +61,25 @@
   text-decoration: none;
 }
 
+/* Pie de página claro */
 .footer {
   background: #f8f9fa;
   padding: 50px 0;
   position: relative;
 }
 
+/* Selector de idioma posicionado en la base del footer */
 .idioma {
   bottom: 15px;
   left: 12.5%;
 }
+
+/* Barras de desplazamiento a juego con el amarillo Snapchat */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #eab308 #f8f9fa;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f8f9fa; }
+::-webkit-scrollbar-thumb { background: #eab308; border-radius: 999px; border: 2px solid #f8f9fa; }
+::-webkit-scrollbar-thumb:hover { background: #ca8a04; }

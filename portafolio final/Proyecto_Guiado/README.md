@@ -1,1 +1,0 @@
-Proyecto guiado de repaso

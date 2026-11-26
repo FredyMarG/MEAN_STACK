@@ -1,59 +1,213 @@
+<!--
+  ============================================================================
+  CATÁLOGO E-COMMERCE INTERACTIVO (Proyecto_Guiado/ecommerce.html)
+  ============================================================================
+  Propósito educativo (Curso MEAN Stack):
+  - Maquetación responsiva con Bootstrap 5 Grid (`row g-4` + `col-md-4`).
+  - Carrito de compras persistente en `localStorage` con cantidades, precios
+    en COP, modal resumen (`#cartModal`) y retroalimentación visual.
+-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap 5 CDN (reemplaza el archivo local faltante assets/css/bootstrap.min.css) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <title>E-Commerce | Proyecto Guiado</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>E-Commerce | Proyecto Guiado</title>
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-        <a class="navbar-brand fw-bold" href="index.html">E-Commerce BIT</a>
-        <div class="ms-auto">
-            <a href="index.html" class="btn btn-outline-light btn-sm">&larr; Volver al Inicio</a>
-        </div>
-    </nav>
+  <!-- Barra superior con contador de carrito clicable -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand fw-bold" href="index.html">E-Commerce BIT</a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <button type="button" class="btn btn-info text-dark fw-bold btn-sm" id="cartBadge"
+        data-bs-toggle="modal" data-bs-target="#cartModal">
+        🛒 0 en carrito
+      </button>
+      <button type="button" class="btn btn-outline-warning btn-sm" id="clearCartBtn">Vaciar</button>
+      <a href="index.html" class="btn btn-outline-light btn-sm">&larr; Volver al Inicio</a>
+    </div>
+  </nav>
 
-    <main class="container py-5">
-        <h1 class="fw-bold mb-4 text-center">Catálogo de Productos</h1>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="assets/img/img1.jpg" class="card-img-top" alt="Producto 1">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Plan Entrenamiento Pro</h5>
-                        <p class="card-text text-muted">Rutina personalizada de alto rendimiento y seguimiento mensual.</p>
-                        <button class="btn btn-primary w-100">Agregar al carrito</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="assets/img/img2.jpg" class="card-img-top" alt="Producto 2">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Kit Deportivo Completo</h5>
-                        <p class="card-text text-muted">Equipamiento esencial para entrenamientos en casa o gimnasio.</p>
-                        <button class="btn btn-primary w-100">Agregar al carrito</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="assets/img/img3.jpg" class="card-img-top" alt="Producto 3">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Asesoría Nutricional</h5>
-                        <p class="card-text text-muted">Guía de alimentación balanceada adaptada a tus objetivos.</p>
-                        <button class="btn btn-primary w-100">Agregar al carrito</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+  <!-- Catálogo principal en grilla de 3 columnas -->
+  <main class="container py-5">
+    <h1 class="fw-bold mb-2 text-center">Catálogo de Productos</h1>
+    <p class="text-muted text-center mb-4">Ejemplo de Bootstrap 5 Grid (`row g-4` + `col-md-4`) con carrito persistente.</p>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="cartFeedback" class="alert alert-success d-none text-center mb-4"></div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="assets/img/plan-pro.svg" class="card-img-top" alt="Plan Entrenamiento Pro" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">Plan Entrenamiento Pro</h5>
+            <p class="card-text text-muted flex-grow-1">Rutina personalizada de alto rendimiento y seguimiento mensual.</p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="fs-5 fw-bold text-success">$120.000 COP</span>
+              <span class="badge bg-primary-subtle text-primary">Mensual</span>
+            </div>
+            <button type="button" class="btn btn-primary w-100 add-cart-btn"
+              data-product="Plan Entrenamiento Pro" data-price="120000">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="assets/img/kit-deportivo.svg" class="card-img-top" alt="Kit Deportivo Completo" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">Kit Deportivo Completo</h5>
+            <p class="card-text text-muted flex-grow-1">Equipamiento esencial para entrenamientos en casa o gimnasio.</p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="fs-5 fw-bold text-success">$245.000 COP</span>
+              <span class="badge bg-warning text-dark">Envío gratis</span>
+            </div>
+            <button type="button" class="btn btn-primary w-100 add-cart-btn"
+              data-product="Kit Deportivo Completo" data-price="245000">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <img src="assets/img/asesoria-nutricion.svg" class="card-img-top" alt="Asesoría Nutricional" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">Asesoría Nutricional</h5>
+            <p class="card-text text-muted flex-grow-1">Guía de alimentación balanceada adaptada a tus objetivos.</p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="fs-5 fw-bold text-success">$95.000 COP</span>
+              <span class="badge bg-success-subtle text-success">Online</span>
+            </div>
+            <button type="button" class="btn btn-primary w-100 add-cart-btn"
+              data-product="Asesoría Nutricional" data-price="95000">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal resumen del carrito con cantidades y total -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold" id="cartModalLabel">🛒 Resumen del Carrito</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="cartModalBody"></div>
+        <div class="modal-footer justify-content-between">
+          <strong class="fs-5 text-success" id="cartTotalLabel">$0 COP</strong>
+          <button type="button" class="btn btn-success fw-bold" id="checkoutBtn">Confirmar Pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Clave en localStorage donde se guarda el carrito como arreglo de { name, price, qty }
+    const KEY = "proyecto_guiado_cart_v2";
+    const badge = document.getElementById("cartBadge");
+    const fb = document.getElementById("cartFeedback");
+    const cartModalBody = document.getElementById("cartModalBody");
+    const cartTotalLabel = document.getElementById("cartTotalLabel");
+
+    /** Carga de forma segura el carrito guardado desde `localStorage`. */
+    function loadCart() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    let cart = loadCart();
+
+    /** Escapa caracteres HTML para renderizado seguro en el modal del carrito. */
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    /** Persiste el carrito, actualiza el botón contador y dibuja el modal resumen. */
+    function syncCartUI() {
+      localStorage.setItem(KEY, JSON.stringify(cart));
+      const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+      const totalPrice = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+      badge.textContent = `🛒 ${totalItems} en carrito`;
+      cartTotalLabel.textContent = `$${totalPrice.toLocaleString("es-CO")} COP`;
+
+      if (cart.length === 0) {
+        cartModalBody.innerHTML = `<p class="text-muted text-center my-4">Tu carrito está vacío.</p>`;
+        return;
+      }
+
+      cartModalBody.innerHTML = cart.map((item, idx) => `
+        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+          <div>
+            <div class="fw-semibold">${escapeHtml(item.name)}</div>
+            <small class="text-muted">${item.qty} × $${Number(item.price).toLocaleString("es-CO")} COP</small>
+          </div>
+          <div class="d-flex align-items-center gap-1">
+            <button type="button" class="btn btn-sm btn-outline-secondary qty-btn" data-idx="${idx}" data-delta="-1">-</button>
+            <span class="px-2 fw-bold">${item.qty}</span>
+            <button type="button" class="btn btn-sm btn-outline-secondary qty-btn" data-idx="${idx}" data-delta="1">+</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // Agrega o incrementa un producto al hacer clic en "Agregar al carrito"
+    document.querySelectorAll(".add-cart-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const name = btn.getAttribute("data-product");
+        const price = Number(btn.getAttribute("data-price"));
+        const existing = cart.find((item) => item.name === name);
+        if (existing) existing.qty += 1;
+        else cart.push({ name, price, qty: 1 });
+
+        syncCartUI();
+        fb.textContent = `✅ "${name}" agregado al carrito.`;
+        fb.classList.remove("d-none");
+      });
+    });
+
+    // Controla botones +/- dentro del modal de carrito
+    cartModalBody.addEventListener("click", (e) => {
+      const btn = e.target.closest(".qty-btn");
+      if (!btn) return;
+      const idx = Number(btn.dataset.idx);
+      const delta = Number(btn.dataset.delta);
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      syncCartUI();
+    });
+
+    // Vacía por completo el carrito
+    document.getElementById("clearCartBtn").addEventListener("click", () => {
+      cart = [];
+      syncCartUI();
+      fb.classList.add("d-none");
+    });
+
+    // Confirma el pedido simulado y cierra el modal
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      if (cart.length === 0) return;
+      const totalPaid = cartTotalLabel.textContent;
+      cart = [];
+      syncCartUI();
+      fb.textContent = `🎉 ¡Pedido confirmado por ${totalPaid}!`;
+      fb.classList.remove("d-none");
+      bootstrap.Modal.getInstance(document.getElementById("cartModal"))?.hide();
+    });
+
+    // Inicialización al cargar la página
+    syncCartUI();
+  </script>
 </body>
 </html>

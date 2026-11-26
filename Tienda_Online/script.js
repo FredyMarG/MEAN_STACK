@@ -6,15 +6,16 @@
  * ============================================================================
  */
 
+// Catálogo estático de productos disponibles en la tienda
 const PRODUCTS = [
   {
-    id: 1,
-    name: "Laptop Pro Dev 16\" (32GB RAM / 1TB SSD)",
-    category: "promociones",
-    price: 4850000,
-    oldPrice: 5600000,
-    icon: "laptop_mac",
-    badge: "Oferta -15%"
+    id: 1,                                                // Identificador único
+    name: "Laptop Pro Dev 16\" (32GB RAM / 1TB SSD)",     // Nombre comercial
+    category: "promociones",                              // Categoría para filtros
+    price: 4850000,                                       // Precio actual en COP
+    oldPrice: 5600000,                                    // Precio anterior tachado
+    icon: "laptop_mac",                                   // Ícono Material Symbols
+    badge: "Oferta -15%"                                  // Etiqueta superior
   },
   {
     id: 2,
@@ -30,7 +31,7 @@ const PRODUCTS = [
     name: "Teclado Mecánico RGB Hot-Swap",
     category: "accesorios",
     price: 340000,
-    oldPrice: null,
+    oldPrice: null,                                       // Sin precio anterior
     icon: "keyboard",
     badge: "Más Vendido"
   },
@@ -63,10 +64,26 @@ const PRODUCTS = [
   }
 ];
 
+// Clave de almacenamiento en localStorage para conservar el carrito
+const CART_STORAGE_KEY = "tienda_online_cart_v1";
 let cart = [];
+
+// Recupera el carrito guardado evitando fallos si el JSON está corrupto
+try {
+  const savedCart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "[]");
+  if (Array.isArray(savedCart)) cart = savedCart;
+} catch {}
+
+/** Guarda el estado actual del carrito en `localStorage`. */
+function saveCart() {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+}
+
+// Estado actual de filtros en el catálogo
 let activeFilter = "all";
 let searchQuery = "";
 
+// Referencias a elementos clave del DOM
 const grid = document.getElementById("productsGrid");
 const resultsCount = document.getElementById("resultsCount");
 const cartCountBadge = document.getElementById("cartCountBadge");
@@ -75,11 +92,14 @@ const cartTotalValue = document.getElementById("cartTotalValue");
 const aboutBanner = document.getElementById("aboutBanner");
 const sectionTitle = document.getElementById("sectionTitle");
 
+/** Formatea un número como moneda colombiana (COP). */
 function formatCOP(val) {
   return "$" + val.toLocaleString("es-CO") + " COP";
 }
 
+/** Filtra los productos según categoría y texto, y los dibuja en pantalla. */
 function renderCatalog() {
+  // Muestra u oculta el banner institucional si se eligió "nosotros"
   if (activeFilter === "nosotros") {
     aboutBanner.classList.remove("d-none");
     sectionTitle.textContent = "Nuestra Identidad & Equipos Destacados";
@@ -93,6 +113,7 @@ function renderCatalog() {
         : "Catálogo Completo de Tecnología";
   }
 
+  // Aplica filtro combinado de categoría y búsqueda por nombre
   const filtered = PRODUCTS.filter((p) => {
     const matchCategory =
       activeFilter === "all" || activeFilter === "nosotros" || p.category === activeFilter;
@@ -101,8 +122,10 @@ function renderCatalog() {
     return matchCategory && matchSearch;
   });
 
+  // Actualiza el contador visible de resultados
   resultsCount.textContent = `${filtered.length} productos disponibles`;
 
+  // Construye las tarjetas HTML del catálogo
   grid.innerHTML = filtered
     .map(
       (p) => `
@@ -136,6 +159,7 @@ function renderCatalog() {
     .join("");
 }
 
+/** Agrega un producto al carrito o incrementa su cantidad si ya existe. */
 window.addToCart = function (productId) {
   const prod = PRODUCTS.find((p) => p.id === productId);
   if (!prod) return;
@@ -145,14 +169,30 @@ window.addToCart = function (productId) {
   } else {
     cart.push({ ...prod, qty: 1 });
   }
+  saveCart();
   renderCart();
 };
 
+/** Suma o resta unidades de un ítem del carrito; si llega a 0 lo elimina. */
+window.updateCartQty = function (productId, delta) {
+  const item = cart.find((i) => i.id === productId);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    cart = cart.filter((i) => i.id !== productId);
+  }
+  saveCart();
+  renderCart();
+};
+
+/** Elimina por completo un producto del carrito según su ID. */
 window.removeFromCart = function (productId) {
   cart = cart.filter((item) => item.id !== productId);
+  saveCart();
   renderCart();
 };
 
+/** Renderiza el panel lateral del carrito con cantidades y total acumulado. */
 function renderCart() {
   const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
@@ -160,6 +200,7 @@ function renderCart() {
   cartCountBadge.textContent = totalItems;
   cartTotalValue.textContent = formatCOP(totalPrice);
 
+  // Estado vacío del carrito
   if (cart.length === 0) {
     cartItemsContainer.innerHTML = `
       <div class="text-center text-muted py-5">
@@ -170,6 +211,7 @@ function renderCart() {
     return;
   }
 
+  // Lista de productos agregados con botones de control
   cartItemsContainer.innerHTML = cart
     .map(
       (item) => `
@@ -178,13 +220,19 @@ function renderCart() {
           <div class="fw-semibold small">${item.name}</div>
           <div class="text-muted small">${item.qty} x ${formatCOP(item.price)}</div>
         </div>
-        <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.id})">&times;</button>
+        <div class="d-flex align-items-center gap-1">
+          <button class="btn btn-sm btn-outline-secondary" onclick="updateCartQty(${item.id}, -1)">-</button>
+          <span class="px-1 small fw-bold">${item.qty}</span>
+          <button class="btn btn-sm btn-outline-secondary" onclick="updateCartQty(${item.id}, 1)">+</button>
+          <button class="btn btn-sm btn-outline-danger ms-1" onclick="removeFromCart(${item.id})">&times;</button>
+        </div>
       </div>
     `
     )
     .join("");
 }
 
+// Eventos de clic en las tarjetas de categoría del Mega-Menú
 document.querySelectorAll(".category-card").forEach((card) => {
   card.addEventListener("click", () => {
     document.querySelectorAll(".category-card").forEach((c) => c.classList.remove("active-cat"));
@@ -194,6 +242,7 @@ document.querySelectorAll(".category-card").forEach((card) => {
   });
 });
 
+// Evento de búsqueda en vivo al escribir
 const searchInput = document.getElementById("searchInput");
 if (searchInput) {
   searchInput.addEventListener("input", (e) => {
@@ -202,18 +251,22 @@ if (searchInput) {
   });
 }
 
+// Evento de confirmación de compra (vacía el carrito y muestra resumen)
 const checkoutBtn = document.getElementById("checkoutBtn");
 if (checkoutBtn) {
   checkoutBtn.addEventListener("click", () => {
     if (cart.length === 0) {
-      alert("Agrega al menos un producto al carrito antes de finalizar la compra.");
+      cartItemsContainer.innerHTML = `<div class="alert alert-warning py-2 small">Agrega al menos un producto al carrito antes de finalizar.</div>`;
       return;
     }
-    alert("¡Pedido confirmado en BIT Shop! Gracias por tu compra.");
+    const totalPaid = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     cart = [];
+    saveCart();
     renderCart();
+    cartItemsContainer.innerHTML = `<div class="alert alert-success py-3 text-center"><strong>¡Pedido confirmado!</strong><br>Total: ${formatCOP(totalPaid)}</div>`;
   });
 }
 
+// Renderizado inicial al abrir la tienda
 renderCatalog();
 renderCart();

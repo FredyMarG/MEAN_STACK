@@ -10,6 +10,7 @@
  * - >= 900px (Desktop): 300x300px, color `#da0000` (rojo).
  */
 
+/* Centra el contenedor de demostración */
 body {
     margin: 0;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -20,17 +21,20 @@ body {
     padding: 32px 16px;
 }
 
+/* Envoltorio principal con ancho máximo legible */
 .demo-wrapper {
     text-align: center;
     max-width: 680px;
     width: 100%;
 }
 
+/* Subtítulo explicativo */
 .subtitle {
     color: #64748b;
     margin-bottom: 16px;
 }
 
+/* Barra tipo píldora que muestra el ancho y breakpoint actual */
 .info-bar {
     display: inline-flex;
     gap: 14px;
@@ -43,6 +47,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* Insignia azul con el nombre del breakpoint activo */
 .bp-badge {
     background: #e0f2fe;
     color: #0369a1;
@@ -52,6 +57,7 @@ body {
     font-size: 0.85rem;
 }
 
+/* Botonera para simular breakpoints manualmente */
 .sim-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -76,6 +82,7 @@ body {
     border-color: #94a3b8;
 }
 
+/* Estilo base (Mobile-First < 600px) del cuadrado de demostración */
 .square {
     width: 200px;
     height: 200px;
@@ -88,9 +95,10 @@ body {
     margin: 0 auto;
     border-radius: 16px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    transition: all 0.35s ease;
+    transition: all 0.35s ease;               /* Anima suavemente el cambio de tamaño y color */
 }
 
+/* Breakpoint Tablet (>= 600px) */
 @media (min-width: 600px) {
     .square {
         width: 100px;
@@ -99,6 +107,7 @@ body {
     }
 }
 
+/* Breakpoint Desktop (>= 900px) */
 @media (min-width: 900px) {
     .square {
         width: 300px;
@@ -107,7 +116,7 @@ body {
     }
 }
 
-/* Clases de simulación interactiva */
+/* Clases auxiliares aplicadas por JS para simular cada tamaño sin redimensionar la ventana */
 .square.sim-mobile {
     width: 200px !important;
     height: 200px !important;
@@ -125,3 +134,13 @@ body {
     height: 300px !important;
     background-color: #da0000 !important;
 }
+
+/* Barras de desplazamiento sutiles a juego */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.5) #f8fafc;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.45); border-radius: 999px; border: 2px solid #f8fafc; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.8); }

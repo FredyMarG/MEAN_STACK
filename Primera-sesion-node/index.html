@@ -1,0 +1,212 @@
+<!--
+  ============================================================================
+  VISTA INTERACTIVA — PRIMERA SESIÓN DE NODE.JS (Primera-sesion-node/index.html)
+  ============================================================================
+  Propósito educativo: Permitir probar visualmente los 8 algoritmos de
+  `hello-world.js` tanto conectados al servidor Node.js (`POST /api/run`) como
+  en modo estático desde el Hub (`index.html`), mostrando salida de consola y
+  valor retornado.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Primera Sesión Node.js — Laboratorio Interactivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Tema oscuro Node.js (verde esmeralda + azul noche) */
+    body {
+      background: radial-gradient(circle at top, #064e3b 0%, #0b1120 65%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    .lab-card {
+      background: #111827;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #34d399;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 280px;
+      overflow: auto;
+    }
+    /* Scrollbars oscuros con acento verde Node.js */
+    * { scrollbar-width: thin; scrollbar-color: rgba(16, 185, 129, 0.45) #020617; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #020617; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(16, 185, 129, 0.45); border-radius: 999px; border: 2px solid #020617; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(16, 185, 129, 0.8); }
+  </style>
+</head>
+<body class="py-4">
+  <div class="container">
+    <!-- Cabecera del laboratorio -->
+    <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary gap-2">
+      <div>
+        <span class="badge bg-success mb-1">Node.js Fundamentos • hello-world.js</span>
+        <h2 class="fw-bold mb-0">🟢 Primera Sesión Node.js — Lab Interactivo</h2>
+        <small class="text-secondary">Ejecuta cada algoritmo y compara su salida en consola y valor de retorno</small>
+      </div>
+      <span id="modeBadge" class="badge bg-info text-dark px-3 py-2">Listo</span>
+    </header>
+
+    <div class="row g-4">
+      <!-- Panel izquierdo: Selector de ejercicio y parámetro -->
+      <div class="col-lg-5 d-flex flex-column gap-4">
+        <div class="lab-card p-3">
+          <h5 class="fw-bold mb-3">⚙️ Parámetro de Prueba</h5>
+          <div class="mb-3">
+            <label for="paramInput" class="form-label small text-secondary mb-1">Número / Límite de entrada</label>
+            <input id="paramInput" type="number" class="form-control bg-dark text-white border-secondary" value="30" />
+          </div>
+          <div class="d-grid gap-2" style="grid-template-columns: repeat(2, 1fr);">
+            <button type="button" class="btn btn-outline-success btn-sm fn-btn" data-fn="evaluarSigno">1. Signo (+/-)</button>
+            <button type="button" class="btn btn-outline-success btn-sm fn-btn" data-fn="evaluarParidad">2. Par / Impar</button>
+            <button type="button" class="btn btn-outline-info btn-sm fn-btn" data-fn="multiplosXD">3. FizzBuzz XD</button>
+            <button type="button" class="btn btn-outline-info btn-sm fn-btn" data-fn="dibujarCuadrado">4. Cuadrado *</button>
+            <button type="button" class="btn btn-outline-warning btn-sm fn-btn" data-fn="tablaDelCinco">5. Tabla del 5</button>
+            <button type="button" class="btn btn-outline-warning btn-sm fn-btn" data-fn="relojDigital">6. Reloj 24h</button>
+            <button type="button" class="btn btn-outline-light btn-sm fn-btn" data-fn="serieCien">7. Serie 0-100</button>
+            <button type="button" class="btn btn-success btn-sm fw-bold fn-btn" data-fn="primosHasta">8. Primos hasta N</button>
+          </div>
+        </div>
+
+        <div class="lab-card p-3">
+          <h6 class="fw-bold mb-2">📘 Concepto Clave</h6>
+          <p id="conceptBox" class="small text-secondary mb-0">
+            Haz clic en cualquiera de los 8 ejercicios para ver su salida en consola, su valor `return` y la explicación algorítmica.
+          </p>
+        </div>
+      </div>
+
+      <!-- Panel derecho: Salida tipo consola y Valor retornado -->
+      <div class="col-lg-7 d-flex flex-column gap-4">
+        <div class="lab-card p-3">
+          <h6 class="fw-bold mb-2">🖥️ Salida en Consola (<code>console.log</code>)</h6>
+          <pre id="consoleOut" class="p-3 small mb-0">// Presiona un botón de ejercicio para ejecutarlo...</pre>
+        </div>
+
+        <div class="lab-card p-3">
+          <h6 class="fw-bold mb-2">📦 Valor Retornado (<code>return</code>)</h6>
+          <pre id="returnOut" class="p-3 small mb-0 text-info">// Aquí verás el valor exacto devuelto por la función...</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // EXPLICACIONES DIDÁCTICAS POR EJERCICIO
+    // =========================================================================
+    const CONCEPTS = {
+      evaluarSigno: "Valida que la entrada sea un número finito con Number.isFinite() antes de comparar > 0 o < 0.",
+      evaluarParidad: "Usa el operador módulo (%) para comprobar si el residuo de dividir entre 2 es exactamente (===) 0.",
+      multiplosXD: "Evalúa primero la condición compuesta (múltiplo de 3 && 5) antes que las individuales.",
+      dibujarCuadrado: "Usa dos bucles for anidados (filas i y columnas j) dibujando '*' solo en los bordes.",
+      tablaDelCinco: "Recorre del 0 al 10 construyendo líneas legibles con template literals.",
+      relojDigital: "Combina bucles anidados (horas/minutos) con padStart(2, '0') para formato HH:MM.",
+      serieCien: "Acumula en un arreglo y usa .join(',') para evitar comas sobrantes al final.",
+      primosHasta: "Optimiza la búsqueda de divisores hasta Math.sqrt(i), logrando complejidad O(n * sqrt(n))."
+    };
+
+    const consoleOut = document.getElementById("consoleOut");
+    const returnOut = document.getElementById("returnOut");
+    const conceptBox = document.getElementById("conceptBox");
+    const modeBadge = document.getElementById("modeBadge");
+
+    /** Respaldo local en navegador cuando se abre como archivo estático desde el Hub. */
+    function runLocalFallback(fnName, rawParam) {
+      const n = Number(rawParam);
+      if (fnName === "evaluarSigno") {
+        const res = !Number.isFinite(n) ? "invalido" : n > 0 ? "positivo" : n < 0 ? "negativo" : "cero";
+        return { consoleOutput: `${n}: El valor es ${res}`, result: res };
+      }
+      if (fnName === "evaluarParidad") {
+        const res = !Number.isFinite(n) ? "invalido" : n % 2 === 0 ? "par" : "impar";
+        return { consoleOutput: `${n}: ${res}`, result: res };
+      }
+      if (fnName === "multiplosXD") {
+        const res = n % 3 === 0 && n % 5 === 0 ? "XD" : n % 5 === 0 ? "D" : n % 3 === 0 ? "X" : String(n);
+        return { consoleOutput: `${n} -> ${res}`, result: res };
+      }
+      if (fnName === "dibujarCuadrado") {
+        const side = Math.min(20, Math.max(1, Math.floor(n || 5)));
+        const lines = [];
+        for (let i = 0; i <= side; i++) {
+          let row = "";
+          for (let j = 0; j <= side; j++) row += i === 0 || i === side || j === 0 || j === side ? "*" : " ";
+          lines.push(row);
+        }
+        return { consoleOutput: lines.join("\n"), result: lines };
+      }
+      if (fnName === "tablaDelCinco") {
+        const lines = Array.from({ length: 11 }, (_, i) => `5 * ${i} = ${5 * i}`);
+        return { consoleOutput: lines.join("\n"), result: lines };
+      }
+      if (fnName === "relojDigital") {
+        const hrs = ["00:00", "06:00", "12:00", "18:00"];
+        return { consoleOutput: hrs.join("\n"), result: hrs };
+      }
+      if (fnName === "serieCien") {
+        const s = Array.from({ length: 101 }, (_, i) => i).join(",");
+        return { consoleOutput: s, result: s };
+      }
+      const lim = Math.min(2000, Math.max(2, Math.floor(n || 100)));
+      const primes = [];
+      for (let i = 2; i <= lim; i++) {
+        let ok = true;
+        for (let j = 2; j <= Math.sqrt(i); j++) {
+          if (i % j === 0) { ok = false; break; }
+        }
+        if (ok) primes.push(i);
+      }
+      return { consoleOutput: `Primos hasta ${lim}: ${primes.join(", ")}`, result: primes };
+    }
+
+    /** Ejecuta el ejercicio en el servidor Node.js (`/api/run`) o usa el respaldo local. */
+    async function runExercise(fnName) {
+      const param = Number(document.getElementById("paramInput").value);
+      conceptBox.textContent = CONCEPTS[fnName] || "";
+
+      try {
+        if (location.protocol.startsWith("http")) {
+          const res = await fetch("/api/run", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fn: fnName, param })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            modeBadge.textContent = "Conectado a Node.js";
+            modeBadge.className = "badge bg-success px-3 py-2";
+            consoleOut.textContent = data.consoleOutput || "(sin salida)";
+            returnOut.textContent = JSON.stringify(data.result, null, 2);
+            return;
+          }
+        }
+      } catch {}
+
+      // Modo estático (cuando se abre directo desde el Hub sin servidor en puerto 3005)
+      const local = runLocalFallback(fnName, param);
+      modeBadge.textContent = "Modo Estático (Hub)";
+      modeBadge.className = "badge bg-info text-dark px-3 py-2";
+      consoleOut.textContent = local.consoleOutput;
+      returnOut.textContent = JSON.stringify(local.result, null, 2);
+    }
+
+    // Conecta los 8 botones de ejercicios
+    document.querySelectorAll(".fn-btn").forEach((btn) => {
+      btn.addEventListener("click", () => runExercise(btn.dataset.fn));
+    });
+
+    // Demostración inicial al cargar
+    runExercise("primosHasta");
+  </script>
+</body>
+</html>

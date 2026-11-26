@@ -1,0 +1,13 @@
+{
+  "name": "repaso-algoritmos-js",
+  "version": "1.0.0",
+  "description": "Repaso de algoritmos en JavaScript: cifrado ROT13 y Bubble Sort optimizado",
+  "main": "repasojs.js",
+  "scripts": {
+    "dev": "node --watch repasojs.js",
+    "start": "node for.js && node repasojs.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "author": "Fredy Martinez",
+  "license": "ISC"
+}

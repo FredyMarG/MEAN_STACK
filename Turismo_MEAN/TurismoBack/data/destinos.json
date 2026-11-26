@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "80f1bb0a87999b134b2a0951",
+    "nombre": "Valle del Cocora y Salento",
+    "ciudad": "Quindío (Eje Cafetero)",
+    "descripcion": "Caminata entre palmas de cera y experiencia cafetera artesanal.",
+    "precio": 980000,
+    "calificacion": 4.6,
+    "fechaCreacion": "2026-11-25T17:54:05.461Z"
+  },
+  {
+    "_id": "2937f0c3a71fabea8bded9dc",
+    "nombre": "Mar de los Siete Colores",
+    "ciudad": "San Andrés Isla",
+    "descripcion": "Tour náutico por Johnny Cay, Acuario y buceo en arrecifes.",
+    "precio": 1890000,
+    "calificacion": 4.8,
+    "fechaCreacion": "2026-11-25T17:54:05.461Z"
+  },
+  {
+    "_id": "a1f60a8b0fe6bd5a48979b24",
+    "nombre": "Parque Nacional Tayrona",
+    "ciudad": "Santa Marta",
+    "descripcion": "Senderismo ecológico, Cabo San Juan y biodiversidad en la Sierra Nevada.",
+    "precio": 1120000,
+    "calificacion": 4.9,
+    "fechaCreacion": "2026-11-25T17:54:05.461Z"
+  }
+]

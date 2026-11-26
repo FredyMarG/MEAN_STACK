@@ -1,0 +1,42 @@
+<!--
+  ============================================================================
+  SHELL PRINCIPAL — PROCRASTINATION NIGHTMARE ANGULAR (app.component.html)
+  ============================================================================
+  Contiene la barra lateral colapsable con iconos Flaticon, el logo SVG y el
+  área de trabajo donde se renderiza `<router-outlet>`.
+-->
+<div class="pn-layout d-flex">
+  <!-- Barra lateral fija -->
+  <nav class="pn-sidebar text-white">
+    <div class="pn-logo-wrap">
+      <img src="assets/img/logo.svg" alt="Logo Pro Night" class="pn-logo-img rounded-circle" />
+      <span class="pn-logo-text fw-bold text-uppercase">Pro night</span>
+    </div>
+
+    <ul class="list-unstyled px-0 mb-0">
+      <li *ngFor="let item of navItems">
+        <a [routerLink]="item.path" routerLinkActive="active-nav" class="pn-nav-link text-decoration-none">
+          <i class="fi" [ngClass]="item.icon"></i>
+          <span class="pn-nav-label">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Área de contenido principal -->
+  <div class="pn-workspace flex-grow-1">
+    <header class="pn-topbar d-flex align-items-center justify-content-between px-4 py-2">
+      <span class="fw-semibold text-white">Procrastination Nightmare</span>
+      <!-- Selector rápido solo en móvil -->
+      <select class="form-select form-select-sm bg-dark text-white border-secondary d-lg-none" style="max-width: 11rem;"
+        (change)="navegarMobile($event)">
+        <option value="">Ir a módulo...</option>
+        <option *ngFor="let item of navItems" [value]="item.path">{{ item.label }}</option>
+      </select>
+    </header>
+
+    <main class="container py-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

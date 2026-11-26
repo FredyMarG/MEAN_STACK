@@ -1,3 +1,9 @@
+/**
+ * ============================================================================
+ * ARCHIVO: proyectoBit/css/style.css
+ * DESCRIPCIÓN: Módulo de la suite web de productividad Procrastination Nightmare.
+ * ============================================================================
+ */
 :root {
   --Primary: #00D2E5;
   --Secundary: #0095FF;
@@ -39,7 +45,7 @@ h6 {
   padding: 0;
 }
 
-.big-contaier {
+.big-container {
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -56,7 +62,8 @@ h6 {
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  background-color: var(--primary);
+  background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 45%),
+              linear-gradient(160deg, #0b1120 0%, #111827 100%);
 }
 
 
@@ -145,8 +152,8 @@ h6 {
   position: fixed;
   height: 100vh;
   left: 0;
-  transition: width 0, 2s linear;
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0, 1);
+  transition: width 0.2s linear;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width:992px) {
@@ -162,19 +169,32 @@ h6 {
   }
 
 .main-logo {
-  transition: all 0, 5s ease;
-  margin-left: 10px;
+  transition: all 0.3s ease;
+  margin-left: 0;
+  padding: 0.5rem 0.7rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
 }
 
 .main-logo .logo-navbar {
-  width: 45px;
-  height: 45px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.main-logo span {
+  margin: 0 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.06em;
 }
 
 .link-lateral-navbar {
   color: #8d95a5;
-  width: 300px;
-  padding: 10px;
+  width: auto;
+  padding: 0.65rem 0.75rem;
+  white-space: nowrap;
 }
 
 .link-lateral-navbar:hover{
@@ -204,7 +224,8 @@ h6 {
 }
 
 .name-option {
-  top: -10px;
+  top: 0;
+  white-space: nowrap;
 }
 
 .lateral-navbar:hover body {
@@ -385,3 +406,176 @@ margin-top: 15px;
 
 
 
+
+/* Mejoras responsivas globales para Procrastination Nightmare */
+.to-do-form {
+  width: min(94%, 560px) !important;
+}
+
+@media (max-width: 768px) {
+  .c-election-pomodoro {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Refinamiento visual moderno para la suite proyectoBit */
+.space-work .bg-secondary.rounded-2 {
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+#btn-work, #btn-rest, #startButton {
+  border-radius: 999px;
+  padding: 0.5rem 1.75rem;
+  font-weight: 700;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+#btn-work:hover, #btn-rest:hover, #startButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 210, 229, 0.3);
+}
+
+/* ============================================================================
+   ESTILOS MODERNOS POMODORO Y LISTA DE TAREAS
+   ============================================================================ */
+.pn-pomodoro-card {
+  background: rgba(17, 24, 39, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  padding: 2.25rem 1.5rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.pn-timer-ring {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: conic-gradient(#38bdf8 var(--progress, 100%), rgba(148, 163, 184, 0.15) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 36px rgba(56, 189, 248, 0.2);
+  transition: background 0.3s ease;
+}
+
+.pn-timer-inner {
+  width: 214px;
+  height: 214px;
+  border-radius: 50%;
+  background: #0f172a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pn-mode-btn.active {
+  background-color: #38bdf8 !important;
+  color: #0f172a !important;
+  border-color: #38bdf8 !important;
+}
+
+.pn-todo-card {
+  background: rgba(17, 24, 39, 0.92) !important;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 1.25rem !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  color: #f8fafc;
+}
+
+.pn-todo-card .li-container {
+  background: transparent !important;
+}
+
+.pn-todo-card .space-li {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0.75rem;
+  margin-bottom: 0.6rem;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.9rem;
+}
+
+.pn-todo-card .to-do-work {
+  color: #f8fafc;
+  margin: 0;
+  flex: 1;
+}
+
+/* ============================================================================
+   SCROLLBARS MODERNOS Y SECCIÓN ACTIVA ILUMINADA
+   ============================================================================ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.5) #0f172a;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #38bdf8, #818cf8);
+  border-radius: 999px;
+  border: 2px solid #0f172a;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+/* Iluminación de la sección activa y alineación en la barra lateral */
+.lateral-navbar {
+  z-index: 1000;
+}
+
+.link-lateral-navbar {
+  display: flex !important;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.6rem;
+  margin: 0.25rem 0.4rem;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link-lateral-navbar .name-option {
+  margin-left: 0 !important;
+}
+
+.link-lateral-navbar i.fi {
+  font-size: 1.25rem;
+  min-width: 1.85rem;
+  text-align: center;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-lateral-navbar.active-nav {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.06));
+  color: #38bdf8 !important;
+  border-left: 3px solid #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
+  font-weight: 700;
+}
+
+.link-lateral-navbar.active-nav .name-option {
+  color: #f8fafc !important;
+}

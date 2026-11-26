@@ -1,0 +1,56 @@
+/**
+ * ============================================================================
+ * ESTILOS GLOBALES — PORTAFOLIO ANGULAR (Portafolio/src/styles.css)
+ * ============================================================================
+ * Propósito: Definir la paleta oscura moderna (#0b1120 / #111827 / #38bdf8)
+ * y barras de desplazamiento personalizadas a juego con el curso MEAN Stack.
+ */
+
+/* Fondo principal y tipografía nativa */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 45%), #0b1120;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Barras de desplazamiento oscuras con acento cian */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.45) #0b1120;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.45);
+  border-radius: 999px;
+  border: 2px solid #0b1120;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.8);
+}
+
+/* Tarjeta oscura reutilizable en las vistas del portafolio */
+.pf-card {
+  background: #111827;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 16px 36px rgba(2, 6, 23, 0.45);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.pf-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.45);
+}

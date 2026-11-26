@@ -1,180 +1,289 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+/**
+ * ============================================================================
+ * ARCHIVO: Instagram/assets/css/style.css
+ * DESCRIPCIÓN: Maquetación y estilos del clon responsivo de acceso de Instagram.
+ * ============================================================================
+ */
+
+/* Reset básico y tipografía */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 40px 0;
+/* Centra horizontalmente la vista (mockup + formulario) */
+body {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 40px 0;
+  background-color: #fafafa;
 }
 
-.ps{
-    height: 40px;
+/* Altura uniforme para insignias de Google Play y Microsoft */
+.ps {
+  height: 40px;
 }
 
-.image{
-    width: 427px;
-    display: flex;
-    height:auto;
-    justify-content: center;
-    margin-top: 20px;
-    align-items: center;
+/* Contenedor izquierdo del mockup de teléfono */
+.image {
+  position: relative;
+  width: 427px;
+  min-height: 580px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  align-items: center;
 }
 
-.bgimage, .flex{
-    position: absolute;
+.bgimage, .flex {
+  position: absolute;
 }
 
-.bgimage{
-    z-index: 0;
-    height: 600px;
-}
-.flex{
-    z-index: 1;
-    width: 240px;
-    margin-left: 90px;
-    margin-top: -40px;
+.bgimage {
+  z-index: 0;
+  height: 600px;
 }
 
-.container{
-    width: 400px;
-    display: flex;
-    height: 600px;
-    align-items: start;
-    justify-content: center;
-    flex-wrap: wrap;
+.flex {
+  z-index: 1;
+  width: 240px;
+  margin-left: 90px;
+  margin-top: -40px;
 }
 
-.general{
-    border:1px solid lightgray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 380px;
-    width: 350px;
-    padding: 30px 0;
+/* Columna derecha que agrupa login, enlace de registro y descarga */
+.container {
+  width: 400px;
+  display: flex;
+  height: 600px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+/* Tarjeta principal blanca con borde sutil */
+.general {
+  background: #ffffff;
+  border: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 380px;
+  width: 350px;
+  padding: 30px 0 20px;
 }
 
-.mainimg{
-    width: 171px;    
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-
-.size{
-    width: 300px;
-    height: 40px;
-    margin: 3px 0;
-    padding: 0 5px;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid lightgray;
+.mainimg {
+  width: 171px;
+  margin-bottom: 12px;
 }
 
-.button{
-    background: #77A7FF;
-    color: white;
-    font-weight: bold;
+/* Campos de texto del formulario */
+.size {
+  width: 300px;
+  height: 40px;
+  margin: 3px 0;
+  padding: 0 10px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #dbdbdb;
+  background: #fafafa;
 }
 
-.line{
-    width: 120px;
-    margin: 0 20px;
-    height: 1px;
-    background: lightgray;
+.size:focus {
+  border-color: #a8a8a8;
 }
 
-.word{
-    color: #a1a0a0;
+/* Contenedor relativo para posicionar el botón "Mostrar/Ocultar" dentro del input */
+.pass-wrap {
+  position: relative;
+  width: 300px;
 }
 
-.icon{
-    color: blue;
-    background: white;
-    border: none;
-    padding: 10px 20px ;
-    margin: 0 20px;
-    font-size: 18px;
+.pass-wrap .pss {
+  padding-right: 64px;
 }
 
-.fa-brands{
-    margin: 0 10px;
+.toggle-pass {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #262626;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
 }
 
-.forgotpass{
-    font-size: 15px;    
+/* Botón principal de acceso (claro por defecto, azul intenso cuando `.ready`) */
+.button {
+  background: #77a7ff;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
-.forgotpass a{
-    text-decoration: none;
-    color:#385898;
+.button.ready {
+  background: #0095f6;
 }
 
-.create{
-    border: 1px solid lightgray;
-    width: 350px;
-    text-align:center;
-    padding: 20px 0;
+.button:hover {
+  opacity: 0.92;
 }
 
-.get{
-    text-align: center;
+.ig-feedback {
+  width: 300px;
+  text-align: center;
+  font-size: 12px;
+  margin: 8px 0 0;
+  display: none;
 }
 
-.get p{
-    margin: 10px 0;
+/* Separador horizontal "─── O ───" */
+.line {
+  width: 112px;
+  margin: 14px 16px;
+  height: 1px;
+  background: #dbdbdb;
 }
 
-.end{
+.word {
+  color: #8e8e8e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Botón de acceso con Facebook */
+.icon {
+  color: #385185;
+  background: transparent;
+  border: none;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fa-brands {
+  margin-right: 8px;
+}
+
+.forgotpass {
+  width: 100%;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.forgotpass a {
+  text-decoration: none;
+  color: #00376b;
+}
+
+/* Tarjeta inferior "¿No tienes una cuenta? Regístrate" */
+.create {
+  background: #ffffff;
+  border: 1px solid #dbdbdb;
+  width: 350px;
+  text-align: center;
+  padding: 18px 0;
+  font-size: 14px;
+}
+
+.create a {
+  color: #0095f6;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.get {
+  text-align: center;
+  font-size: 14px;
+}
+
+.get p {
+  margin: 10px 0;
+}
+
+/* Pie de página */
+.end {
+  width: 100%;
+  background: #fafafa;
+  padding: 24px 20px;
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.main {
+  width: 100%;
+  text-align: center;
+}
+
+.main a {
+  color: #8e8e8e;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 0 10px;
+}
+
+.second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: #8e8e8e;
+  font-size: 12px;
+  padding: 12px 0;
+}
+
+.second p {
+  margin: 0 15px;
+}
+
+.fa-solid {
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+/* Barras de desplazamiento sutiles a juego */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 149, 246, 0.45) #fafafa;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #fafafa; }
+::-webkit-scrollbar-thumb { background: rgba(0, 149, 246, 0.45); border-radius: 999px; border: 2px solid #fafafa; }
+::-webkit-scrollbar-thumb:hover { background: #0095f6; }
+
+/* Responsivo: en <= 875px oculta el mockup de teléfono */
+@media (max-width: 875px) {
+  .image {
+    display: none;
+  }
+  .container {
     width: 100%;
-    background: white;
-    height: 100px;
-    margin: 50px 0;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.main{
-    width: 100%;
-    padding: 0 100px;
-}
-
-.main a{
-    color: grey;
-    text-decoration: none;
-    font-size: 12px;
-    margin-right: 20px;
-}
-
-.second{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    color: grey;
-    font-size: 12px;
-    padding: 10px 0;
-}
-
-.second p{
-    margin-left: 30px;
-}
-
-.fa-solid{
-    margin-left: 5px;
-    font-size: 12px;
+    max-width: 380px;
+    height: auto;
+  }
 }

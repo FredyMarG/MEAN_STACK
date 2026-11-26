@@ -1,0 +1,14 @@
+<!--
+  ============================================================================
+  ARCHIVO: Never-Give-Up/src/app/components/button/button.component.html
+  DESCRIPCIÓN: Componente botón reutilizable con @Input/@Output en Angular (Never-Give-Up).
+  ============================================================================
+-->
+<button
+  type="button"
+  class="btn px-4 py-2 fw-semibold shadow-sm"
+  [ngClass]="'btn-' + variant"
+  [disabled]="disabled"
+  (click)="onClick()">
+  {{ label }}
+</button>

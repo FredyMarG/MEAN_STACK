@@ -1,0 +1,14 @@
+{
+  "name": "mongo-dbz-playground",
+  "version": "1.0.0",
+  "description": "Simulador local de MongoDB (DBZ-V2) con Playground Web y recarga automática",
+  "main": "run-mongo-demo.js",
+  "scripts": {
+    "dev": "node --watch run-mongo-demo.js",
+    "start": "node run-mongo-demo.js",
+    "demo": "node run-mongo-demo.js --demo",
+    "test": "node --test tests/*.test.js"
+  },
+  "author": "Fredy Martinez",
+  "license": "ISC"
+}

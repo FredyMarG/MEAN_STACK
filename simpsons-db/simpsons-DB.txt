@@ -1,0 +1,593 @@
+[
+  {
+    "nombre": "Homer Simpson",
+    "genero": "hombre",
+    "id_padres": [
+      "Abraham Simpson",
+      "Mona Simpson"
+    ],
+    "mascotas": [
+      "Ayudante de Santa",
+      "Gato Snowball II"
+    ],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": "Planta nuclear de springfield",
+    "casado": true,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Marge Simpson",
+    "genero": "mujer",
+    "id_padres": [
+      "Jack Bouvier",
+      "Patty Bouvier"
+    ],
+    "mascotas": [
+      "Gato Snowball II"
+    ],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": "Ama de casa",
+    "casado": true,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Bart Simpson",
+    "genero": "hombre",
+    "id_padres": [
+      "Homer Simpson",
+      "Marge Simpson"
+    ],
+    "mascotas": [
+      "Ayudante de Santa"
+    ],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": "Estudiante",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Lisa Simpson",
+    "genero": "mujer",
+    "id_padres": [
+      "Homer Simpson",
+      "Marge Simpson"
+    ],
+    "mascotas": [],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": "Estudiante",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Maggie Simpson",
+    "genero": "mujer",
+    "id_padres": [
+      "Homer Simpson",
+      "Marge Simpson"
+    ],
+    "mascotas": [
+      "Pato Pocoyo"
+    ],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Abraham Simpson",
+    "genero": "hombre",
+    "id_padres": [
+      "Orville Simpson",
+      "Yuma Hickman"
+    ],
+    "mascotas": [
+      "Tortuga"
+    ],
+    "residencia": "Casa de retiro del coronel",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Patty Bouvier",
+    "genero": "mujer",
+    "id_padres": [
+      "Clancy Bouvier",
+      "Jacqueline Bouvier"
+    ],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Desconocido"
+  },
+  {
+    "nombre": "Selma Bouvier",
+    "genero": "mujer",
+    "id_padres": [
+      "Clancy Bouvier",
+      "Jacqueline Bouvier"
+    ],
+    "mascotas": [
+      "Gato Jub-Jub"
+    ],
+    "residencia": "Desconocido",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Ned Flanders",
+    "genero": "hombre",
+    "id_padres": [
+      "Nedward Flanders Sr.",
+      "Agnes Flanders"
+    ],
+    "mascotas": [
+      "Perro llamado Ayudante de Santa II"
+    ],
+    "residencia": "744 Evergreen Terrace",
+    "empleo": "Dueño de la tienda the leftorium",
+    "casado": false,
+    "estado_vida": "Vivo",
+    "estado_civil": "Viudo"
+  },
+  {
+    "nombre": "Maude Flanders",
+    "genero": "mujer",
+    "id_padres": [
+      "Nedward Flanders Sr.",
+      "Agnes Flanders"
+    ],
+    "mascotas": [],
+    "residencia": "744 Evergreen Terrace",
+    "empleo": null,
+    "casado": true,
+    "estado_vida": "Fallecido"
+  },
+  {
+    "nombre": "Rod Flanders",
+    "genero": "hombre",
+    "id_padres": [
+      "Ned Flanders",
+      "Maude Flanders"
+    ],
+    "mascotas": [],
+    "residencia": "744 Evergreen Terrace",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Todd Flanders",
+    "genero": "hombre",
+    "id_padres": [
+      "Ned Flanders",
+      "Maude Flanders"
+    ],
+    "mascotas": [],
+    "residencia": "744 Evergreen Terrace",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Milhouse Van Houten",
+    "genero": "hombre",
+    "id_padres": [
+      "Kirk Van Houten",
+      "Luann Van Houten"
+    ],
+    "mascotas": [
+      "Gato llamado Zorro"
+    ],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Kirk Van Houten",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Desempleado",
+    "casado": false,
+    "estado_vida": "Vivo",
+    "estado_civil": "Divorciado"
+  },
+  {
+    "nombre": "Luann Van Houten",
+    "genero": "mujer",
+    "id_padres": [
+      "Clancy Bouvier",
+      "Jacqueline Bouvier"
+    ],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Desempleado",
+    "casado": false,
+    "estado_vida": "Vivo",
+    "estado_civil": "Divorciado"
+  },
+  {
+    "nombre": "Ralph Wiggum",
+    "genero": "hombre",
+    "id_padres": [
+      "Clancy Wiggum",
+      "Sarah Wiggum"
+    ],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": null,
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Chief Clancy Wiggum",
+    "genero": "hombre",
+    "id_padres": [
+      "Ralph Wiggum",
+      "Sarah Wiggum"
+    ],
+    "mascotas": [],
+    "residencia": "Estación de policía de Springfield",
+    "empleo": "Jefe de policía",
+    "casado": true,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Sarah Wiggum",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": null,
+    "casado": true,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Moe Szyslak",
+    "genero": "hombre",
+    "id_padres": [
+      "Morty Szyslak"
+    ],
+    "mascotas": [],
+    "residencia": "Moe's Tavern, Springfield",
+    "empleo": "Dueño de moe's tavern",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Morty Szyslak",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Desempleado",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Troy McClure",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "742 Evergreen Terrace",
+    "empleo": "Actor de películas de bajo presupuesto",
+    "casado": false,
+    "estado_vida": "Fallecido"
+  },
+  {
+    "nombre": "Lionel Hutz",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Abogado",
+    "casado": false,
+    "estado_vida": "Fallecido"
+  },
+  {
+    "nombre": "Dr. Nick Riviera",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Consultorio del Dr. Nick",
+    "empleo": "Doctor no acreditado",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Agnes Skinner",
+    "genero": "mujer",
+    "id_padres": [
+      "¿?",
+      "¿?"
+    ],
+    "mascotas": [],
+    "residencia": "Casa de reposo de Springfield",
+    "empleo": "Jubilado",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Superintendente Chalmers",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Superintendente de escuelas",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Bleeding Gums Murphy",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Músico de jazz",
+    "casado": false,
+    "estado_vida": "Fallecido"
+  },
+  {
+    "nombre": "Lunchlady Doris",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Escuela Primaria de Springfield",
+    "empleo": "Encargada del comedor escolar",
+    "casado": false,
+    "estado_vida": "Fallecido"
+  },
+  {
+    "nombre": "Drederick Tatum",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Springfield",
+    "empleo": "Boxeador",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Kang",
+    "genero": "desconocido",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Planeta de origen desconocido",
+    "empleo": "Invader",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Kodos",
+    "genero": "desconocido",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Planeta de origen desconocido",
+    "empleo": "Invader",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Gil Gunderson",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Vendedor",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Princesa Kashmir",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Bailarina exótica",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Herman Hermann",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Herman's Military Antiques",
+    "empleo": "Dueño de una tienda de antigüedades militares",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Mindy Simmons",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Planta Nuclear de Springfield",
+    "empleo": "Trabajadora de la planta nuclear de springfield",
+    "casado": false,
+    "estado_vida": "Desconocido"
+  },
+  {
+    "nombre": "Herb Powell",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Inventor",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Laura Powers",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Estudiante",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Greta Wolfcastle",
+    "genero": "mujer",
+    "id_padres": [
+      "Rainier Wolfcastle",
+      "Maria Wolfcastle"
+    ],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Estudiante",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Lucille Botzcowski",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Springfield Retirement Castle",
+    "empleo": "Residente del hogar de ancianos",
+    "casado": false,
+    "estado_vida": "Desconocido"
+  },
+  {
+    "nombre": "Bleeding Gums' hermana",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Músico de jazz",
+    "casado": false,
+    "estado_vida": "Fallecido"
+  },
+  {
+    "nombre": "Sr. Burns",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [
+      "Abe's flying hellfish tortoise"
+    ],
+    "residencia": "Mansión Burns",
+    "empleo": "Dueño de la planta nuclear de springfield",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Waylon Smithers",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Mansión Burns",
+    "empleo": "Asistente ejecutivo del sr. burns",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Hans Moleman",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Springfield",
+    "empleo": "Varios trabajos",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Jub-Jub",
+    "genero": "desconocido",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Casa de Selma Bouvier",
+    "empleo": "Mascota de selma bouvier",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Akira",
+    "genero": "hombre",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Springfield",
+    "empleo": "Dueño del restaurante japonés",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Crazy Cat Lady",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [
+      "Gatos"
+    ],
+    "residencia": "Springfield",
+    "empleo": "Desconocido",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Patty Bouvier (Sizzle Lean)",
+    "genero": "mujer",
+    "id_padres": [
+      "Clancy Bouvier",
+      "Jacqueline Bouvier"
+    ],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Empleado en la cadena de comidas rápidas 'sizzle lean'",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Selma Bouvier (Sizzle Lean)",
+    "genero": "mujer",
+    "id_padres": [
+      "Clancy Bouvier",
+      "Jacqueline Bouvier"
+    ],
+    "mascotas": [
+      "Jub-Jub"
+    ],
+    "residencia": "Desconocido",
+    "empleo": "Empleado en la cadena de comidas rápidas 'sizzle lean'",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Stampy",
+    "genero": "desconocido",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Springfield",
+    "empleo": "Mascota de lisa simpson",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Gino Terwilliger",
+    "genero": "hombre",
+    "id_padres": [
+      "Robert Terwilliger Sr.",
+      "Dame Judith Underdunk"
+    ],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Estudiante",
+    "casado": false,
+    "estado_vida": "Vivo"
+  },
+  {
+    "nombre": "Nana Sophie Mussolini",
+    "genero": "mujer",
+    "id_padres": [],
+    "mascotas": [],
+    "residencia": "Desconocido",
+    "empleo": "Desconocido",
+    "casado": false,
+    "estado_vida": "Desconocido"
+  }
+]

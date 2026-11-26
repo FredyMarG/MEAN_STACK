@@ -1,0 +1,78 @@
+{
+  "products": [
+    {
+      "_id": "e97cf77b6764b1878bf06159",
+      "name": "Teclado Mecánico RGB 65%",
+      "price": 249900,
+      "availableElements": 21,
+      "description": "Teclado mecánico compacto con switches rojos silenciosos.",
+      "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600",
+      "tags": [
+        "perifericos",
+        "teclado",
+        "gaming"
+      ],
+      "createdAt": "2026-11-25T17:52:37.101Z",
+      "updatedAt": "2026-11-26T16:06:04.943Z"
+    },
+    {
+      "_id": "787a15b840ac1c5e7f3bca3a",
+      "name": "Mouse Inalámbrico Ergonómico",
+      "price": 139900,
+      "availableElements": 25,
+      "description": "Sensor óptico de alta precisión y batería recargable USB-C.",
+      "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600",
+      "tags": [
+        "perifericos",
+        "mouse",
+        "oficina"
+      ],
+      "createdAt": "2026-11-25T17:52:37.101Z",
+      "updatedAt": "2026-11-25T17:52:37.101Z"
+    },
+    {
+      "_id": "80d03db1d2b8d4ebcc204274",
+      "name": "Monitor 27\" QHD IPS 144Hz",
+      "price": 1299000,
+      "availableElements": 7,
+      "description": "Panel IPS con calibración sRGB 99% ideal para desarrollo y diseño.",
+      "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600",
+      "tags": [
+        "monitores",
+        "hardware"
+      ],
+      "createdAt": "2026-11-25T17:52:37.101Z",
+      "updatedAt": "2026-11-25T17:52:37.101Z"
+    }
+  ],
+  "users": [
+    {
+      "_id": "356b9a69c9248e66b66333e4",
+      "username": "admin_bitshop",
+      "email": "admin@bitshop.local",
+      "password": "scrypt$926412686743ab4faf91b843c346aced$b1e33cb0c98e6f2fcfe5d5189f28fc629ba5a56a05f95666dceb41916c758eba976c34c32f0f879841a1fc478e5d7a2f2784f754b7538ecf1539eaa2087d074f",
+      "phone": "+57 300 000 0001",
+      "Permissions": {
+        "admin": true,
+        "client": true,
+        "verified": true
+      },
+      "createdAt": "2026-11-25T17:52:37.101Z",
+      "updatedAt": "2026-11-25T17:52:37.101Z"
+    },
+    {
+      "_id": "18e4c989a9997171a3c8574d",
+      "username": "cliente_demo",
+      "email": "cliente@bitshop.local",
+      "password": "scrypt$b5e31c3537fbffcfe6f34421077d5784$8413518caa5b9399bc7911aec3c82523a717f74001905bb5481c976d04ea9bc5cb6aa4cfaeaaaf33147fe45715443f6e1dbd9422bbb57bd3aeff86aa337c3686",
+      "phone": "+57 300 000 0002",
+      "Permissions": {
+        "admin": false,
+        "client": true,
+        "verified": true
+      },
+      "createdAt": "2026-11-25T17:52:37.101Z",
+      "updatedAt": "2026-11-25T17:52:37.101Z"
+    }
+  ]
+}

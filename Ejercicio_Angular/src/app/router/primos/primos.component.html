@@ -1,5 +1,18 @@
-<section class="p-4">
-  <h2>Verificador de Número Primo</h2>
-  <input type="number" [(ngModel)]="numero" />
-  <p>{{ esPrimo() ? 'Es un número primo' : 'No es primo' }}</p>
+<!--
+  ============================================================================
+  ARCHIVO: Ejercicio_Angular/src/app/router/primos/primos.component.html
+  DESCRIPCIÓN: Componente o archivo de la SPA multirruta en Angular (Ejercicio_Angular).
+  ============================================================================
+-->
+<section class="container py-3" style="max-width: 540px;">
+  <div class="card shadow-sm border-0 p-4">
+    <h3 class="fw-bold mb-3">Detector de Números Primos</h3>
+    <label for="primoInput" class="form-label">Ingresa un número entero positivo:</label>
+    <input id="primoInput" type="number" min="0" step="1" class="form-control mb-3" [(ngModel)]="numero" />
+    <div *ngIf="!esEnteroValido" class="alert alert-warning">Ingresa un número entero mayor o igual a 0.</div>
+    <div *ngIf="esEnteroValido" class="alert" [ngClass]="resultadoPrimo ? 'alert-success' : 'alert-secondary'">
+      <strong>{{ numero }}</strong> {{ resultadoPrimo ? 'es un número primo.' : 'no es un número primo.' }}
+      <div class="small mt-1">Siguiente primo: <strong>{{ siguientePrimo }}</strong></div>
+    </div>
+  </div>
 </section>

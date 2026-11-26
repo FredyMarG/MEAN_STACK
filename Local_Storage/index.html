@@ -2,36 +2,84 @@
   ============================================================================
   PERSISTENCIA EN EL NAVEGADOR CON LOCALSTORAGE (Local_Storage/index.html)
   ============================================================================
-  Complemento: Se agregó una interfaz interactiva para demostrar cómo serializar
-  arreglos y objetos con `JSON.stringify()`, guardarlos en `localStorage` y
-  recuperarlos con `JSON.parse()`.
+  Propósito educativo (Curso MEAN Stack):
+  1. Guardar, leer, eliminar individualmente y restaurar datos persistentes
+     en el navegador usando `localStorage`, `JSON.stringify()` y `JSON.parse()`.
+  2. Visualizar tanto las píldoras interactivas como el JSON crudo y el tamaño
+     en bytes ocupado en Web Storage.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <title>Práctica de LocalStorage y JSON</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <title>Práctica de LocalStorage y JSON</title>
+  <style>
+    /* Tema oscuro moderno con scrollbars a juego */
+    body {
+      background: radial-gradient(circle at top, #134e4a 0%, #0b1120 60%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+    .storage-card {
+      background: rgba(17, 24, 39, 0.92);
+      border: 1px solid rgba(45, 212, 191, 0.25);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #2dd4bf;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 220px;
+      overflow: auto;
+    }
+    * { scrollbar-width: thin; scrollbar-color: rgba(45, 212, 191, 0.45) #0b1120; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0b1120; }
+    ::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.45); border-radius: 999px; border: 2px solid #0b1120; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(45, 212, 191, 0.85); }
+  </style>
 </head>
-<body class="bg-light p-5">
-    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
-        <div class="card-header bg-dark text-white fw-bold">
-            💾 Persistencia con Web Storage API (localStorage)
+<body class="py-5">
+  <div class="container" style="max-width: 720px;">
+    <div class="storage-card p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+          <span class="badge bg-info text-dark mb-1">Web Storage API • JSON</span>
+          <h3 class="fw-bold mb-0">💾 Persistencia con <code>localStorage</code></h3>
         </div>
-        <div class="card-body">
-            <p class="text-muted">Guarda y recupera datos persistentes en el navegador usando <code>JSON.stringify()</code> y <code>JSON.parse()</code>.</p>
-            <div class="d-flex gap-2 mb-3">
-                <input type="text" id="itemInput" class="form-control" placeholder="Escribe un dato para guardar en localStorage...">
-                <button onclick="guardarElemento()" class="btn btn-primary">Guardar</button>
-                <button onclick="limpiarStorage()" class="btn btn-outline-danger">Limpiar</button>
-            </div>
-            <h6>Contenido actual de <code>localStorage["llave"]</code>:</h6>
-            <pre id="storageViewer" class="bg-dark text-success p-3 rounded-2 mb-0"></pre>
-        </div>
-    </div>
+        <span id="metricsBadge" class="badge bg-dark border border-secondary px-3 py-2">0 ítems • 0 B</span>
+      </div>
 
-    <script src="script.js"></script>
+      <p class="small text-secondary mb-3">
+        Agrega valores (texto o números), elimínalos individualmente o inspecciona la serialización en <code>localStorage["llave"]</code>.
+      </p>
+
+      <!-- Barra de acciones -->
+      <div class="input-group mb-3">
+        <input type="text" id="itemInput" class="form-control bg-dark text-white border-secondary"
+          placeholder="Escribe un dato para guardar en localStorage..." />
+        <button onclick="guardarElemento()" class="btn btn-info text-dark fw-bold" type="button">Guardar</button>
+        <button onclick="restaurarSemilla()" class="btn btn-outline-warning" type="button" title="Restaurar [1,2,3,4,5]">↺ Semilla</button>
+        <button onclick="limpiarStorage()" class="btn btn-outline-danger" type="button">Limpiar</button>
+      </div>
+
+      <!-- Lista interactiva de elementos guardados -->
+      <div class="mb-3">
+        <h6 class="small text-secondary fw-bold mb-2">Elementos guardados (clic en × para eliminar):</h6>
+        <div id="itemsPills" class="d-flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Visor JSON crudo -->
+      <h6 class="small text-secondary fw-bold mb-2">Contenido serializado en <code>localStorage["llave"]</code>:</h6>
+      <pre id="storageViewer" class="p-3 small mb-0">[]</pre>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

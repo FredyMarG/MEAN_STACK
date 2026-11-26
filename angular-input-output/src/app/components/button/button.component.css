@@ -1,0 +1,16 @@
+/**
+ * ============================================================================
+ * ESTILOS DEL BOTÓN REUTILIZABLE (src/app/components/button/button.component.css)
+ * ============================================================================
+ * Propósito: Añadir transición suave y elevación al interactuar con el botón.
+ */
+
+/* Transición fluida para hover y estado activo */
+button {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Eleva ligeramente el botón cuando está habilitado y se pasa el cursor */
+button:not(:disabled):hover {
+  transform: translateY(-2px);
+}

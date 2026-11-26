@@ -2,37 +2,64 @@
   ============================================================================
   MAQUETACIÓN SEMÁNTICA CON FLEXBOX (html5_exercise/flexbox/index.html)
   ============================================================================
-  Propósito: Diagramar la estructura clásica de una página web (`header`, `nav`,
-  contenedor flex con `section` + `article` y `aside` lateral, y `footer`).
+  Propósito educativo (Curso MEAN Stack):
+  1. Diagramar la estructura semántica clásica (`header`, `nav`, `section`,
+     `article`, `aside`, `footer`) con CSS3 Flexbox.
+  2. Experimentar en vivo con `flex-direction`, `align-items` y `gap` sobre el
+     contenedor `.container` viendo la regla CSS resultante.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Maquetación Semántica HTML5 + Flexbox</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Maquetación Semántica HTML5 + Flexbox</title>
 </head>
 <body>
-    
   <header>
     <h1>HEADER</h1>
   </header>
-  
+
   <nav>
     <h1>NAV</h1>
+    <!-- Barra interactiva para probar propiedades Flexbox en vivo -->
+    <div class="flex-controls">
+      <label>flex-direction:
+        <select id="flexDir">
+          <option value="row">row (fila)</option>
+          <option value="row-reverse">row-reverse (invertida)</option>
+          <option value="column">column (columna)</option>
+        </select>
+      </label>
+      <label>align-items:
+        <select id="flexAlign">
+          <option value="center">center</option>
+          <option value="stretch">stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+        </select>
+      </label>
+      <label>gap:
+        <select id="flexGap">
+          <option value="0px">0px</option>
+          <option value="16px" selected>16px</option>
+          <option value="32px">32px</option>
+        </select>
+      </label>
+      <code id="flexCssOut" class="flex-code">display: flex; flex-direction: row; align-items: center; gap: 16px;</code>
+    </div>
   </nav>
 
-  <!-- Contenedor Flexbox que alinea SECTION (izquierda) y ASIDE (derecha) -->
-  <div class="container">
+  <!-- Contenedor Flexbox que alinea SECTION y ASIDE -->
+  <div id="flexContainer" class="container">
     <section>
-        <h1>SECTION</h1>
-        <article><h1>ARTICLE</h1></article>
+      <h1>SECTION</h1>
+      <article><h1>ARTICLE</h1></article>
     </section>
-    
+
     <aside>
-        <h1>ASIDE</h1>
+      <h1>ASIDE</h1>
     </aside>
   </div>
 
@@ -40,5 +67,25 @@
     <h1>FOOTER</h1>
   </footer>
 
+  <script>
+    // Referencias al contenedor flex y los 3 selectores de propiedades
+    const flexContainer = document.getElementById("flexContainer");
+    const flexDir = document.getElementById("flexDir");
+    const flexAlign = document.getElementById("flexAlign");
+    const flexGap = document.getElementById("flexGap");
+    const flexCssOut = document.getElementById("flexCssOut");
+
+    /** Aplica las propiedades Flexbox elegidas al contenedor y muestra el CSS resultante. */
+    function updateFlexDemo() {
+      flexContainer.style.flexDirection = flexDir.value;
+      flexContainer.style.alignItems = flexAlign.value;
+      flexContainer.style.gap = flexGap.value;
+      flexCssOut.textContent = `display: flex; flex-direction: ${flexDir.value}; align-items: ${flexAlign.value}; gap: ${flexGap.value};`;
+    }
+
+    // Escucha cambios en los 3 controles
+    [flexDir, flexAlign, flexGap].forEach((el) => el.addEventListener("change", updateFlexDemo));
+    updateFlexDemo();
+  </script>
 </body>
 </html>

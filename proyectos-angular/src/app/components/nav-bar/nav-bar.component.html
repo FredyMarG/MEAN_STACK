@@ -1,0 +1,17 @@
+<!-- Barra de navegación SPA del Portafolio con indicador de ruta activa -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark border-bottom border-secondary px-3">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-info" routerLink="/proyectos">
+      💼 Fredy Martinez | Portafolio MEAN
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#pfNav" aria-label="Menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="pfNav">
+      <div class="navbar-nav ms-auto gap-2">
+        <a class="nav-link" routerLink="/proyectos" routerLinkActive="active text-info fw-bold">Proyectos</a>
+        <a class="nav-link" routerLink="/sobre-mi" routerLinkActive="active text-info fw-bold">Sobre Mí</a>
+      </div>
+    </div>
+  </div>
+</nav>

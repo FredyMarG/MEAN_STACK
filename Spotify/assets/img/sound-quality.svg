@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Fondo circular oscuro con aro verde Spotify -->
+  <circle cx="60" cy="60" r="56" fill="#0f172a" stroke="#1ed760" stroke-width="4"/>
+  <!-- Barras de ecualizador de alta fidelidad -->
+  <line x1="34" y1="74" x2="34" y2="54" stroke="#1ed760" stroke-width="7" stroke-linecap="round"/>
+  <line x1="47" y1="80" x2="47" y2="40" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <line x1="60" y1="84" x2="60" y2="32" stroke="#1ed760" stroke-width="7" stroke-linecap="round"/>
+  <line x1="73" y1="78" x2="73" y2="44" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <line x1="86" y1="72" x2="86" y2="52" stroke="#1ed760" stroke-width="7" stroke-linecap="round"/>
+</svg>

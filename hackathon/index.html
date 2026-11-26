@@ -2,39 +2,117 @@
   ============================================================================
   HACKATHON: EXTRACTOR DE PARÁMETROS URL (hackathon/index.html)
   ============================================================================
-  Complemento: Este archivo se encontraba vacío (0 bytes). Se construyó una
-  interfaz interactiva para probar el algoritmo de extracción de parámetros
-  QueryString (`?nombre=...&edad=...`) implementado en `script.js`.
+  Propósito educativo (Curso MEAN Stack):
+  1. Comparar el parseo manual de QueryString (`indexOf`, `slice`, `split`)
+     frente a la API estándar `URL` y `URLSearchParams`.
+  2. Mostrar la anatomía completa de la URL (`protocol`, `host`, `pathname`, `hash`).
+  3. Permitir añadir parámetros en vivo y ver la tabla clave/valor + JSON.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <title>Hackathon - Extractor de Parámetros URL</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackathon — Extractor de Query Params</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <style>
+    /* Tema oscuro consistente con scrollbars a juego */
+    body {
+      background: radial-gradient(circle at top, #312e81 0%, #0b1120 60%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+    .hack-card {
+      background: rgba(17, 24, 39, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+    }
+    pre {
+      background: #020617;
+      color: #38bdf8;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      max-height: 260px;
+      overflow: auto;
+    }
+    * { scrollbar-width: thin; scrollbar-color: rgba(56, 189, 248, 0.45) #0b1120; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0b1120; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.45); border-radius: 999px; border: 2px solid #0b1120; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.8); }
+  </style>
 </head>
-<body class="bg-light">
-    <div class="container py-5">
-        <div class="card shadow-sm mx-auto" style="max-width: 650px;">
-            <div class="card-header bg-dark text-white fw-bold">
-                🏆 Reto Hackathon: Parser de Parámetros de URL
-            </div>
-            <div class="card-body">
-                <p class="text-muted">
-                    Extrae los valores de los parámetros <code>nombre</code> y <code>edad</code> de una URL utilizando manipulación de strings (<code>search</code> y <code>slice</code>) y compáralo con <code>URLSearchParams</code>.
-                </p>
-                <label for="urlInput" class="form-label fw-semibold">URL de entrada:</label>
-                <input type="text" id="urlInput" class="form-control mb-3" value="https://urldelapagina.com?nombre=Miguel&edad=125">
-                <button onclick="procesarUrl()" class="btn btn-primary">Extraer Parámetros</button>
-
-                <div class="mt-4">
-                    <h6>Resultado extraído (Array):</h6>
-                    <pre id="output" class="bg-dark text-info p-3 rounded-2 mb-0"></pre>
-                </div>
-            </div>
+<body class="py-4">
+  <div class="container" style="max-width: 960px;">
+    <header class="hack-card p-4 mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+          <span class="badge bg-info text-dark mb-1">Reto Hackathon • URL &amp; URLSearchParams</span>
+          <h2 class="fw-bold mb-0">🏆 Extractor de Query Params</h2>
         </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" class="btn btn-outline-info btn-sm preset-url" data-url="https://urldelapagina.com?nombre=Miguel&edad=125">Ejemplo Base</button>
+          <button type="button" class="btn btn-outline-warning btn-sm preset-url" data-url="http://localhost:5000/api/products/get-products?q=Teclado+RGB&categoria=accesorios#catalogo">URL con #hash</button>
+        </div>
+      </div>
+
+      <!-- Entrada principal de URL -->
+      <div class="input-group mb-3">
+        <input id="urlInput" type="text" class="form-control bg-dark text-white border-secondary"
+          value="https://urldelapagina.com?nombre=Miguel&edad=125" placeholder="Pega una URL con ?param=valor..." />
+        <button onclick="procesarUrl()" class="btn btn-info text-dark fw-bold" type="button">Extraer</button>
+      </div>
+
+      <!-- Constructor rápido para añadir un parámetro nuevo a la URL -->
+      <form id="addParamForm" class="row g-2 align-items-center">
+        <div class="col-sm-4">
+          <input id="newKey" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Nueva clave (ej. curso)" required />
+        </div>
+        <div class="col-sm-5">
+          <input id="newVal" type="text" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Valor (ej. MEAN Stack)" required />
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-outline-success btn-sm w-100 fw-semibold">+ Añadir a la URL</button>
+        </div>
+      </form>
+    </header>
+
+    <div class="row g-4">
+      <!-- Anatomía de URL + Tabla clave/valor -->
+      <div class="col-lg-6 d-flex flex-column gap-4">
+        <div class="hack-card p-3">
+          <h6 class="fw-bold mb-2">🧭 Anatomía de la URL</h6>
+          <div id="urlAnatomy" class="small text-secondary"></div>
+        </div>
+
+        <div class="hack-card p-3">
+          <h6 class="fw-bold mb-2">📊 Parámetros Extraídos</h6>
+          <div class="table-responsive">
+            <table class="table table-dark table-sm table-bordered align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Clave</th>
+                  <th>Valor decodificado</th>
+                </tr>
+              </thead>
+              <tbody id="paramsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparativa JSON en vivo -->
+      <div class="col-lg-6">
+        <div class="hack-card p-3 h-100">
+          <h6 class="fw-bold mb-2">📡 Comparativa JSON (Manual vs URLSearchParams)</h6>
+          <pre id="output" class="p-3 small mb-0"></pre>
+        </div>
+      </div>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

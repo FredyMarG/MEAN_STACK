@@ -1,88 +1,156 @@
+<!--
+  ============================================================================
+  ARCHIVO: Instagram/index.html
+  DESCRIPCIÓN: Clon responsivo de la pantalla de inicio de sesión de Instagram
+  con alternancia de contraseña ("Mostrar/Ocultar"), validación de campos y
+  enlaces sin recarga accidental.
+  ============================================================================
+-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>Instagram</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>Instagram</title>
 </head>
 <body>
+  <!-- Columna izquierda: Mockup del teléfono (oculta en móvil <= 875px) -->
+  <div class="image">
+    <img src="assets/img/bgimage.jpg" alt="Marco de teléfono Instagram" class="bgimage" />
+    <img src="assets/img/screenshot4.png" alt="Captura de pantalla de Instagram" class="flex" />
+  </div>
 
-    <div class="image">
+  <!-- Columna derecha: Tarjeta de acceso, registro y descarga -->
+  <div class="container">
+    <div class="general">
+      <div class="logo">
+        <img src="assets/img/logoInstagram.png" alt="Instagram" class="mainimg" />
+      </div>
 
-        <img src="assets/img/bgimage.jpg" alt="" class="bgimage">
-        <img src="assets/img/screenshot4.png" alt="" class="flex">
+      <form class="form" id="igLoginForm">
+        <input type="text" id="igUser" class="size txt"
+          placeholder="Teléfono, usuario o correo electrónico" required />
 
+        <!-- Contenedor relativo para ubicar el botón "Mostrar/Ocultar" dentro del campo -->
+        <div class="pass-wrap">
+          <input type="password" id="igPass" class="size pss" placeholder="Contraseña" required />
+          <button type="button" id="toggleIgPass" class="toggle-pass">Mostrar</button>
+        </div>
+
+        <input type="submit" id="igSubmitBtn" value="Iniciar sesión" class="size button" />
+        <p id="igFeedback" class="ig-feedback"></p>
+      </form>
+
+      <div class="line"></div>
+      <div class="word">O</div>
+      <div class="line"></div>
+
+      <button type="button" id="fbLoginBtn" class="icon">
+        <i class="fa-brands fa-square-facebook"></i>Iniciar sesión con Facebook
+      </button>
+
+      <div class="forgotpass">
+        <a href="#" id="forgotLink">¿Has olvidado tu contraseña?</a>
+      </div>
     </div>
 
-    <div class="container">
-
-        <div class="general">
-
-            <div class="logo">
-                <img src="assets/img/logoInstagram.png" alt="" class="mainimg">
-            </div>
-
-            <div class="form">
-
-                <input type="text" class="size txt" placeholder="Número de teléfono, Nombre de usuario  o correo electrónico">
-
-                <input type="password" class="size pss" placeholder="Contraseña">
-
-                <input type="submit" value="Acceso" class="size button">
-
-
-            </div>
-
-            <div class="line"></div>
-            <div class="word">O</div>
-            <div class="line"></div>
-
-            <button type="submit" class="icon"><i class="fa-brands fa-square-facebook"></i>Iniciar sesión con Facebook</button>
-
-            <div class="forgotpass">
-                <a href="#">¿Has olvidado tu contraseña?</a> 
-            </div>
-
-        </div>
-
-        <div class="create">¿No tienes una cuenta?<a href="#">Incribirse</a></div>
-
-        <div class="get">
-            <p>Obtener la aplicación</p>            
-            <img src="assets/img/google play.jpg" alt="" class="ps">
-            <img src="assets/img/microsoft.jpg" alt="" class="ps">
-        </div>
-
+    <div class="create">
+      ¿No tienes una cuenta?
+      <a href="#" id="signupLink">Regístrate</a>
     </div>
 
-    <div class="end">
-
-        <div class="main">
-            <a href="">Meta</a>
-            <a href="">Acerca de</a>
-            <a href="">Blog</a>
-            <a href="">Trabajos</a>
-            <a href="">Ayuda</a>
-            <a href="">API</a>
-            <a href="">Privacidad</a>
-            <a href="">Términos</a>
-            <a href="">Cuentas principales</a>
-            <a href="">Ubicaciones</a>
-            <a href="">Instagram Lite</a>
-            <a href="">Carga de contactos y no usuarios</a>
-            <a href="">Metaverificado</a>         
-              
-        </div>
-
-        <div class="second">
-            <p>Inglés<i class="fa-solid fa-chevron-down"></i></p>
-            <p>© 2023 Instagram de Meta</p>
-        </div>
-
+    <div class="get">
+      <p>Descarga la aplicación</p>
+      <img src="assets/img/google play.jpg" alt="Disponible en Google Play" class="ps" />
+      <img src="assets/img/microsoft.jpg" alt="Consíguelo en Microsoft" class="ps" />
     </div>
-    
+  </div>
+
+  <!-- Pie de página con enlaces informativos -->
+  <footer class="end">
+    <div class="main">
+      <a href="#">Meta</a>
+      <a href="#">Información</a>
+      <a href="#">Blog</a>
+      <a href="#">Empleo</a>
+      <a href="#">Ayuda</a>
+      <a href="#">API</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Condiciones</a>
+      <a href="#">Ubicaciones</a>
+      <a href="#">Instagram Lite</a>
+      <a href="#">Meta Verified</a>
+    </div>
+
+    <div class="second">
+      <p>Español<i class="fa-solid fa-chevron-down"></i></p>
+      <p>© 2026 Instagram from Meta</p>
+    </div>
+  </footer>
+
+  <script>
+    // Referencias a controles del formulario y mensajes
+    const igForm = document.getElementById("igLoginForm");
+    const igUser = document.getElementById("igUser");
+    const igPass = document.getElementById("igPass");
+    const igSubmitBtn = document.getElementById("igSubmitBtn");
+    const igFeedback = document.getElementById("igFeedback");
+    const toggleIgPass = document.getElementById("toggleIgPass");
+
+    /** Activa el azul intenso de Instagram cuando usuario y contraseña tienen contenido. */
+    function updateSubmitState() {
+      const ready = igUser.value.trim().length > 0 && igPass.value.trim().length >= 4;
+      igSubmitBtn.classList.toggle("ready", ready);
+    }
+
+    /** Muestra un mensaje de estado debajo del botón de acceso. */
+    function showFeedback(text, isError = false) {
+      igFeedback.style.display = "block";
+      igFeedback.style.color = isError ? "#ed4956" : "#0095f6";
+      igFeedback.textContent = text;
+    }
+
+    igUser.addEventListener("input", updateSubmitState);
+    igPass.addEventListener("input", updateSubmitState);
+
+    // Alterna visibilidad de la contraseña entre oculta y texto plano
+    toggleIgPass.addEventListener("click", () => {
+      const hidden = igPass.type === "password";
+      igPass.type = hidden ? "text" : "password";
+      toggleIgPass.textContent = hidden ? "Ocultar" : "Mostrar";
+    });
+
+    // Valida el envío del formulario sin recargar la página
+    igForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const u = igUser.value.trim();
+      const p = igPass.value.trim();
+      if (!u || p.length < 4) {
+        showFeedback("Ingresa usuario y una contraseña de al menos 4 caracteres.", true);
+        return;
+      }
+      showFeedback(`✓ Sesión simulada iniciada como @${u}`);
+    });
+
+    // Evita recargas al hacer clic en botones/enlaces demostrativos
+    document.getElementById("fbLoginBtn").addEventListener("click", () => {
+      showFeedback("Demo educativa: acceso con Facebook simulado.");
+    });
+    document.getElementById("forgotLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      showFeedback("Ingresa tu usuario arriba para simular la recuperación.");
+    });
+    document.getElementById("signupLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      igUser.focus();
+    });
+    document.querySelectorAll(".end .main a").forEach((link) => {
+      link.addEventListener("click", (e) => e.preventDefault());
+    });
+  </script>
 </body>
 </html>
